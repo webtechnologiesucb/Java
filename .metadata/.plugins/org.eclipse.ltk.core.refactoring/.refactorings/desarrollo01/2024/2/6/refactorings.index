@@ -1,0 +1,5 @@
+1707580901506	Rename type 'desarrollo03'
+1707581552993	Extract method 'obtenerIT'
+1707581572778	Extract method 'obtenerIVA'
+1707581599104	Extract method 'obtenerUtilidad'
+1707606077380	Rename local variable 'valor'
