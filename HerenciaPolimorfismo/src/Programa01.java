@@ -8,6 +8,7 @@ public class Programa01 {
 		double r = sc.nextDouble();
 		Circulo c = new Circulo(r);
 		c.calcularArea();
+		c.calcularPerimetro();
 		sc.nextLine();
 
 	}

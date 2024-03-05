@@ -13,4 +13,10 @@ public class Rectangulo extends Figura {
 		this.area = this.base * this.altura;
 		System.out.println("Area del rectángulo: " + this.area);
 	}
+	
+	@Override
+	public void calcularPerimetro() {
+		this.perimetro = 2 * (this.base + this.altura);
+		System.out.println("Perímetro del rectángulo: " + this.perimetro);
+	}
 }

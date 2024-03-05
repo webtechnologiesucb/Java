@@ -1,6 +1,7 @@
 
 public class Figura {
 	protected double area;
+	protected double perimetro;
 	
 	public Figura() {}
 	
@@ -10,5 +11,9 @@ public class Figura {
 	
 	public void calcularArea() {
 		System.out.println("Calculando el area ...");
+	}
+	
+	public void calcularPerimetro() {
+		System.out.println("Calculando el perímetro ...");
 	}
 }
