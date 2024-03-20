@@ -26,8 +26,8 @@ sealed class Figura permits Circulo, Cuadrado {
 	}
 
 	public void getValores() {
-		System.out.println("Area del " + this.nombre + ": " + this.area);
-		System.out.println("Perimetro del " + this.nombre + ": " + this.perimetro);
+		System.out.println("Area del " + getNombre() + ": " + getArea());
+		System.out.println("Perimetro del " + getNombre() + ": " + getPerimetro());
 	}
 
 	private double getArea() {
@@ -147,7 +147,6 @@ final class Cuadrado extends Figura {
 
 public class EjemploSellada {
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
 		Figura fci = new Circulo(0,0,2);
 		fci.obtenerAreaPerimetro();
 		fci.getValores();
