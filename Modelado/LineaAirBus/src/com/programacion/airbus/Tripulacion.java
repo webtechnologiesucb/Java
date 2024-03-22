@@ -30,7 +30,7 @@ public class Tripulacion {
       return azafata;
    }
 
-   public java.util.Iterator getIteratorAzafata() {
+   public java.util.Iterator<Azafata> getIteratorAzafata() {
       if (azafata == null)
          azafata = new java.util.HashSet<Azafata>();
       return azafata.iterator();
@@ -38,8 +38,8 @@ public class Tripulacion {
    
    public void setAzafata(java.util.Collection<Azafata> newAzafata) {
       removeAllAzafata();
-      for (java.util.Iterator iter = newAzafata.iterator(); iter.hasNext();)
-         addAzafata((Azafata)iter.next());
+      for (Object element : newAzafata)
+		addAzafata((Azafata)element);
    }
 
    public void addAzafata(Azafata newAzafata) {
@@ -70,7 +70,7 @@ public class Tripulacion {
       return piloto;
    }
 
-   public java.util.Iterator getIteratorPiloto() {
+   public java.util.Iterator<Piloto> getIteratorPiloto() {
       if (piloto == null)
          piloto = new java.util.HashSet<Piloto>();
       return piloto.iterator();
@@ -78,8 +78,8 @@ public class Tripulacion {
 
    public void setPiloto(java.util.Collection<Piloto> newPiloto) {
       removeAllPiloto();
-      for (java.util.Iterator iter = newPiloto.iterator(); iter.hasNext();)
-         addPiloto((Piloto)iter.next());
+      for (java.util.Iterator<Piloto> iter = newPiloto.iterator(); iter.hasNext();)
+         addPiloto(iter.next());
    }
 
    public void addPiloto(Piloto newPiloto) {
@@ -110,7 +110,7 @@ public class Tripulacion {
       return copiloto;
    }
 
-   public java.util.Iterator getIteratorCopiloto() {
+   public java.util.Iterator<Copiloto> getIteratorCopiloto() {
       if (copiloto == null)
          copiloto = new java.util.HashSet<Copiloto>();
       return copiloto.iterator();
@@ -118,8 +118,8 @@ public class Tripulacion {
 
    public void setCopiloto(java.util.Collection<Copiloto> newCopiloto) {
       removeAllCopiloto();
-      for (java.util.Iterator iter = newCopiloto.iterator(); iter.hasNext();)
-         addCopiloto((Copiloto)iter.next());
+      for (java.util.Iterator<Copiloto> iter = newCopiloto.iterator(); iter.hasNext();)
+         addCopiloto(iter.next());
    }
 
    public void addCopiloto(Copiloto newCopiloto) {
@@ -150,7 +150,7 @@ public class Tripulacion {
       return pasajero;
    }
 
-   public java.util.Iterator getIteratorPasajero() {
+   public java.util.Iterator<Pasajero> getIteratorPasajero() {
       if (pasajero == null)
          pasajero = new java.util.HashSet<Pasajero>();
       return pasajero.iterator();
@@ -158,8 +158,8 @@ public class Tripulacion {
 
    public void setPasajero(java.util.Collection<Pasajero> newPasajero) {
       removeAllPasajero();
-      for (java.util.Iterator iter = newPasajero.iterator(); iter.hasNext();)
-         addPasajero((Pasajero)iter.next());
+      for (java.util.Iterator<Pasajero> iter = newPasajero.iterator(); iter.hasNext();)
+         addPasajero(iter.next());
    }
 
    public void addPasajero(Pasajero newPasajero) {
