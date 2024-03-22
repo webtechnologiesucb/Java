@@ -49,7 +49,7 @@ public class Vuelo {
       return pasaje;
    }
 
-   public java.util.Iterator getIteratorPasaje() {
+   public java.util.Iterator<Pasaje> getIteratorPasaje() {
       if (pasaje == null)
          pasaje = new java.util.HashSet<Pasaje>();
       return pasaje.iterator();
@@ -57,8 +57,8 @@ public class Vuelo {
 
    public void setPasaje(java.util.Collection<Pasaje> newPasaje) {
       removeAllPasaje();
-      for (java.util.Iterator iter = newPasaje.iterator(); iter.hasNext();)
-         addPasaje((Pasaje)iter.next());
+      for (java.util.Iterator<Pasaje> iter = newPasaje.iterator(); iter.hasNext();)
+         addPasaje(iter.next());
    }
 
    public void addPasaje(Pasaje newPasaje) {
@@ -89,7 +89,7 @@ public class Vuelo {
       return tripulacion;
    }
 
-   public java.util.Iterator getIteratorTripulacion() {
+   public java.util.Iterator<Tripulacion> getIteratorTripulacion() {
       if (tripulacion == null)
          tripulacion = new java.util.HashSet<Tripulacion>();
       return tripulacion.iterator();
@@ -97,8 +97,8 @@ public class Vuelo {
 
    public void setTripulacion(java.util.Collection<Tripulacion> newTripulacion) {
       removeAllTripulacion();
-      for (java.util.Iterator iter = newTripulacion.iterator(); iter.hasNext();)
-         addTripulacion((Tripulacion)iter.next());
+      for (Object element : newTripulacion)
+		addTripulacion((Tripulacion)element);
    }
 
    public void addTripulacion(Tripulacion newTripulacion) {

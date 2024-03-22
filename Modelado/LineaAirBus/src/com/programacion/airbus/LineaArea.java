@@ -38,7 +38,7 @@ public class LineaArea {
       return avionComercial;
    }
    
-   public java.util.Iterator getIteratorAvionComercial() {
+   public java.util.Iterator<AvionComercial> getIteratorAvionComercial() {
       if (avionComercial == null)
          avionComercial = new java.util.HashSet<AvionComercial>();
       return avionComercial.iterator();
@@ -46,8 +46,8 @@ public class LineaArea {
    
    public void setAvionComercial(java.util.Collection<AvionComercial> newAvionComercial) {
       removeAllAvionComercial();
-      for (java.util.Iterator iter = newAvionComercial.iterator(); iter.hasNext();)
-         addAvionComercial((AvionComercial)iter.next());
+      for (Object element : newAvionComercial)
+		addAvionComercial((AvionComercial)element);
    }
    
    public void addAvionComercial(AvionComercial newAvionComercial) {

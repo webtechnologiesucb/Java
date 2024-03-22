@@ -11,13 +11,9 @@ public class Tripulacion {
 
    private int nTotalTripulacion;
    
-   /** @pdRoleInfo migr=no name=Azafata assc=Association_6 coll=java.util.Collection impl=java.util.HashSet mult=0..* type=Composition */
    public java.util.Collection<Azafata> azafata;
-   /** @pdRoleInfo migr=no name=Piloto assc=Association_8 coll=java.util.Collection impl=java.util.HashSet mult=0..* type=Composition */
    public java.util.Collection<Piloto> piloto;
-   /** @pdRoleInfo migr=no name=Copiloto assc=Association_9 coll=java.util.Collection impl=java.util.HashSet mult=0..* type=Composition */
    public java.util.Collection<Copiloto> copiloto;
-   /** @pdRoleInfo migr=no name=Pasajero assc=Association_10 coll=java.util.Collection impl=java.util.HashSet mult=0..* type=Composition */
    public java.util.Collection<Pasajero> pasajero;
    
    public int getnTotalTripulacion() {

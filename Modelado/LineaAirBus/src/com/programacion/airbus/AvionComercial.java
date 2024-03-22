@@ -38,7 +38,7 @@ public class AvionComercial extends Avion {
       return vuelo;
    }
    
-   public java.util.Iterator getIteratorVuelo() {
+   public java.util.Iterator<Vuelo> getIteratorVuelo() {
       if (vuelo == null)
          vuelo = new java.util.HashSet<Vuelo>();
       return vuelo.iterator();
@@ -46,8 +46,8 @@ public class AvionComercial extends Avion {
    
    public void setVuelo(java.util.Collection<Vuelo> newVuelo) {
       removeAllVuelo();
-      for (java.util.Iterator iter = newVuelo.iterator(); iter.hasNext();)
-         addVuelo((Vuelo)iter.next());
+      for (java.util.Iterator<Vuelo> iter = newVuelo.iterator(); iter.hasNext();)
+         addVuelo(iter.next());
    }
    
    public void addVuelo(Vuelo newVuelo) {

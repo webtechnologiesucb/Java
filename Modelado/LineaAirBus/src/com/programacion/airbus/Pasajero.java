@@ -47,7 +47,7 @@ public class Pasajero extends Persona {
       return pasaje;
    }
 
-   public java.util.Iterator getIteratorPasaje() {
+   public java.util.Iterator<Pasaje> getIteratorPasaje() {
       if (pasaje == null)
          pasaje = new java.util.HashSet<Pasaje>();
       return pasaje.iterator();
@@ -55,8 +55,8 @@ public class Pasajero extends Persona {
 
    public void setPasaje(java.util.Collection<Pasaje> newPasaje) {
       removeAllPasaje();
-      for (java.util.Iterator iter = newPasaje.iterator(); iter.hasNext();)
-         addPasaje((Pasaje)iter.next());
+      for (Object element : newPasaje)
+		addPasaje((Pasaje)element);
    }
 
    public void addPasaje(Pasaje newPasaje) {

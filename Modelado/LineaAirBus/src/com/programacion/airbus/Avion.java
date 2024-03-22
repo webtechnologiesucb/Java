@@ -36,7 +36,7 @@ public class Avion extends Transporte {
       return hangar;
    }
    
-   public java.util.Iterator getIteratorHangar() {
+   public java.util.Iterator<Hangar> getIteratorHangar() {
       if (hangar == null)
          hangar = new java.util.HashSet<Hangar>();
       return hangar.iterator();
@@ -44,8 +44,8 @@ public class Avion extends Transporte {
    
    public void setHangar(java.util.Collection<Hangar> newHangar) {
       removeAllHangar();
-      for (java.util.Iterator iter = newHangar.iterator(); iter.hasNext();)
-         addHangar((Hangar)iter.next());
+      for (java.util.Iterator<Hangar> iter = newHangar.iterator(); iter.hasNext();)
+         addHangar(iter.next());
    }
    
    public void addHangar(Hangar newHangar) {
