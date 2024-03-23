@@ -1,0 +1,3 @@
+Este es un ejemplo de escritura en un archivo de texto.
+Podemos escribir varias líneas también.
+¡Es muy fácil escribir en archivos de texto en Java!
