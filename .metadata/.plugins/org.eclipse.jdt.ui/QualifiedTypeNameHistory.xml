@@ -17,4 +17,5 @@
     <fullyQualifiedTypeName name="com.programacion.dos.Aritmetica"/>
     <fullyQualifiedTypeName name="java.text.DecimalFormat"/>
     <fullyQualifiedTypeName name="com.programacion.dos.Matematica"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>
