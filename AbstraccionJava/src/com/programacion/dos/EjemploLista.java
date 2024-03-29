@@ -48,9 +48,9 @@ public class EjemploLista {
 		// Modificar listado
 		CocheX c1 = new CocheX("852-WER", 25000, "Toyota");
 		for (int i = 0; i < listado.size(); i++) {
-			if (listado.get(i).getPlaca() == c1.getPlaca()) {
-				listado.set(i, c1); // actualice el registro
-				break;
+			if (listado.get(i).getPlaca() == c1.getPlaca()) { // el get(i) obtiene el objeto actual
+				listado.set(i, c1); // actualiza el registro
+				break; // corta la busqueda
 			}
 		}
 		
@@ -61,8 +61,16 @@ public class EjemploLista {
 		}
 		
 		// eliminar de lista
-		String placa = "123-ABC";
-		listado.removeIf(coche -> coche.getPlaca() == placa);
+		// String placa = "123-ABC";
+		// listado.removeIf(coche -> coche.getPlaca() == placa);
+		CocheX c2 = new CocheX("123-ABC", 18000, "Toyota");
+		for (int i = 0; i < listado.size(); i++) {
+			if (listado.get(i).getPlaca() == c2.getPlaca()) { // el get(i) obtiene el objeto actual
+				listado.remove(i); // actualiza el registro
+				break; // corta la busqueda
+			}
+		}
+		
 		System.out.println("Lista post eliminacion");
 		for(CocheX c: listado) {
 			c.mostrar();
