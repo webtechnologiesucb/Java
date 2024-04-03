@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 
 // Clase que implementa la interfaz marcadora
 class Persona implements Serializable {
+	
+	private static final long serialVersionUID = 8795398377076894384L;
 	private String nombre;
 	private int edad;
 
