@@ -37,18 +37,22 @@ public class Usuario{
 		listado.add(new UsuarioModel(3,"Daniela", "Toledo", "Abastoflor",
 				LocalDateTime.now(), "dtoledo", "D4ni2024", true));
 		
+		System.out.println("*******************************************");
 		System.out.println("Uso del toString");
 		for(UsuarioModel u : listado) {
 			System.out.println(u.toString());
 		}
+		System.out.println("*******************************************");
 		System.out.println("Uso del HashCode");
 		for(UsuarioModel u : listado) {
 			System.out.println(u.hashCode());
 		}
+		System.out.println("*******************************************");
 		System.out.println("Uso de cuentas de usuario");
 		for(UsuarioModel u : listado) {
 			System.out.println(u.getCuenta());
 		}
+		System.out.println("*******************************************");
 	}
 }
 
