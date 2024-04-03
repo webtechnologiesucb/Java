@@ -32,8 +32,10 @@ public class Usuario{
 		List<UsuarioModel> listado = new ArrayList<UsuarioModel>();
 		listado.add(new UsuarioModel(1, "Miguel", "Pacheco", "Arteaga", 
 				LocalDateTime.now(), "admin", "4dm1n123", true));
-		listado.add(new UsuarioModel(2,"Leticia", "Garcia", "Martinez",
-				LocalDateTime.now(), "lgarcia", "Leti2024", true));
+		listado.add(new UsuarioModel(2,"Leticia", "Martinez", "Garcia",
+				LocalDateTime.now(), "lgarcia", "L3ti2024", true));
+		listado.add(new UsuarioModel(3,"Daniela", "Toledo", "Abastoflor",
+				LocalDateTime.now(), "dtoledo", "D4ni2024", true));
 		
 		System.out.println("Uso del toString");
 		for(UsuarioModel u : listado) {
