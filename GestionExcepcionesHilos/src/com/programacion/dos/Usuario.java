@@ -30,9 +30,9 @@ class UsuarioModel {
 public class Usuario{
 	public static void main(String...args) {
 		List<UsuarioModel> listado = new ArrayList<UsuarioModel>();
-		listado.add(new UsuarioModel(1, "Miguel","Pacheco","Arteaga", 
-				LocalDateTime.now(), "admin","4dm1n123", true));
-		listado.add(new UsuarioModel(2,"Leticia","Garcia","Martinez",
+		listado.add(new UsuarioModel(1, "Miguel", "Pacheco", "Arteaga", 
+				LocalDateTime.now(), "admin", "4dm1n123", true));
+		listado.add(new UsuarioModel(2,"Leticia", "Garcia", "Martinez",
 				LocalDateTime.now(), "lgarcia", "Leti2024", true));
 		
 		System.out.println("Uso del toString");
