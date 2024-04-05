@@ -21,7 +21,7 @@ class UsuarioModel {
 	private String nombres;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
-	private LocalDateTime fechaReg;
+	private LocalDateTime fechaReg; // para manejar fecha y hora
 	private String cuenta;
 	private String contraseña;
 	private boolean vigente;
