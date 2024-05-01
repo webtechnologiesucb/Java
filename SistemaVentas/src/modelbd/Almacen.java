@@ -5,6 +5,7 @@ package modelbd;
  * @author Ferz Código Lite - https://codigolite.com
  */
 public class Almacen extends SimpleModelo {
+	private static final long serialVersionUID = 5399033143172278312L;
 	public static final String TABLA = "gv_almacen";
 	public static final String PK_COLUMNA = "ida";
 	private String direccion;

@@ -33,19 +33,19 @@ public class Paginador {
 		criterio.setLimit(limite);
 		criterio.setDesplazamientos(desplazamiento);
 		totalItems = tipoObjeto.contar();
-		item = new ArrayList();
+		item = new ArrayList<>();
 		this.tipoObjeto = tipoObjeto;
 	}
 
 	public Paginador(CriterioSQL criterio) {
 		this.criterio = criterio;
-		item = new ArrayList();
+		item = new ArrayList<>();
 		totalItems = tipoObjeto.contar();
 	}
 
 	public Paginador() {
 		this.criterio = new CriterioSQL();
-		item = new ArrayList();
+		item = new ArrayList<>();
 	}
 
 	public List<JAbstractModelBD> siguiente() {
@@ -66,7 +66,7 @@ public class Paginador {
 	}
 
 	private List<JAbstractModelBD> cargarRegistros() {
-		item = new ArrayList();
+		item = new ArrayList<>();
 		try {
 			ResultSet rs = BaseConexion.getResultSet(criterio.getConsultaSQL());
 			while (rs.next()) {

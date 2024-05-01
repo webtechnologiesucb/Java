@@ -17,7 +17,7 @@ import java.util.List;
  * @author Código Lite - https://codigolite.com
  */
 public class AlmacenProducto extends JAbstractModelBD implements Serializable, IModel {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7906803663844023570L;
 	public static final String nt = "gv_almaceproduct";
 	public static final String COLUMNA_PK = "idpa";
 	public static final String COLUMNA_ACTIVO = "activo";

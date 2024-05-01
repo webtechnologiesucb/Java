@@ -12,8 +12,8 @@ import java.sql.SQLException;
  * @author Código Lite - https://codigolite.com
  */
 public class Producto extends JAbstractModelBD implements Serializable, IModel, Cloneable {
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = -5257414806851699891L;
 	public static final String nt = "gv_producto";
 	public static final String COLUMNA_PK = "idproducto";
 	public static final String COLUMNA_ACTIVO = "activo";

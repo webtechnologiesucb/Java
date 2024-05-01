@@ -15,21 +15,18 @@ import java.util.Date;
  * @author Código Lite <https://codigolite.com>
  */
 public class Compra extends JAbstractModelBD implements Serializable, IModel {
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 7807356761981880350L;
 	public static final String nt = "gv_compra";
 	public static final String COLUMNA_PK = "idcompra";
 	public static final String COLUMNA_ACTIVO = "activo";
-
 	public static final String[] TIPOSDOC = { "FACTURA", "BOLETA", "GUIA", "NOTA DE PEDIDO", "DUA" };
 	public static final String[] ESTADOS = { "CANCELADO", "PENDIENTE" };
 
 	public static final String FULL_CAMPOS = "idcompra,tipodoc,numdoc,idproveedor,idusuario,"
 			+ "idmoneda,estado,numitems,observaciones,subtotal," + "igv,total,fecha,activo";
-
 	public static final String CAMPOS_NO_ID = "tipodoc,numdoc,idproveedor,idusuario,"
 			+ "idmoneda,estado,numitems,observaciones,subtotal," + "igv,total,fecha,activo";
-
 	public static final String CAMPOS_OBLIGATORIOS = "idcompra,tipodoc,numdoc,idproveedor,idusuario,"
 			+ "idmoneda,estado,numitems,subtotal," + "total,fecha";
 

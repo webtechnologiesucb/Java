@@ -5,6 +5,8 @@ package modelbd;
  * @author Ferz Código Lite - https://codigolite.com
  */
 public class Moneda extends SimpleModelo {
+
+	private static final long serialVersionUID = -2927371620354970506L;
 	public static final String TABLA = "gv_moneda";
 	public static final String PK_COLUMNA = "idm";
 	private String simbolo;

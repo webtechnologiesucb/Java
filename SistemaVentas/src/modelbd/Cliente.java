@@ -9,10 +9,8 @@ import java.sql.ResultSet;
  * @author Código Lite - https://codigolite.com
  */
 public class Cliente extends JAbstractModelBD implements Serializable, IModel {
-
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5038850140859209122L;
 	public static final String nt = "gv_cliente";
-
 	private Long idc;
 	private String ruc;
 	private String dni;

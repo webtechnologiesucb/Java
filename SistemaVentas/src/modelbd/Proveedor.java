@@ -10,7 +10,7 @@ import java.sql.ResultSet;
  */
 public class Proveedor extends JAbstractModelBD implements Serializable, IModel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8405050078588726135L;
 	public static final String nt = "gv_proveedor";
 	public static final String campoActivo = "activo";
 	public static final String CAMPO_RUC = "ruc";

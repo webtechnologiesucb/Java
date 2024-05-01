@@ -67,7 +67,6 @@ public class BaseConexion {
 			System.out.println("se esta pasando un objeto nulo");
 			ex.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -100,7 +99,7 @@ public class BaseConexion {
 		if (cns == null) {
 			init();
 		}
-		List<String> reg = new ArrayList();
+		List<String> reg = new ArrayList<>();
 		try {
 			rs = getStatement().executeQuery(sql.getConsultaSQL());
 			while (rs.next()) {
@@ -114,12 +113,12 @@ public class BaseConexion {
 		return reg;
 	}
 
-	public static HashMap getItems(CriterioSQL sql) {
+	public static HashMap<Object, Object> getItems(CriterioSQL sql) {
 		if (cns == null) {
 			init();
 		}
-		HashMap items = new HashMap();
-		List<Object> reg = new ArrayList();
+		HashMap<Object, Object> items = new HashMap<Object, Object>();
+		List<Object> reg = new ArrayList<>();
 		try {
 			rs = getStatement().executeQuery(sql.getConsultaSQL());
 			int conter = 0;
@@ -144,12 +143,12 @@ public class BaseConexion {
 		if (cns == null) {
 			init();
 		}
-		HashMap items;
-		ArrayList<HashMap> reg = new ArrayList();
+		HashMap<Object, Object> items;
+		ArrayList<HashMap> reg = new ArrayList<>();
 		try {
 			rs = getStatement().executeQuery(sql);
 			while (rs.next()) {
-				items = new HashMap();
+				items = new HashMap<Object, Object>();
 				items.put("nombre", rs.getString(1));
 				items.put("tipo", rs.getInt(2));
 				items.put("descripcion", rs.getString(3));

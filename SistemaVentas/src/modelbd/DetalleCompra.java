@@ -13,16 +13,14 @@ import java.sql.ResultSet;
  * @author Código Lite <https://codigolite.com>
  */
 public class DetalleCompra extends JAbstractModelBD implements Serializable, IModel, Cloneable {
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = -7297042750683567363L;
 	public static final String nt = "gv_detalleCompra";
 	public static final String COLUMNA_PK = "iddetallec";
 	public static final String COLUMNA_ACTIVO = "activo";
 
 	public static final String FULL_CAMPOS = "iddetallec,idcompra,idproducto," + "cantidad,importe,descuento,activo";
-
 	public static final String CAMPOS_NO_ID = "idcompra,idproducto," + "cantidad,importe,descuento,activo";
-
 	public static final String CAMPOS_OBLIGATORIOS = "idcompra,idproducto," + "cantidad,importe,activo";
 
 	private Integer id;

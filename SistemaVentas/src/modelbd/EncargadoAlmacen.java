@@ -10,6 +10,7 @@ import java.sql.ResultSet;
  */
 public class EncargadoAlmacen extends JAbstractModelBD implements Serializable, IModel {
 
+	private static final long serialVersionUID = 7083514626462261673L;
 	public static final String nt = "gv_encargadoalmacen";
 	public static final String COLUMNA_PK = "idEA";
 	public static final String COLUMNA_ACTIVO = "activo";

@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class Kardex extends JAbstractModelBD implements Serializable, IModel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4300524340261646299L;
 	public static final String nt = "gv_kardex";
 	public static final String COLUMNA_PK = "idkardex";
 	public static final String COLUMNA_ACTIVO = "activo";

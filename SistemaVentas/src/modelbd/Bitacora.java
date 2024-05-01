@@ -9,7 +9,7 @@ import java.sql.ResultSet;
  * @author Código Lite - https://codigolite.com
  */
 public class Bitacora extends JAbstractModelBD implements Serializable, IModel {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2025197620609231011L;
 	public static final String nt = "gv_bitacora";
 	public static final String COLUMNA_PK = "idbitacora";
 	public static final String COLUMNA_USER = "idusuario";

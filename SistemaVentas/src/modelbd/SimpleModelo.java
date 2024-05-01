@@ -12,6 +12,7 @@ import java.sql.ResultSet;
  */
 public class SimpleModelo extends JAbstractModelBD implements Serializable, IModel {
 
+	private static final long serialVersionUID = 4782576568889433704L;
 	protected String nombre;
 	protected Integer activo = 1;
 	public static final String CLASE = "gv_clase";

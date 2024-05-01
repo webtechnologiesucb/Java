@@ -20,7 +20,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author Código Lite - https://codigolite.com**
  */
 public class Usuario extends JAbstractModelBD implements Serializable, IModel {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 5455447991305134625L;
 	public static final String nt = "gv_usuario";
 	public static final String COLUMNA_PK = "idu";
 	public static final String COLUMNA_ACTIVO = "activo";
