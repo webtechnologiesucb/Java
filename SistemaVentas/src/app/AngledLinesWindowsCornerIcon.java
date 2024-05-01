@@ -5,7 +5,6 @@ import java.awt.*;
 
 /**
  * Created by IntelliJ IDEA. User: Jonathan Simon Date: Oct 5, 2004 Time:
- * 6:03:57 PM To change this template use File | Settings | File Templates.
  */
 public class AngledLinesWindowsCornerIcon implements Icon {
 	// RGB values discovered using ZoomIn

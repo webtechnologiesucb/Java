@@ -15,7 +15,7 @@ public class CBitacora extends JAbstractController implements Serializable {
 
 	@Override
 	public ArrayList getRegistros() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
@@ -25,61 +25,59 @@ public class CBitacora extends JAbstractController implements Serializable {
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public boolean guardarRegistro(JAbstractModelBD mdl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public int actualizarRegistro(JAbstractModelBD mdl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public ArrayList<Bitacora> getRegistros(String[] campos, String[] columnaId, Object[] id) {
-
 		ArrayList<Bitacora> rgs = new ArrayList<Bitacora>();
 		try {
-
 			if (id != null) {
-				this.numRegistros = this.getNumeroRegistros(Bitacora.nt, Bitacora.COLUMNA_USER, Bitacora.COLUMNA_USER,
-						id);
+				this.setNumRegistros(this.getNumeroRegistros(Bitacora.nt, Bitacora.COLUMNA_USER, Bitacora.COLUMNA_USER,
+						id));
 			} else {
-				this.numRegistros = this.getNumeroRegistros(Bitacora.nt, Bitacora.COLUMNA_USER);
-				if (rs.isClosed()) {
+				this.setNumRegistros(this.getNumeroRegistros(Bitacora.nt, Bitacora.COLUMNA_USER));
+				if (getRs().isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			rs = this.getRegistros(Bitacora.nt, campos, columnaId, id);
-			if (this.numRegistros < finalPag) {
-				finalPag = this.numRegistros;
+			setRs(this.getRegistros(Bitacora.nt, campos, columnaId, id));
+			if (this.getNumRegistros() < getFinalPag()) {
+				setFinalPag(this.getNumRegistros());
 			}
-			if (finalPag > inicioPag) {
-				inicioPag -= (finalPag - inicioPag) - 1;
+			if (getFinalPag() > inicioPag) {
+				inicioPag -= (getFinalPag() - inicioPag) - 1;
 			}
 			Bitacora bt = new Bitacora();
-			while (rs.next()) {
-				bt.setIdbitacora(rs.getLong(1));
-				bt.setIdusuario(rs.getInt(2));
-				bt.setOs(rs.getString(3));
-				bt.setArquitectura(rs.getString(4));
-				bt.setVersion(rs.getString(5));
-				bt.setUsuario(rs.getString(6));
-				bt.setUltimaActividad(rs.getLong(7));
-				bt.setFechaActividad(rs.getLong(8));
+			while (getRs().next()) {
+				bt.setIdbitacora(getRs().getLong(1));
+				bt.setIdusuario(getRs().getInt(2));
+				bt.setOs(getRs().getString(3));
+				bt.setArquitectura(getRs().getString(4));
+				bt.setVersion(getRs().getString(5));
+				bt.setUsuario(getRs().getString(6));
+				bt.setUltimaActividad(getRs().getLong(7));
+				bt.setFechaActividad(getRs().getLong(8));
 				rgs.add(bt);
 			}
 		} catch (SQLException ex) {
@@ -87,5 +85,4 @@ public class CBitacora extends JAbstractController implements Serializable {
 		}
 		return rgs;
 	}
-
 }

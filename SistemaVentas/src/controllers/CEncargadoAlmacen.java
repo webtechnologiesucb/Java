@@ -14,6 +14,9 @@ import java.util.ArrayList;
  */
 public class CEncargadoAlmacen extends JAbstractController implements Serializable {
 
+	private CUsuario controllerUsuario;
+	private CAlmacen controllerAlmacen;
+
 	@Override
 	public ArrayList<EncargadoAlmacen> getRegistros() {
 		return this.getRegistros(new String[] {}, null, null);
@@ -21,7 +24,7 @@ public class CEncargadoAlmacen extends JAbstractController implements Serializab
 
 	@Override
 	public ArrayList getRegistros(Object[] cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	public ArrayList<EncargadoAlmacen> getRegistrosPorEncargado(Integer idu) {
@@ -44,17 +47,17 @@ public class CEncargadoAlmacen extends JAbstractController implements Serializab
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
@@ -90,15 +93,15 @@ public class CEncargadoAlmacen extends JAbstractController implements Serializab
 	public EncargadoAlmacen getRegistroPorPk(Integer id) {
 		EncargadoAlmacen sm = null;
 		try {
-			rs = this.selectPorPk(EncargadoAlmacen.nt, EncargadoAlmacen.COLUMNA_PK, id);
-			CUsuario controllerUsuario = null;
-			CAlmacen controllerAlmacen = null;
-			while (rs.next()) {
+			setRs(this.selectPorPk(EncargadoAlmacen.nt, EncargadoAlmacen.COLUMNA_PK, id));
+			controllerUsuario = null;
+			controllerAlmacen = null;
+			while (getRs().next()) {
 				sm = new EncargadoAlmacen();
-				sm.setUsuario(controllerUsuario.getRegistroPorPk(rs.getInt(1)));
-				sm.setAlmacen(controllerAlmacen.getRegistroPorPk(rs.getInt(2)));
-				sm.setTipoCargo(rs.getString(3));
-				sm.setActivo(rs.getInt(4));
+				sm.setUsuario(controllerUsuario.getRegistroPorPk(getRs().getInt(1)));
+				sm.setAlmacen(controllerAlmacen.getRegistroPorPk(getRs().getInt(2)));
+				sm.setTipoCargo(getRs().getString(3));
+				sm.setActivo(getRs().getInt(4));
 
 			}
 		} catch (SQLException ex) {
@@ -108,38 +111,38 @@ public class CEncargadoAlmacen extends JAbstractController implements Serializab
 	}
 
 	@Override
-	public ArrayList getRegistros(String[] campos, String[] columnaId, Object[] id) {
-		ArrayList<EncargadoAlmacen> rgs = new ArrayList();
+	public ArrayList<EncargadoAlmacen> getRegistros(String[] campos, String[] columnaId, Object[] id) {
+		ArrayList<EncargadoAlmacen> rgs = new ArrayList<>();
 		try {
 
 			if (id != null) {
-				this.numRegistros = this.getNumeroRegistros(EncargadoAlmacen.nt, EncargadoAlmacen.COLUMNA_ACTIVO,
-						EncargadoAlmacen.COLUMNA_ACTIVO, id);
+				this.setNumRegistros(this.getNumeroRegistros(EncargadoAlmacen.nt, EncargadoAlmacen.COLUMNA_ACTIVO,
+						EncargadoAlmacen.COLUMNA_ACTIVO, id));
 			} else {
-				this.numRegistros = this.getNumeroRegistros(EncargadoAlmacen.nt, EncargadoAlmacen.COLUMNA_ACTIVO);
-				if (rs.isClosed()) {
+				this.setNumRegistros(this.getNumeroRegistros(EncargadoAlmacen.nt, EncargadoAlmacen.COLUMNA_ACTIVO));
+				if (getRs().isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			rs = this.getRegistros(EncargadoAlmacen.nt, campos, columnaId, id);
-			if (this.numRegistros < finalPag) {
-				finalPag = this.numRegistros;
+			setRs(this.getRegistros(EncargadoAlmacen.nt, campos, columnaId, id));
+			if (this.getNumRegistros() < getFinalPag()) {
+				setFinalPag(this.getNumRegistros());
 			}
-			if (finalPag > inicioPag) {
-				inicioPag -= (finalPag - inicioPag) - 1;
+			if (getFinalPag() > inicioPag) {
+				inicioPag -= (getFinalPag() - inicioPag) - 1;
 			}
 			EncargadoAlmacen sm = null;
 			CUsuario controllerUsuario = null;
 			CAlmacen controllerAlmacen = null;
-			while (rs.next()) {
+			while (getRs().next()) {
 				controllerUsuario = new CUsuario();
 				controllerAlmacen = new CAlmacen();
 				sm = new EncargadoAlmacen();
-				sm.setPrimaryKey(rs.getInt(1));
-				sm.setUsuario(controllerUsuario.getRegistroPorPk(rs.getInt(2)));
-				sm.setAlmacen(controllerAlmacen.getRegistroPorPk(rs.getInt(3)));
-				sm.setTipoCargo(rs.getString(4));
-				sm.setActivo(rs.getInt(5));
+				sm.setPrimaryKey(getRs().getInt(1));
+				sm.setUsuario(controllerUsuario.getRegistroPorPk(getRs().getInt(2)));
+				sm.setAlmacen(controllerAlmacen.getRegistroPorPk(getRs().getInt(3)));
+				sm.setTipoCargo(getRs().getString(4));
+				sm.setActivo(getRs().getInt(5));
 				rgs.add(sm);
 			}
 		} catch (SQLException ex) {

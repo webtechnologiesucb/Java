@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
  */
 public class DLogin extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = -564568944019360028L;
 	/**
 	 * Creates new form DLogin
 	 */

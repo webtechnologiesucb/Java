@@ -19,7 +19,9 @@ import java.util.ArrayList;
  * @author Código Lite <https://codigolite.com>
  */
 public class AppConfig implements Serializable {
-    private static Usuario usuario;
+
+	private static final long serialVersionUID = -4165972383883724749L;
+	private static Usuario usuario;
     private static Almacen almacen;
     private static Moneda moneda;
     private static ArrayList<Almacen> almacenes;

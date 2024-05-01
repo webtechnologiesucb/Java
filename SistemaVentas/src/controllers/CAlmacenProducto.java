@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class CAlmacenProducto extends JAbstractController implements Serializable{
 
     @Override
-    public ArrayList getRegistros() {
+    public ArrayList<AlmacenProducto> getRegistros() {
         return this.getRegistros(new String[]{},null, null);
     }
 
@@ -28,17 +28,17 @@ public class CAlmacenProducto extends JAbstractController implements Serializabl
 
     @Override
     public JAbstractModelBD getRegistro() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("No soportado");
     }
 
     @Override
     public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("No soportado");
     }
 
     @Override
     public JAbstractModelBD buscarRegistro(Object cvl) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("No soportado");
     }
     
     public AlmacenProducto getRegistro(Integer idalm,Integer idprd)
@@ -112,45 +112,45 @@ public class CAlmacenProducto extends JAbstractController implements Serializabl
     }
 
     @Override
-    public ArrayList getRegistros(String[] campos, String[] columnaId, Object[] id) {
-        ArrayList<AlmacenProducto> rgs = new ArrayList();        
+    public ArrayList<AlmacenProducto> getRegistros(String[] campos, String[] columnaId, Object[] id) {
+        ArrayList<AlmacenProducto> rgs = new ArrayList<>();        
         try {
             
             if(id != null)
             { 
-               this.numRegistros = this.getNumeroRegistros(AlmacenProducto.nt, AlmacenProducto.COLUMNA_ACTIVO, AlmacenProducto.COLUMNA_ACTIVO, id);
+               this.setNumRegistros(this.getNumeroRegistros(AlmacenProducto.nt, AlmacenProducto.COLUMNA_ACTIVO, AlmacenProducto.COLUMNA_ACTIVO, id));
             }else
             {
-               this.numRegistros = this.getNumeroRegistros(AlmacenProducto.nt, AlmacenProducto.COLUMNA_ACTIVO);               
-               if(rs.isClosed())
+               this.setNumRegistros(this.getNumeroRegistros(AlmacenProducto.nt, AlmacenProducto.COLUMNA_ACTIVO));               
+               if(getRs().isClosed())
                {
                    System.out.println("resultset esta cerrado...");
                }
             }
-            rs = this.getRegistros(AlmacenProducto.nt,campos,columnaId,id);
-            if(this.numRegistros<finalPag)
+            setRs(this.getRegistros(AlmacenProducto.nt,campos,columnaId,id));
+            if(this.getNumRegistros()<getFinalPag())
            {
-              finalPag =  this.numRegistros;
+              setFinalPag(this.getNumRegistros());
            }
-            if(finalPag>inicioPag)
+            if(getFinalPag()>inicioPag)
             {
-                inicioPag -= (finalPag-inicioPag)-1;
+                inicioPag -= (getFinalPag()-inicioPag)-1;
             }
             AlmacenProducto sm = null;
             CAlmacen controllerAlmacen = new CAlmacen();
             CProducto controllerProducto = new CProducto();
-            while(rs.next())
+            while(getRs().next())
             {
                  sm = new AlmacenProducto();
-                 sm.setPrimaryKey(rs.getInt(1));
-                 sm.setAlmacen((Almacen)controllerAlmacen.buscarRegistro(rs.getInt(2)));
+                 sm.setPrimaryKey(getRs().getInt(1));
+                 sm.setAlmacen((Almacen)controllerAlmacen.buscarRegistro(getRs().getInt(2)));
                  controllerProducto.setNumPaginador(0, 50);
-                 sm.setProducto(controllerProducto.getRegistro(rs.getInt(3)));
-                 sm.setCantidadActual(rs.getInt(4));
-                 sm.setCantidadInicial(rs.getInt(5));
-                 sm.setTipoManipulacion(rs.getString(6));
-                 sm.setFecha(rs.getDate(7));
-                 sm.setActivo(rs.getInt(8));
+                 sm.setProducto(controllerProducto.getRegistro(getRs().getInt(3)));
+                 sm.setCantidadActual(getRs().getInt(4));
+                 sm.setCantidadInicial(getRs().getInt(5));
+                 sm.setTipoManipulacion(getRs().getString(6));
+                 sm.setFecha(getRs().getDate(7));
+                 sm.setActivo(getRs().getInt(8));
                  rgs.add(sm);
             }
         } catch (SQLException ex) {

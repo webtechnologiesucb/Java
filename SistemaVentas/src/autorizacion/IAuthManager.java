@@ -21,7 +21,7 @@ public interface IAuthManager {
 	 * @return boolean whether the operations can be performed by the user.
 	 */
     
-	public boolean checkAccess(String itemName,Object userId,HashMap params);
+	public boolean checkAccess(String itemName,Object userId,HashMap<Object, Object> params);
 
 	/**
 	 * Creates an authorization item.
@@ -168,5 +168,5 @@ public interface IAuthManager {
 	 * @return boolean whether the execution returns a true value.
 	 * If the business rule is empty, it will also return true.
 	 */
-	public boolean executeBizRule(String bizRule,HashMap params,Object data);
+	public boolean executeBizRule(String bizRule,HashMap<Object,Object> params,Object data);
 }

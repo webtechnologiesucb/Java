@@ -36,28 +36,28 @@ public class CCompra extends JAbstractController {
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	public boolean existeDocumento(String numDoc, String tipoDoc) {
-		sql = "select * from " + Compra.nt + " where numdoc='" + numDoc + "' and tipodoc ='" + tipoDoc + "'";
+		setSql("select * from " + Compra.nt + " where numdoc='" + numDoc + "' and tipodoc ='" + tipoDoc + "'");
 		boolean encontrado = false;
 		try {
-			rs = BaseConexion.getResultSet(sql);
-			if (rs.next()) {
+			setRs(BaseConexion.getResultSet(getSql()));
+			if (getRs().next()) {
 				encontrado = true;
 			}
-			rs.close();
+			getRs().close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -119,25 +119,25 @@ public class CCompra extends JAbstractController {
 	public Compra getRegistroPorPk(Integer id) {
 		Compra us = null;
 		try {
-			rs = this.selectPorPk(Compra.nt, Compra.COLUMNA_PK, id);
+			setRs(this.selectPorPk(Compra.nt, Compra.COLUMNA_PK, id));
 			CProveedor cntp = new CProveedor();
-			while (rs.next()) {
+			while (getRs().next()) {
 				us = new Compra();
-				us.setPrimaryKey(rs.getInt(1));
-				us.setId(rs.getInt(1));
-				us.setTipoDocumento(rs.getString(2));
-				us.setNumeroDocumento(rs.getString(3));
-				us.setIdProveedor(cntp.getRegistroPorPk(rs.getInt(4)));
-				us.setIdUsuario(new CUsuario().getRegistroPorPk(rs.getInt(5)));
-				us.setIdMoneda(new CMoneda().getRegistroPorPk(rs.getInt(6)));
-				us.setEstado(rs.getString(7));
-				us.setNumeroItems(rs.getInt(8));
-				us.setObservaciones(rs.getString(9));
-				us.setSubtotla(rs.getDouble(10));
-				us.setIgv(rs.getInt(11));
-				us.setTotal(rs.getDouble(12));
-				us.setFecha(rs.getDate(13));
-				us.setActivo(rs.getInt(14));
+				us.setPrimaryKey(getRs().getInt(1));
+				us.setId(getRs().getInt(1));
+				us.setTipoDocumento(getRs().getString(2));
+				us.setNumeroDocumento(getRs().getString(3));
+				us.setIdProveedor(cntp.getRegistroPorPk(getRs().getInt(4)));
+				us.setIdUsuario(new CUsuario().getRegistroPorPk(getRs().getInt(5)));
+				us.setIdMoneda(new CMoneda().getRegistroPorPk(getRs().getInt(6)));
+				us.setEstado(getRs().getString(7));
+				us.setNumeroItems(getRs().getInt(8));
+				us.setObservaciones(getRs().getString(9));
+				us.setSubtotla(getRs().getDouble(10));
+				us.setIgv(getRs().getInt(11));
+				us.setTotal(getRs().getDouble(12));
+				us.setFecha(getRs().getDate(13));
+				us.setActivo(getRs().getInt(14));
 
 			}
 		} catch (SQLException ex) {
@@ -147,45 +147,45 @@ public class CCompra extends JAbstractController {
 	}
 
 	@Override
-	public ArrayList getRegistros(String[] campos, String[] columnaId, Object[] id) {
+	public ArrayList<Compra> getRegistros(String[] campos, String[] columnaId, Object[] id) {
 		ArrayList<Compra> rgs = new ArrayList<Compra>();
 		try {
 
 			if (id != null) {
-				this.numRegistros = this.getNumeroRegistros(Compra.nt, Compra.COLUMNA_ACTIVO, Compra.COLUMNA_ACTIVO,
-						id);
+				this.setNumRegistros(this.getNumeroRegistros(Compra.nt, Compra.COLUMNA_ACTIVO, Compra.COLUMNA_ACTIVO,
+						id));
 			} else {
-				this.numRegistros = this.getNumeroRegistros(Compra.nt, Compra.COLUMNA_ACTIVO);
-				if (rs.isClosed()) {
+				this.setNumRegistros(this.getNumeroRegistros(Compra.nt, Compra.COLUMNA_ACTIVO));
+				if (getRs().isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			rs = this.getRegistros(Compra.nt, campos, columnaId, id);
-			if (this.numRegistros < finalPag) {
-				finalPag = this.numRegistros;
+			setRs(this.getRegistros(Compra.nt, campos, columnaId, id));
+			if (this.getNumRegistros() < getFinalPag()) {
+				setFinalPag(this.getNumRegistros());
 			}
-			if (finalPag > inicioPag) {
-				inicioPag -= (finalPag - inicioPag) - 1;
+			if (getFinalPag() > inicioPag) {
+				inicioPag -= (getFinalPag() - inicioPag) - 1;
 			}
 			Compra us = null;
 			CProveedor cntp = new CProveedor();
-			while (rs.next()) {
+			while (getRs().next()) {
 				us = new Compra();
-				us.setPrimaryKey(rs.getInt(1));
-				us.setId(rs.getInt(1));
-				us.setTipoDocumento(rs.getString(2));
-				us.setNumeroDocumento(rs.getString(3));
-				us.setIdProveedor(cntp.getRegistroPorPk(rs.getInt(4)));
-				us.setIdUsuario(new CUsuario().getRegistroPorPk(rs.getInt(5)));
-				us.setIdMoneda(new CMoneda().getRegistroPorPk(rs.getInt(6)));
-				us.setEstado(rs.getString(7));
-				us.setNumeroItems(rs.getInt(8));
-				us.setObservaciones(rs.getString(9));
-				us.setSubtotla(rs.getDouble(10));
-				us.setIgv(rs.getInt(11));
-				us.setTotal(rs.getDouble(12));
-				us.setFecha(rs.getDate(13));
-				us.setActivo(rs.getInt(14));
+				us.setPrimaryKey(getRs().getInt(1));
+				us.setId(getRs().getInt(1));
+				us.setTipoDocumento(getRs().getString(2));
+				us.setNumeroDocumento(getRs().getString(3));
+				us.setIdProveedor(cntp.getRegistroPorPk(getRs().getInt(4)));
+				us.setIdUsuario(new CUsuario().getRegistroPorPk(getRs().getInt(5)));
+				us.setIdMoneda(new CMoneda().getRegistroPorPk(getRs().getInt(6)));
+				us.setEstado(getRs().getString(7));
+				us.setNumeroItems(getRs().getInt(8));
+				us.setObservaciones(getRs().getString(9));
+				us.setSubtotla(getRs().getDouble(10));
+				us.setIgv(getRs().getInt(11));
+				us.setTotal(getRs().getDouble(12));
+				us.setFecha(getRs().getDate(13));
+				us.setActivo(getRs().getInt(14));
 				rgs.add(us);
 			}
 		} catch (SQLException ex) {

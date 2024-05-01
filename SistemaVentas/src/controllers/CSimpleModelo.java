@@ -40,26 +40,26 @@ public class CSimpleModelo extends JAbstractController implements Serializable {
 		try {
 
 			if (id != null) {
-				this.numRegistros = this.getNumeroRegistros(sm.getNombreTabla(), sm.getCampoExistencial(),
-						sm.getCampoExistencial(), id);
+				this.setNumRegistros(this.getNumeroRegistros(sm.getNombreTabla(), sm.getCampoExistencial(),
+						sm.getCampoExistencial(), id));
 			} else {
-				this.numRegistros = this.getNumeroRegistros(sm.getNombreTabla(), sm.getCampoExistencial());
-				if (rs.isClosed()) {
+				this.setNumRegistros(this.getNumeroRegistros(sm.getNombreTabla(), sm.getCampoExistencial()));
+				if (getRs().isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			rs = this.getRegistros(sm.getNombreTabla(), campos, columnaId, id);
-			if (this.numRegistros < finalPag) {
-				finalPag = this.numRegistros;
+			setRs(this.getRegistros(sm.getNombreTabla(), campos, columnaId, id));
+			if (this.getNumRegistros() < getFinalPag()) {
+				setFinalPag(this.getNumRegistros());
 			}
-			if (finalPag > inicioPag) {
-				inicioPag -= (finalPag - inicioPag) - 1;
+			if (getFinalPag() > inicioPag) {
+				inicioPag -= (getFinalPag() - inicioPag) - 1;
 			}
-			while (rs.next()) {
+			while (getRs().next()) {
 				sm = new SimpleModelo(tipoModelo);
-				sm.setPrimaryKey(rs.getInt(1));
-				sm.setNombre(rs.getString(2));
-				sm.setActivo(rs.getInt(3));
+				sm.setPrimaryKey(getRs().getInt(1));
+				sm.setNombre(getRs().getString(2));
+				sm.setActivo(getRs().getInt(3));
 				rgs.add(sm);
 			}
 		} catch (SQLException ex) {
@@ -80,17 +80,17 @@ public class CSimpleModelo extends JAbstractController implements Serializable {
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override

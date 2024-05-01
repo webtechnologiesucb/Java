@@ -1,6 +1,5 @@
 package app;
 
-import static java.awt.Frame.MAXIMIZED_BOTH;
 import ventanas.DLogin;
 
 /**

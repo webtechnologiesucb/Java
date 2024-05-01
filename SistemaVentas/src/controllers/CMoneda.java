@@ -23,7 +23,7 @@ public class CMoneda extends JAbstractController implements Serializable {
 	}
 
 	public ArrayList<SimpleModelo> getRegistros(String[] columna, Object[] valor) {
-		return getRegistros(new String[] {}, columna, valor);
+		return (ArrayList<SimpleModelo>) getRegistros(new String[] {}, columna, valor);
 	}
 
 	@Override
@@ -33,17 +33,17 @@ public class CMoneda extends JAbstractController implements Serializable {
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
@@ -76,15 +76,15 @@ public class CMoneda extends JAbstractController implements Serializable {
 	public Moneda getRegistroPorPk(Integer id) {
 		Moneda sm = null;
 		try {
-			rs = this.selectPorPk(Moneda.TABLA, Moneda.PK_COLUMNA, id);
+			setRs(this.selectPorPk(Moneda.TABLA, Moneda.PK_COLUMNA, id));
 
-			while (rs.next()) {
+			while (getRs().next()) {
 				sm = new Moneda();
-				sm.setPrimaryKey(rs.getInt(1));
-				sm.setNombre(rs.getString(2));
-				sm.setSimbolo(rs.getString(3));
-				sm.setActivo(rs.getInt(4));
-				sm.setPredeterminado(rs.getInt(5));
+				sm.setPrimaryKey(getRs().getInt(1));
+				sm.setNombre(getRs().getString(2));
+				sm.setSimbolo(getRs().getString(3));
+				sm.setActivo(getRs().getInt(4));
+				sm.setPredeterminado(getRs().getInt(5));
 				if (sm.getPredeterminadoBool()) {
 					this.predeterminado = sm;
 				}
@@ -97,33 +97,33 @@ public class CMoneda extends JAbstractController implements Serializable {
 	}
 
 	@Override
-	public ArrayList getRegistros(String[] campos, String[] columnaId, Object[] id) {
+	public ArrayList<?> getRegistros(String[] campos, String[] columnaId, Object[] id) {
 		ArrayList<Moneda> rgs = new ArrayList<Moneda>();
 		try {
 
 			if (id != null) {
-				this.numRegistros = this.getNumeroRegistros(Moneda.TABLA, SimpleModelo.ACTIVO, SimpleModelo.ACTIVO, id);
+				this.setNumRegistros(this.getNumeroRegistros(Moneda.TABLA, SimpleModelo.ACTIVO, SimpleModelo.ACTIVO, id));
 			} else {
-				this.numRegistros = this.getNumeroRegistros(Moneda.TABLA, SimpleModelo.ACTIVO);
-				if (rs.isClosed()) {
+				this.setNumRegistros(this.getNumeroRegistros(Moneda.TABLA, SimpleModelo.ACTIVO));
+				if (getRs().isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			rs = this.getRegistros(Moneda.TABLA, campos, columnaId, id);
-			if (this.numRegistros < finalPag) {
-				finalPag = this.numRegistros;
+			setRs(this.getRegistros(Moneda.TABLA, campos, columnaId, id));
+			if (this.getNumRegistros() < getFinalPag()) {
+				setFinalPag(this.getNumRegistros());
 			}
-			if (finalPag > inicioPag) {
-				inicioPag -= (finalPag - inicioPag) - 1;
+			if (getFinalPag() > inicioPag) {
+				inicioPag -= (getFinalPag() - inicioPag) - 1;
 			}
 			Moneda sm = null;
-			while (rs.next()) {
+			while (getRs().next()) {
 				sm = new Moneda();
-				sm.setPrimaryKey(rs.getInt(1));
-				sm.setNombre(rs.getString(2));
-				sm.setSimbolo(rs.getString(3));
-				sm.setActivo(rs.getInt(4));
-				sm.setPredeterminado(rs.getInt(5));
+				sm.setPrimaryKey(getRs().getInt(1));
+				sm.setNombre(getRs().getString(2));
+				sm.setSimbolo(getRs().getString(3));
+				sm.setActivo(getRs().getInt(4));
+				sm.setPredeterminado(getRs().getInt(5));
 				if (sm.getPredeterminadoBool()) {
 					this.predeterminado = sm;
 				}

@@ -22,6 +22,22 @@ public class CProducto extends JAbstractController {
 
 	private Producto prd;
 	private InputStream itmp;
+	
+	public Producto getPrd() {
+		return prd;
+	}
+
+	public void setPrd(Producto prd) {
+		this.prd = prd;
+	}
+
+	public InputStream getItmp() {
+		return itmp;
+	}
+
+	public void setItmp(InputStream itmp) {
+		this.itmp = itmp;
+	}
 
 	@Override
 	public ArrayList getRegistros() {
@@ -35,17 +51,17 @@ public class CProducto extends JAbstractController {
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	public Producto getRegistro(int id) {
@@ -109,51 +125,51 @@ public class CProducto extends JAbstractController {
 	}
 
 	@Override
-	public ArrayList getRegistros(String[] campos, String[] columnaId, Object[] id) {
+	public ArrayList<Producto> getRegistros(String[] campos, String[] columnaId, Object[] id) {
 		ArrayList<Producto> rgs = new ArrayList<Producto>();
 		try {
 
 			if (id != null) {
-				this.numRegistros = this.getNumeroRegistros(Producto.nt, Producto.COLUMNA_ACTIVO,
-						Producto.COLUMNA_ACTIVO, id);
+				this.setNumRegistros(this.getNumeroRegistros(Producto.nt, Producto.COLUMNA_ACTIVO,
+						Producto.COLUMNA_ACTIVO, id));
 			} else {
-				this.numRegistros = this.getNumeroRegistros(Producto.nt, Producto.COLUMNA_ACTIVO);
-				if (rs.isClosed()) {
+				this.setNumRegistros(this.getNumeroRegistros(Producto.nt, Producto.COLUMNA_ACTIVO));
+				if (getRs().isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			rs = this.getRegistros(Producto.nt, campos, columnaId, id);
-			if (this.numRegistros < finalPag) {
-				finalPag = this.numRegistros;
+			setRs(this.getRegistros(Producto.nt, campos, columnaId, id));
+			if (this.getNumRegistros() < getFinalPag()) {
+				setFinalPag(this.getNumRegistros());
 			}
-			if (finalPag > inicioPag) {
-				inicioPag -= (finalPag - inicioPag) - 1;
+			if (getFinalPag() > inicioPag) {
+				inicioPag -= (getFinalPag() - inicioPag) - 1;
 			}
 			Producto us = null;
-			while (rs.next()) {
+			while (getRs().next()) {
 				us = new Producto();
-				us.setPrimaryKey(rs.getInt(1));
-				us.setIdProducto(rs.getInt(1));
-				us.setCodigoBarras(rs.getString(2));
-				us.setCodigo(rs.getString(3));
-				us.setCodigoDelFabricante(rs.getString(4));
-				us.setNombre(rs.getString(5));
-				us.setCosto(rs.getDouble(6));
-				us.setPrecioAlMayor(rs.getDouble(7));
-				us.setPrecioAlMenor(rs.getDouble(8));
-				us.setUtilidad(rs.getInt(9));
-				us.setAplicaIGV(rs.getInt(10));
-				us.setStockMinimo(rs.getInt(11));
-				us.setTipo(rs.getString(12));
-				us.setIdMoneda(rs.getInt(13));
+				us.setPrimaryKey(getRs().getInt(1));
+				us.setIdProducto(getRs().getInt(1));
+				us.setCodigoBarras(getRs().getString(2));
+				us.setCodigo(getRs().getString(3));
+				us.setCodigoDelFabricante(getRs().getString(4));
+				us.setNombre(getRs().getString(5));
+				us.setCosto(getRs().getDouble(6));
+				us.setPrecioAlMayor(getRs().getDouble(7));
+				us.setPrecioAlMenor(getRs().getDouble(8));
+				us.setUtilidad(getRs().getInt(9));
+				us.setAplicaIGV(getRs().getInt(10));
+				us.setStockMinimo(getRs().getInt(11));
+				us.setTipo(getRs().getString(12));
+				us.setIdMoneda(getRs().getInt(13));
 				// us.setImagen(rs.getBinaryStream(14));
-				us.setIdClase(rs.getInt(15));
-				us.setIdMarca(rs.getInt(16));
-				us.setIdModelo(rs.getInt(17));
-				us.setUbicacion(rs.getString(18));
-				us.setUnidadPrincipal(rs.getString(19));
-				us.setPeso(rs.getDouble(20));
-				us.setActivo(rs.getInt(21));
+				us.setIdClase(getRs().getInt(15));
+				us.setIdMarca(getRs().getInt(16));
+				us.setIdModelo(getRs().getInt(17));
+				us.setUbicacion(getRs().getString(18));
+				us.setUnidadPrincipal(getRs().getString(19));
+				us.setPeso(getRs().getDouble(20));
+				us.setActivo(getRs().getInt(21));
 				rgs.add(us);
 			}
 		} catch (SQLException ex) {
@@ -164,7 +180,7 @@ public class CProducto extends JAbstractController {
 
 	public ImageIcon getFoto(Integer id) {
 		InputStream archivo = this.getArchivo(Producto.nt, "imagen", Producto.COLUMNA_PK, id);
-		itmp = archivo;
+		setItmp(archivo);
 		ImageIcon ii = null;
 		if (archivo != null) {
 			try {
@@ -198,5 +214,4 @@ public class CProducto extends JAbstractController {
 	public int getTotalRegistros() {
 		return this.getNumeroRegistros(Producto.nt, Producto.COLUMNA_PK);
 	}
-
 }

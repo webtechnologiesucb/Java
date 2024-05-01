@@ -26,7 +26,7 @@ public abstract class AutorizacionAdministrador implements IAuthManager {
 	 *      authenticated. And then declare 'authenticated' in this property so that
 	 *      it can be applied to every authenticated user.
 	 */
-	public List defaultRoles = new ArrayList();
+	public List<Object> defaultRoles = new ArrayList<Object>();
 
 	/**
 	 * Creates a role. This is a shortcut method to
@@ -170,7 +170,7 @@ public abstract class AutorizacionAdministrador implements IAuthManager {
 	 * @return boolean whether the business rule returns true. If the business rule
 	 *         is empty, it will still return true.
 	 */
-	public boolean executeBizRule(String bizRule, HashMap params, Object data) {
+	public boolean executeBizRule(String bizRule, HashMap<Object, Object> params, Object data) {
 		if (bizRule == null)
 			return true;
 		if (bizRule.isEmpty())
@@ -186,7 +186,6 @@ public abstract class AutorizacionAdministrador implements IAuthManager {
 	 *                   cannot be added as a child due to its incompatible type.
 	 */
 	protected void checkItemChildType(int parentType, int childType) {
-		String[] types = { "operation", "task", "role" };
 		if (parentType < childType)
 			System.out.println("Error no se puede agregar");
 	}

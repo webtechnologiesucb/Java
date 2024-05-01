@@ -29,12 +29,12 @@ public class CAlmacen extends JAbstractController implements Serializable {
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
@@ -93,14 +93,14 @@ public class CAlmacen extends JAbstractController implements Serializable {
 	public Almacen getRegistroPorPk(Integer id) {
 		Almacen sm = null;
 		try {
-			rs = this.selectPorPk(Almacen.TABLA, Almacen.PK_COLUMNA, id);
-			while (rs.next()) {
+			setRs(this.selectPorPk(Almacen.TABLA, Almacen.PK_COLUMNA, id));
+			while (getRs().next()) {
 				sm = new Almacen();
-				sm.setPrimaryKey(rs.getInt(1));
-				sm.setNombre(rs.getString(2));
-				sm.setDireccion(rs.getString(3));
-				sm.setEncargado(rs.getInt(4));
-				sm.setActivo(rs.getInt(5));
+				sm.setPrimaryKey(getRs().getInt(1));
+				sm.setNombre(getRs().getString(2));
+				sm.setDireccion(getRs().getString(3));
+				sm.setEncargado(getRs().getInt(4));
+				sm.setActivo(getRs().getInt(5));
 
 			}
 		} catch (SQLException ex) {
@@ -112,14 +112,14 @@ public class CAlmacen extends JAbstractController implements Serializable {
 	public Almacen getUltimoAlmacen() {
 		Almacen sm = null;
 		try {
-			rs = this.getUltimoRegistro(Almacen.TABLA, Almacen.PK_COLUMNA);
-			while (rs.next()) {
+			setRs(this.getUltimoRegistro(Almacen.TABLA, Almacen.PK_COLUMNA));
+			while (getRs().next()) {
 				sm = new Almacen();
-				sm.setPrimaryKey(rs.getInt(1));
-				sm.setNombre(rs.getString(2));
-				sm.setDireccion(rs.getString(3));
-				sm.setEncargado(rs.getInt(4));
-				sm.setActivo(rs.getInt(5));
+				sm.setPrimaryKey(getRs().getInt(1));
+				sm.setNombre(getRs().getString(2));
+				sm.setDireccion(getRs().getString(3));
+				sm.setEncargado(getRs().getInt(4));
+				sm.setActivo(getRs().getInt(5));
 
 			}
 		} catch (SQLException ex) {
@@ -131,33 +131,33 @@ public class CAlmacen extends JAbstractController implements Serializable {
 
 	@Override
 	public ArrayList<Almacen> getRegistros(String[] campos, String[] columnaId, Object[] id) {
-		ArrayList<Almacen> rgs = new ArrayList();
+		ArrayList<Almacen> rgs = new ArrayList<>();
 		try {
 
 			if (id != null) {
-				this.numRegistros = this.getNumeroRegistros(Almacen.TABLA, tmp.getCampoExistencial(),
-						tmp.getCampoExistencial(), id);
+				this.setNumRegistros(this.getNumeroRegistros(Almacen.TABLA, tmp.getCampoExistencial(),
+						tmp.getCampoExistencial(), id));
 			} else {
-				this.numRegistros = this.getNumeroRegistros(Almacen.TABLA, tmp.getCampoExistencial());
-				if (rs.isClosed()) {
+				this.setNumRegistros(this.getNumeroRegistros(Almacen.TABLA, tmp.getCampoExistencial()));
+				if (getRs().isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			rs = this.getRegistros(Almacen.TABLA, campos, columnaId, id);
-			if (this.numRegistros < finalPag) {
-				finalPag = this.numRegistros;
+			setRs(this.getRegistros(Almacen.TABLA, campos, columnaId, id));
+			if (this.getNumRegistros() < getFinalPag()) {
+				setFinalPag(this.getNumRegistros());
 			}
-			if (finalPag > inicioPag) {
-				inicioPag -= (finalPag - inicioPag) - 1;
+			if (getFinalPag() > inicioPag) {
+				inicioPag -= (getFinalPag() - inicioPag) - 1;
 			}
 			Almacen sm = null;
-			while (rs.next()) {
+			while (getRs().next()) {
 				sm = new Almacen();
-				sm.setPrimaryKey(rs.getInt(1));
-				sm.setNombre(rs.getString(2));
-				sm.setDireccion(rs.getString(3));
-				sm.setEncargado(rs.getInt(4));
-				sm.setActivo(rs.getInt(5));
+				sm.setPrimaryKey(getRs().getInt(1));
+				sm.setNombre(getRs().getString(2));
+				sm.setDireccion(getRs().getString(3));
+				sm.setEncargado(getRs().getInt(4));
+				sm.setActivo(getRs().getInt(5));
 				rgs.add(sm);
 			}
 		} catch (SQLException ex) {

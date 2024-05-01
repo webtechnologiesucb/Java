@@ -16,27 +16,27 @@ public class CKardex extends JAbstractController {
 
 	@Override
 	public ArrayList getRegistros() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public ArrayList getRegistros(Object[] cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	public JAbstractModelBD buscarRegistro(Object[] cvl) {
@@ -85,42 +85,42 @@ public class CKardex extends JAbstractController {
 	}
 
 	@Override
-	public ArrayList getRegistros(String[] campos, String[] columnaId, Object[] id) {
+	public ArrayList<Kardex> getRegistros(String[] campos, String[] columnaId, Object[] id) {
 		ArrayList<Kardex> rgs = new ArrayList<Kardex>();
 		try {
 
 			if (id != null) {
-				this.numRegistros = this.getNumeroRegistros(Kardex.nt, Kardex.COLUMNA_ACTIVO, Kardex.COLUMNA_ACTIVO,
-						id);
+				this.setNumRegistros(this.getNumeroRegistros(Kardex.nt, Kardex.COLUMNA_ACTIVO, Kardex.COLUMNA_ACTIVO,
+						id));
 			} else {
-				this.numRegistros = this.getNumeroRegistros(Kardex.nt, Kardex.COLUMNA_ACTIVO);
-				if (rs.isClosed()) {
+				this.setNumRegistros(this.getNumeroRegistros(Kardex.nt, Kardex.COLUMNA_ACTIVO));
+				if (getRs().isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			rs = this.getRegistros(Kardex.nt, campos, columnaId, id);
-			if (this.numRegistros < finalPag) {
-				finalPag = this.numRegistros;
+			setRs(this.getRegistros(Kardex.nt, campos, columnaId, id));
+			if (this.getNumRegistros() < getFinalPag()) {
+				setFinalPag(this.getNumRegistros());
 			}
-			if (finalPag > inicioPag) {
-				inicioPag -= (finalPag - inicioPag) - 1;
+			if (getFinalPag() > inicioPag) {
+				inicioPag -= (getFinalPag() - inicioPag) - 1;
 			}
 			Kardex us = null;
 			CProducto cpr = new CProducto();
-			while (rs.next()) {
+			while (getRs().next()) {
 				us = new Kardex();
-				us.setPrimaryKey(rs.getInt(1));
-				us.setProducto(cpr.getRegistro(rs.getInt(2)));
-				us.setFecha(rs.getDate(3));
-				us.setDocumento(rs.getString(4));
-				us.setNumeroDeDocumento(rs.getString(5));
-				us.setEntrada(rs.getInt(6));
-				us.setSalida(rs.getInt(7));
-				us.setPrecio(rs.getDouble(8));
-				us.setValor(rs.getDouble(9));
-				us.setStockActual(rs.getInt(10));
-				us.setValorTotal(rs.getDouble(11));
-				us.setActivo(rs.getInt(12));
+				us.setPrimaryKey(getRs().getInt(1));
+				us.setProducto(cpr.getRegistro(getRs().getInt(2)));
+				us.setFecha(getRs().getDate(3));
+				us.setDocumento(getRs().getString(4));
+				us.setNumeroDeDocumento(getRs().getString(5));
+				us.setEntrada(getRs().getInt(6));
+				us.setSalida(getRs().getInt(7));
+				us.setPrecio(getRs().getDouble(8));
+				us.setValor(getRs().getDouble(9));
+				us.setStockActual(getRs().getInt(10));
+				us.setValorTotal(getRs().getDouble(11));
+				us.setActivo(getRs().getInt(12));
 				rgs.add(us);
 			}
 		} catch (SQLException ex) {

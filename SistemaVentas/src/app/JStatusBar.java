@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class JStatusBar extends JPanel {
+	private static final long serialVersionUID = -7642471457947958720L;
 
 	public JStatusBar() {
 		setLayout(new BorderLayout());

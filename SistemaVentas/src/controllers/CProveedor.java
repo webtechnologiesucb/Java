@@ -25,25 +25,25 @@ public class CProveedor extends JAbstractController {
 
 	public Proveedor getRegistroPorPk(Integer id) {
 		try {
-			rs = this.selectPorPk(Proveedor.nt, "idproveedor", id);
-			while (rs.next()) {
+			setRs(this.selectPorPk(Proveedor.nt, "idproveedor", id));
+			while (getRs().next()) {
 				prv = new Proveedor();
-				prv.setPrimaryKey(rs.getInt(1));
-				prv.setIdproveedor(rs.getInt(1));
-				prv.setRuc(rs.getString(2));
-				prv.setRazonSocial(rs.getString(3));
-				prv.setDireccion(rs.getString(4));
-				prv.setCiudad(rs.getString(5));
-				prv.setTelefono(rs.getString(6));
-				prv.setNextel(rs.getString(7));
-				prv.setMovil(rs.getString(8));
-				prv.setFax(rs.getString(9));
-				prv.setCtaBancaria(rs.getString(10));
-				prv.setNomContacto(rs.getString(11));
-				prv.setEmail(rs.getString(12));
-				prv.setRubro(rs.getString(13));
-				prv.setProductos(rs.getString(14));
-				prv.setActivo(rs.getInt(15));
+				prv.setPrimaryKey(getRs().getInt(1));
+				prv.setIdproveedor(getRs().getInt(1));
+				prv.setRuc(getRs().getString(2));
+				prv.setRazonSocial(getRs().getString(3));
+				prv.setDireccion(getRs().getString(4));
+				prv.setCiudad(getRs().getString(5));
+				prv.setTelefono(getRs().getString(6));
+				prv.setNextel(getRs().getString(7));
+				prv.setMovil(getRs().getString(8));
+				prv.setFax(getRs().getString(9));
+				prv.setCtaBancaria(getRs().getString(10));
+				prv.setNomContacto(getRs().getString(11));
+				prv.setEmail(getRs().getString(12));
+				prv.setRubro(getRs().getString(13));
+				prv.setProductos(getRs().getString(14));
+				prv.setActivo(getRs().getInt(15));
 
 			}
 		} catch (SQLException ex) {
@@ -59,39 +59,39 @@ public class CProveedor extends JAbstractController {
 		try {
 
 			if (id != null) {
-				this.numRegistros = this.getNumeroRegistros(Proveedor.nt, Proveedor.campoActivo, Proveedor.campoActivo,
-						id);
+				this.setNumRegistros(this.getNumeroRegistros(Proveedor.nt, Proveedor.campoActivo, Proveedor.campoActivo,
+						id));
 			} else {
-				this.numRegistros = this.getNumeroRegistros(Proveedor.nt, Proveedor.campoActivo);
-				if (rs.isClosed()) {
+				this.setNumRegistros(this.getNumeroRegistros(Proveedor.nt, Proveedor.campoActivo));
+				if (getRs().isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			rs = this.getRegistros(Proveedor.nt, campos, columnaId, id);
-			if (this.numRegistros < finalPag) {
-				finalPag = this.numRegistros;
+			setRs(this.getRegistros(Proveedor.nt, campos, columnaId, id));
+			if (this.getNumRegistros() < getFinalPag()) {
+				setFinalPag(this.getNumRegistros());
 			}
-			if (finalPag > inicioPag) {
-				inicioPag -= (finalPag - inicioPag) - 1;
+			if (getFinalPag() > inicioPag) {
+				inicioPag -= (getFinalPag() - inicioPag) - 1;
 			}
-			while (rs.next()) {
+			while (getRs().next()) {
 				prv = new Proveedor();
-				prv.setPrimaryKey(rs.getInt(1));
-				prv.setIdproveedor(rs.getInt(1));
-				prv.setRuc(rs.getString(2));
-				prv.setRazonSocial(rs.getString(3));
-				prv.setDireccion(rs.getString(4));
-				prv.setCiudad(rs.getString(5));
-				prv.setTelefono(rs.getString(6));
-				prv.setNextel(rs.getString(7));
-				prv.setMovil(rs.getString(8));
-				prv.setFax(rs.getString(9));
-				prv.setCtaBancaria(rs.getString(10));
-				prv.setNomContacto(rs.getString(11));
-				prv.setEmail(rs.getString(12));
-				prv.setRubro(rs.getString(13));
-				prv.setProductos(rs.getString(14));
-				prv.setActivo(rs.getInt(15));
+				prv.setPrimaryKey(getRs().getInt(1));
+				prv.setIdproveedor(getRs().getInt(1));
+				prv.setRuc(getRs().getString(2));
+				prv.setRazonSocial(getRs().getString(3));
+				prv.setDireccion(getRs().getString(4));
+				prv.setCiudad(getRs().getString(5));
+				prv.setTelefono(getRs().getString(6));
+				prv.setNextel(getRs().getString(7));
+				prv.setMovil(getRs().getString(8));
+				prv.setFax(getRs().getString(9));
+				prv.setCtaBancaria(getRs().getString(10));
+				prv.setNomContacto(getRs().getString(11));
+				prv.setEmail(getRs().getString(12));
+				prv.setRubro(getRs().getString(13));
+				prv.setProductos(getRs().getString(14));
+				prv.setActivo(getRs().getInt(15));
 				rgs.add(prv);
 			}
 		} catch (SQLException ex) {
@@ -103,22 +103,22 @@ public class CProveedor extends JAbstractController {
 
 	@Override
 	public ArrayList<JAbstractModelBD> getRegistros() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("No soportado");
 	}
 
 	@Override

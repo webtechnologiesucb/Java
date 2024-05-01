@@ -17,20 +17,20 @@ import java.util.logging.Logger;
  */
 public abstract class JAbstractController<M extends JAbstractModelBD> implements JController {
 
-	public ResultSet rs;
-	public PreparedStatement ps;
+	private ResultSet rs;
+	private PreparedStatement ps;
 	public Statement st;
-	public String sql;
-	public int numRegistros = 0;
-	public int finalPag = 50;
+	private String sql;
+	private int numRegistros = 0;
+	private int finalPag = 50;
 	public int inicioPag = 0;
 
 	public int borrarRegistro(M mdl) {
-		sql = "UPDATE " + mdl.getNombreTabla() + " SET " + mdl.getCampoExistencial() + " = 0 WHERE "
-				+ mdl.getCampoClavePrimaria() + " = " + mdl.getPrimaryKey() + "";
+		setSql("UPDATE " + mdl.getNombreTabla() + " SET " + mdl.getCampoExistencial() + " = 0 WHERE "
+				+ mdl.getCampoClavePrimaria() + " = " + mdl.getPrimaryKey() + "");
 		int opcion = 0;
 		try {
-			opcion = BaseConexion.getStatement().executeUpdate(sql);
+			opcion = BaseConexion.getStatement().executeUpdate(getSql());
 			BaseConexion.cerrarEnlacesConexion(BaseConexion.SOLO_STATEMENT);
 		} catch (SQLException ex) {
 			Logger.getLogger(JAbstractController.class.getName()).log(Level.SEVERE, null, ex);
@@ -40,12 +40,12 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	}
 
 	public void setNumPaginador(int inicio, int fin) {
-		finalPag = fin;
+		setFinalPag(fin);
 		inicioPag = inicio;
 	}
 
 	public int getCantidadRegistros() {
-		return numRegistros;
+		return getNumRegistros();
 	}
 
 	public String getCodigo(String nombreTabla, String nombreColumna) {
@@ -53,11 +53,11 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 				+ " DESC LIMIT 1";
 		String codigo = null;
 		try {
-			rs = BaseConexion.getResultSet(sql);
-			while (rs.next()) {
-				codigo = rs.getObject(1).toString();
+			setRs(BaseConexion.getResultSet(sql));
+			while (getRs().next()) {
+				codigo = getRs().getObject(1).toString();
 			}
-			rs.close();
+			getRs().close();
 		} catch (SQLException ex) {
 			return null;
 		}
@@ -104,11 +104,11 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	}
 
 	public int eliminacionReal(M mdl) {
-		sql = "delete from " + mdl.getNombreTabla() + " where " + mdl.getCampoClavePrimaria() + Ex.IGUAL
-				+ mdl.getPrimaryKey();
+		setSql("delete from " + mdl.getNombreTabla() + " where " + mdl.getCampoClavePrimaria() + Ex.IGUAL
+				+ mdl.getPrimaryKey());
 		int opcion = 0;
 		try {
-			opcion = BaseConexion.getStatement().executeUpdate(sql);
+			opcion = BaseConexion.getStatement().executeUpdate(getSql());
 			BaseConexion.cerrarEnlacesConexion(BaseConexion.SOLO_STATEMENT);
 		} catch (SQLException ex) {
 			Logger.getLogger(JAbstractController.class.getName()).log(Level.SEVERE, null, ex);
@@ -277,11 +277,11 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 				+ (columaCod != null ? Ex.WHERE + columaCod + Ex.IGUAL + (vl != null ? vl : valor) : "");
 
 		try {
-			rs = BaseConexion.getResultSet(sql2);
-			while (rs.next()) {
-				numReg = rs.getInt(1);
+			setRs(BaseConexion.getResultSet(sql2));
+			while (getRs().next()) {
+				numReg = getRs().getInt(1);
 			}
-			rs.close();
+			getRs().close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -315,9 +315,9 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 				+ (columaCod != null ? Ex.WHERE + columaCod + Ex.IGUAL + (vl != null ? vl : valor) : "");
 
 		try {
-			rs = BaseConexion.getResultSet(sql2);
-			while (rs.next()) {
-				max = rs.getObject(1);
+			setRs(BaseConexion.getResultSet(sql2));
+			while (getRs().next()) {
+				max = getRs().getObject(1);
 			}
 			st.close();
 		} catch (SQLException ex) {
@@ -343,9 +343,9 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 				+ (columaCod != null ? Ex.WHERE + columaCod + Ex.IGUAL + (vl != null ? vl : valor) : "");
 		System.out.println(sql2);
 		try {
-			rs = BaseConexion.getResultSet(sql2);
-			while (rs.next()) {
-				sum = rs.getObject(1);
+			setRs(BaseConexion.getResultSet(sql2));
+			while (getRs().next()) {
+				sum = getRs().getObject(1);
 			}
 			// st.close();
 		} catch (SQLException ex) {
@@ -406,19 +406,19 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	public ResultSet getRegistros(String nombreTabla, String[] campos, String[] columnaId, Object[] id) {
 		String condiciones = unirColumnasValores(columnaId, id);
 
-		sql = "select " + (campos != null ? (campos.length == 0 ? "* " : generarArrayAString(campos)) : "* ") + " from "
+		setSql("select " + (campos != null ? (campos.length == 0 ? "* " : generarArrayAString(campos)) : "* ") + " from "
 				+ nombreTabla + (condiciones != null ? Ex.WHERE + condiciones : "") + Ex.LIMIT + this.inicioPag + ","
-				+ this.finalPag;
-		System.out.println(sql);
-		rs = BaseConexion.getResultSet(sql);
+				+ this.getFinalPag());
+		System.out.println(getSql());
+		setRs(BaseConexion.getResultSet(getSql()));
 
-		return rs;
+		return getRs();
 	}
 
 	public ResultSet getRegistros2(CriterioSQL criterio) {
 		System.out.println(criterio.getConsultaSQL());
-		rs = BaseConexion.getResultSet(criterio.getConsultaSQL());
-		return rs;
+		setRs(BaseConexion.getResultSet(criterio.getConsultaSQL()));
+		return getRs();
 	}
 
 	public String unirColumnasValores(String[] columnas, Object[] valores) {
@@ -452,13 +452,13 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	public ResultSet getRegistrosMn(String nombreTabla, String[] campos, String[] columnaId, Object[] id) {
 		String condiciones = unirColumnasMayorMenor(columnaId, id);
 
-		sql = "select " + (campos != null ? (campos.length == 0 ? "* " : generarArrayAString(campos)) : "* ") + " from "
+		setSql("select " + (campos != null ? (campos.length == 0 ? "* " : generarArrayAString(campos)) : "* ") + " from "
 				+ nombreTabla + (condiciones != null ? Ex.WHERE + condiciones : "") + Ex.LIMIT + this.inicioPag + ","
-				+ this.finalPag;
-		System.out.println(sql);
-		rs = BaseConexion.getResultSet(sql);
+				+ this.getFinalPag());
+		System.out.println(getSql());
+		setRs(BaseConexion.getResultSet(getSql()));
 
-		return rs;
+		return getRs();
 	}
 
 	public String unirColumnasMayorMenor(String[] columnas, Object[] valores) {
@@ -551,16 +551,16 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 			id = "'" + id + "'";
 		}
 
-		sql = "update " + nomTabla + " set " + generarArrayAString(cnls) + Ex.WHERE + columnaId + Ex.IGUAL
-				+ (vl == null ? id : vl);
+		setSql("update " + nomTabla + " set " + generarArrayAString(cnls) + Ex.WHERE + columnaId + Ex.IGUAL
+				+ (vl == null ? id : vl));
 		int op = 0;
 		try {
-			op = BaseConexion.getStatement().executeUpdate(sql);
+			op = BaseConexion.getStatement().executeUpdate(getSql());
 			BaseConexion.cerrarEnlacesConexion(BaseConexion.SOLO_STATEMENT);
 		} catch (SQLException ex) {
 		}
 
-		System.out.println(sql);
+		System.out.println(getSql());
 		return op;
 	}
 
@@ -571,15 +571,15 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	@Override
 	public int agregarRegistro(String nombreTabla, String[] campos, Object[] valores) {
 
-		sql = "insert into " + nombreTabla + "(" + generarArrayAString(campos) + ") values(" + formatearValores(valores)
-				+ ")";
+		setSql("insert into " + nombreTabla + "(" + generarArrayAString(campos) + ") values(" + formatearValores(valores)
+				+ ")");
 		int op = 0;
 		try {
-			op = BaseConexion.getStatement().executeUpdate(sql);
+			op = BaseConexion.getStatement().executeUpdate(getSql());
 			BaseConexion.cerrarEnlacesConexion(BaseConexion.SOLO_STATEMENT);
 		} catch (SQLException ex) {
 		}
-		System.out.println(sql);
+		System.out.println(getSql());
 		return op;
 	}
 
@@ -594,35 +594,35 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	 */
 	public int actualizarRegistroPs(String nomTabla, String cnls, Object[] valores) {
 
-		sql = "update " + nomTabla + " set " + cnls;
+		setSql("update " + nomTabla + " set " + cnls);
 		int op = 0;
 		try {
-			ps = BaseConexion.getPreparedStatement(sql);
-			setValores(ps, valores);
-			op = ps.executeUpdate();
-			ps.close();
+			setPs(BaseConexion.getPreparedStatement(getSql()));
+			setValores(getPs(), valores);
+			op = getPs().executeUpdate();
+			getPs().close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 
-		System.out.println(sql);
+		System.out.println(getSql());
 		return op;
 	}
 
 	public int updateRegisterPs(String nomTabla, String cnls, Object[] valores) {
 
-		sql = "update " + nomTabla + " set " + this.generarCadenaUpdatePs(this.stringToArray(cnls, ","));
+		setSql("update " + nomTabla + " set " + this.generarCadenaUpdatePs(this.stringToArray(cnls, ",")));
 		int op = 0;
 		try {
-			ps = BaseConexion.getPreparedStatement(sql);
-			setValores(ps, valores);
-			op = ps.executeUpdate();
-			ps.close();
+			setPs(BaseConexion.getPreparedStatement(getSql()));
+			setValores(getPs(), valores);
+			op = getPs().executeUpdate();
+			getPs().close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 
-		System.out.println(sql);
+		System.out.println(getSql());
 		return op;
 	}
 
@@ -636,15 +636,15 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	 */
 	public int agregarRegistroPs(String nombreTabla, String[] campos, Object[] valores) {
 
-		sql = "insert into " + nombreTabla + "(" + generarArrayAString(campos) + ") values("
-				+ formatearValores(valores.length) + ")";
-		System.out.println(sql);
+		setSql("insert into " + nombreTabla + "(" + generarArrayAString(campos) + ") values("
+				+ formatearValores(valores.length) + ")");
+		System.out.println(getSql());
 		int op = 0;
 		try {
-			ps = BaseConexion.getPreparedStatement(sql);
-			setValores(ps, valores);
-			op = ps.executeUpdate();
-			ps.close();
+			setPs(BaseConexion.getPreparedStatement(getSql()));
+			setValores(getPs(), valores);
+			op = getPs().executeUpdate();
+			getPs().close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -653,9 +653,9 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	}
 
 	public ResultSet getUltimoRegistro(String table, String column) {
-		sql = "select * from " + table + " order by " + column + " desc limit 0,1";
-		rs = BaseConexion.getResultSet(sql);
-		return rs;
+		setSql("select * from " + table + " order by " + column + " desc limit 0,1");
+		setRs(BaseConexion.getResultSet(getSql()));
+		return getRs();
 	}
 
 	/**
@@ -856,14 +856,14 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 
 	public boolean existe(String nomTabla, String nomCampo, Object value) {
 		Number nb = esNumerico(value, null);
-		sql = "select * from " + nomTabla + Ex.WHERE + nomCampo + Ex.IGUAL + (nb != null ? nb : "'" + value + "'");
+		setSql("select * from " + nomTabla + Ex.WHERE + nomCampo + Ex.IGUAL + (nb != null ? nb : "'" + value + "'"));
 		boolean encontrado = false;
 		try {
-			rs = BaseConexion.getResultSet(sql);
-			if (rs.next()) {
+			setRs(BaseConexion.getResultSet(getSql()));
+			if (getRs().next()) {
 				encontrado = true;
 			}
-			rs.close();
+			getRs().close();
 		} catch (SQLException ex) {
 		}
 
@@ -873,15 +873,15 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	public boolean existe(String nomTabla, String nomCampo, Object value, String cmp, Object exepcion) {
 		Number nb = esNumerico(value, null);
 		Number exp = esNumerico(exepcion, null);
-		sql = "select * from " + nomTabla + Ex.WHERE + nomCampo + Ex.IGUAL + (nb != null ? nb : "'" + value + "'")
-				+ Ex.AND + cmp + Ex.DIFERENTE + (exp != null ? exp : "'" + exepcion + "'");
+		setSql("select * from " + nomTabla + Ex.WHERE + nomCampo + Ex.IGUAL + (nb != null ? nb : "'" + value + "'")
+				+ Ex.AND + cmp + Ex.DIFERENTE + (exp != null ? exp : "'" + exepcion + "'"));
 		boolean encontrado = false;
 		try {
-			rs = BaseConexion.getResultSet(sql);
-			if (rs.next()) {
+			setRs(BaseConexion.getResultSet(getSql()));
+			if (getRs().next()) {
 				encontrado = true;
 			}
-			rs.close();
+			getRs().close();
 		} catch (SQLException ex) {
 		}
 
@@ -892,15 +892,15 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	public boolean existeDosPk(String nomTabla, String nomCampo, Object value, String cmp, Object exepcion) {
 		Number nb = esNumerico(value, null);
 		Number exp = esNumerico(exepcion, null);
-		sql = "select * from " + nomTabla + Ex.WHERE + nomCampo + Ex.IGUAL + (nb != null ? nb : "'" + value + "'")
-				+ Ex.AND + cmp + Ex.IGUAL + (exp != null ? exp : "'" + exepcion + "'");
+		setSql("select * from " + nomTabla + Ex.WHERE + nomCampo + Ex.IGUAL + (nb != null ? nb : "'" + value + "'")
+				+ Ex.AND + cmp + Ex.IGUAL + (exp != null ? exp : "'" + exepcion + "'"));
 		boolean encontrado = false;
 		try {
-			rs = BaseConexion.getResultSet(sql);
-			if (rs.next()) {
+			setRs(BaseConexion.getResultSet(getSql()));
+			if (getRs().next()) {
 				encontrado = true;
 			}
-			rs.close();
+			getRs().close();
 		} catch (SQLException ex) {
 		}
 
@@ -909,26 +909,26 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 
 	public InputStream getArchivo(String nomTabla, String campoArchivo, String campoCondicional, Object valor) {
 		Number nb = esNumerico(valor, null);
-		sql = "select " + campoArchivo + " from " + nomTabla + Ex.WHERE + campoCondicional + Ex.IGUAL
-				+ (nb != null ? nb : "'" + valor + "'");
+		setSql("select " + campoArchivo + " from " + nomTabla + Ex.WHERE + campoCondicional + Ex.IGUAL
+				+ (nb != null ? nb : "'" + valor + "'"));
 		InputStream bs = null;
 		try {
-			rs = BaseConexion.getResultSet(sql);
-			if (rs.next()) {
-				bs = rs.getBinaryStream(1);
+			setRs(BaseConexion.getResultSet(getSql()));
+			if (getRs().next()) {
+				bs = getRs().getBinaryStream(1);
 			}
-			rs.close();
+			getRs().close();
 		} catch (SQLException ex) {
 		}
 		return bs;
 	}
 
 	private ResultSet getRegistroPk(String nombreTabla, String[] campos, String columnaid, Integer id) {
-		sql = "select " + (campos != null ? (campos.length == 0 ? "* " : generarArrayAString(campos)) : "* ") + " from "
-				+ nombreTabla + Ex.WHERE + columnaid + Ex.IGUAL + id;
+		setSql("select " + (campos != null ? (campos.length == 0 ? "* " : generarArrayAString(campos)) : "* ") + " from "
+				+ nombreTabla + Ex.WHERE + columnaid + Ex.IGUAL + id);
 
-		rs = BaseConexion.getResultSet(sql);
-		return rs;
+		setRs(BaseConexion.getResultSet(getSql()));
+		return getRs();
 	}
 
 	public ResultSet selectPorPk(String nombreTabla, String columnaid, Integer id) {
@@ -950,5 +950,45 @@ public abstract class JAbstractController<M extends JAbstractModelBD> implements
 	public abstract int actualizarRegistro(M mdl);
 
 	public abstract ArrayList<M> getRegistros(String[] campos, String[] columnaId, Object[] id);
+
+	public ResultSet getRs() {
+		return rs;
+	}
+
+	public void setRs(ResultSet rs) {
+		this.rs = rs;
+	}
+
+	public int getNumRegistros() {
+		return numRegistros;
+	}
+
+	public void setNumRegistros(int numRegistros) {
+		this.numRegistros = numRegistros;
+	}
+
+	public int getFinalPag() {
+		return finalPag;
+	}
+
+	public void setFinalPag(int finalPag) {
+		this.finalPag = finalPag;
+	}
+
+	public String getSql() {
+		return sql;
+	}
+
+	public void setSql(String sql) {
+		this.sql = sql;
+	}
+
+	public PreparedStatement getPs() {
+		return ps;
+	}
+
+	public void setPs(PreparedStatement ps) {
+		this.ps = ps;
+	}
 
 }
