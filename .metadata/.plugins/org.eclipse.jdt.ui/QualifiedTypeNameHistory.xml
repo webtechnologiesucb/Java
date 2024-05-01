@@ -13,7 +13,6 @@
     <fullyQualifiedTypeName name="com.programacion.dos.Coche"/>
     <fullyQualifiedTypeName name="com.programacion.dos.Persona"/>
     <fullyQualifiedTypeName name="com.programacion.dos.Estudiante"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="com.programacion.dos.Aritmetica"/>
     <fullyQualifiedTypeName name="java.text.DecimalFormat"/>
     <fullyQualifiedTypeName name="com.programacion.dos.Matematica"/>
@@ -28,4 +27,7 @@
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="lombok.Getter"/>
     <fullyQualifiedTypeName name="lombok.Setter"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.lang.ArithmeticException"/>
+    <fullyQualifiedTypeName name="java.util.Base64"/>
 </qualifiedTypeNameHistroy>
