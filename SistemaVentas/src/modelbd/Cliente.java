@@ -3,12 +3,15 @@ package modelbd;
 import core.JAbstractModelBD;
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.util.Objects;
 
 /**
  *
  * @author Código Lite - https://codigolite.com
  */
 public class Cliente extends JAbstractModelBD implements Serializable, IModel {
+
+	
 	private static final long serialVersionUID = 5038850140859209122L;
 	public static final String nt = "gv_cliente";
 	private Long idc;
@@ -136,13 +139,12 @@ public class Cliente extends JAbstractModelBD implements Serializable, IModel {
 
 	@Override
 	public int hashCode() {
-		int hash = 0;
-		hash += (idc != null ? idc.hashCode() : 0);
-		return hash;
+		return Objects.hash(idc,ruc,dni,nombre,apellidos,tipo,email,telefono,movil,nextel,fax,fecReg);
 	}
-
+	
 	@Override
 	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
 		if (!(object instanceof Cliente)) {
 			return false;
 		}
@@ -160,11 +162,11 @@ public class Cliente extends JAbstractModelBD implements Serializable, IModel {
 
 	@Override
 	public JAbstractModelBD llenarObjeto(ResultSet rs) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("Not supported yet."); 
 	}
 
 	@Override
 	public Object[] llenarValores() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException("Not supported yet."); 
 	}
 }

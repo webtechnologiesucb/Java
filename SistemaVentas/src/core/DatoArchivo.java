@@ -23,5 +23,4 @@ public class DatoArchivo {
 	public int getLongitud() {
 		return longitud;
 	}
-
 }

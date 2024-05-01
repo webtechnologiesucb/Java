@@ -98,13 +98,6 @@ public class AutorizacionAsignado {
 	}
 
 	@Override
-	public int hashCode() {
-		int hash = 7;
-		hash = 79 * hash + Objects.hashCode(this.itemName);
-		return hash;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;
@@ -118,5 +111,9 @@ public class AutorizacionAsignado {
 		}
 		return true;
 	}
-
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(auth, itemName, userId, bizRule, data);
+	}
 }

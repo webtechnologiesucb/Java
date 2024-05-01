@@ -20,18 +20,21 @@ import java.util.ArrayList;
  */
 public class AppConfig implements Serializable {
 
-	private static final long serialVersionUID = -4165972383883724749L;
-	private static Usuario usuario;
+    private static Usuario usuario;
     private static Almacen almacen;
     private static Moneda moneda;
     private static ArrayList<Almacen> almacenes;
 
     public static enum Estado {
+
         ERROR, NO_EXISTE, ERROR_CLAVE, ACCESO_OK
     };
 
     public AppConfig() //throws ParserConfigurationException
     {
+//        DocumentBuilderFactory dbc = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder db = dbc.newDocumentBuilder();
+//        Document doc = db.newDocument();
 
     }
 
@@ -107,4 +110,5 @@ public class AppConfig implements Serializable {
             }
         }
     }
+
 }

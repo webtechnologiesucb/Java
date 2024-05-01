@@ -21,27 +21,27 @@ public class CDetalleCompra extends JAbstractController {
 
 	@Override
 	public ArrayList getRegistros() {
-		throw new UnsupportedOperationException("No soportado");
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
 	public ArrayList getRegistros(Object[] cvl) {
-		throw new UnsupportedOperationException("No soportado");
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("No soportado");
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("No soportado");
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("No soportado");
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	public ArrayList<DetalleCompra> getRegistros(String[] columnas, Object[] cvl) {
@@ -69,6 +69,19 @@ public class CDetalleCompra extends JAbstractController {
 		return false;
 	}
 
+	private Integer getUltimoPk() {
+		ResultSet rsTmp = this.getUltimoRegistro(DetalleCompra.nt, "iddetallec");
+		Integer pk = null;
+		try {
+			while (rsTmp.next()) {
+				pk = rsTmp.getInt(1);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return pk;
+	}
+
 	@Override
 	public int actualizarRegistro(JAbstractModelBD mdl) {
 		DetalleCompra usr = (DetalleCompra) mdl;
@@ -85,38 +98,38 @@ public class CDetalleCompra extends JAbstractController {
 	}
 
 	@Override
-	public ArrayList<DetalleCompra> getRegistros(String[] campos, String[] columnaId, Object[] id) {
+	public ArrayList getRegistros(String[] campos, String[] columnaId, Object[] id) {
 		ArrayList<DetalleCompra> rgs = new ArrayList<DetalleCompra>();
 		try {
 
 			if (id != null) {
-				this.setNumRegistros(this.getNumeroRegistros(DetalleCompra.nt, DetalleCompra.COLUMNA_ACTIVO,
-						DetalleCompra.COLUMNA_ACTIVO, id));
+				this.numRegistros = this.getNumeroRegistros(DetalleCompra.nt, DetalleCompra.COLUMNA_ACTIVO,
+						DetalleCompra.COLUMNA_ACTIVO, id);
 			} else {
-				this.setNumRegistros(this.getNumeroRegistros(DetalleCompra.nt, DetalleCompra.COLUMNA_ACTIVO));
-				if (getRs().isClosed()) {
+				this.numRegistros = this.getNumeroRegistros(DetalleCompra.nt, DetalleCompra.COLUMNA_ACTIVO);
+				if (rs.isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			setRs(this.getRegistros(DetalleCompra.nt, campos, columnaId, id));
-			if (this.getNumRegistros() < getFinalPag()) {
-				setFinalPag(this.getNumRegistros());
+			rs = this.getRegistros(DetalleCompra.nt, campos, columnaId, id);
+			if (this.numRegistros < finalPag) {
+				finalPag = this.numRegistros;
 			}
-			if (getFinalPag() > inicioPag) {
-				inicioPag -= (getFinalPag() - inicioPag) - 1;
+			if (finalPag > inicioPag) {
+				inicioPag -= (finalPag - inicioPag) - 1;
 			}
 			DetalleCompra us = null;
 			CCompra controllerCompra = null;
-			while (getRs().next()) {
+			while (rs.next()) {
 				controllerCompra = new CCompra();
 				us = new DetalleCompra();
-				us.setPrimaryKey(getRs().getInt(1));
-				us.setId(getRs().getInt(1));
-				us.setIdcompra(controllerCompra.getRegistroPorPk(getRs().getInt(2)));
-				us.setIdProducto(new CProducto().getRegistro(getRs().getInt(3)));
-				us.setCantidad(getRs().getInt(4));
-				us.setImporte(getRs().getDouble(5));
-				us.setDescuento(getRs().getDouble(6));
+				us.setPrimaryKey(rs.getInt(1));
+				us.setId(rs.getInt(1));
+				us.setIdcompra(controllerCompra.getRegistroPorPk(rs.getInt(2)));
+				us.setIdProducto(new CProducto().getRegistro(rs.getInt(3)));
+				us.setCantidad(rs.getInt(4));
+				us.setImporte(rs.getDouble(5));
+				us.setDescuento(rs.getDouble(6));
 				rgs.add(us);
 			}
 		} catch (SQLException ex) {

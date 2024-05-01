@@ -8,213 +8,213 @@ import java.sql.ResultSet;
  *
  * @author Código Lite - https://codigolite.com
  */
-public class Proveedor extends JAbstractModelBD implements Serializable, IModel {
+public class Proveedor extends JAbstractModelBD implements Serializable,IModel{
+    
+    private static final long serialVersionUID = 1L; 
+    public static final String nt = "gv_proveedor";
+    public static final String campoActivo = "activo";
+    public static final String CAMPO_RUC = "ruc";
+    public static final String CAMPO_NOMBRE = "razon_social";
+    public static final String CAMPO_TELEFONO = "telefono";
+    
+    
+    private Integer idproveedor;   
+    private String ruc;   
+    private String razonSocial;
+    private String direccion;
+    private String ciudad;   
+    private String telefono;    
+    private String nextel;    
+    private String movil;   
+    private String fax;   
+    private String ctaBancaria;   
+    private String nomContacto;    
+    private String email;   
+    private String rubro;    
+    private String productos;
+    private Integer activo;
 
-	private static final long serialVersionUID = -8405050078588726135L;
-	public static final String nt = "gv_proveedor";
-	public static final String campoActivo = "activo";
-	public static final String CAMPO_RUC = "ruc";
-	public static final String CAMPO_NOMBRE = "razon_social";
-	public static final String CAMPO_TELEFONO = "telefono";
+    public Proveedor() {
+        initBasic();
+    }
 
-	private Integer idproveedor;
-	private String ruc;
-	private String razonSocial;
-	private String direccion;
-	private String ciudad;
-	private String telefono;
-	private String nextel;
-	private String movil;
-	private String fax;
-	private String ctaBancaria;
-	private String nomContacto;
-	private String email;
-	private String rubro;
-	private String productos;
-	private Integer activo;
+    public Proveedor(Integer idproveedor) {
+        this.idproveedor = idproveedor;
+        initBasic();
+    }
 
-	public Proveedor() {
-		initBasic();
-	}
+    public Proveedor(Integer idproveedor, String razonSocial) {
+        this.idproveedor = idproveedor;
+        this.razonSocial = razonSocial;
+        initBasic();
+    }
+    public Proveedor(Integer idproveedor,String ruc, String razonSocial) {
+        this.idproveedor = idproveedor;
+        this.ruc=ruc;
+        this.razonSocial = razonSocial;
+        initBasic();
+    }
+    
+    private void initBasic()
+    {
+        this.setNombreTabla(nt);
+        this.setCampoClavePrimaria("idproveedor");
+        this.setCampoExistencial("activo");
+    }
 
-	public Proveedor(Integer idproveedor) {
-		this.idproveedor = idproveedor;
-		initBasic();
-	}
+    public String getDireccion() {
+        return direccion;
+    }
 
-	public Proveedor(Integer idproveedor, String razonSocial) {
-		this.idproveedor = idproveedor;
-		this.razonSocial = razonSocial;
-		initBasic();
-	}
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-	public Proveedor(Integer idproveedor, String ruc, String razonSocial) {
-		this.idproveedor = idproveedor;
-		this.ruc = ruc;
-		this.razonSocial = razonSocial;
-		initBasic();
-	}
+    public Integer getIdproveedor() {
+        return idproveedor;
+    }
 
-	private void initBasic() {
-		this.setNombreTabla(nt);
-		this.setCampoClavePrimaria("idproveedor");
-		this.setCampoExistencial("activo");
-	}
+    public void setIdproveedor(Integer idproveedor) {
+        this.idproveedor = idproveedor;
+    }
 
-	public String getDireccion() {
-		return direccion;
-	}
+    public String getRuc() {
+        return ruc;
+    }
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
 
-	public Integer getIdproveedor() {
-		return idproveedor;
-	}
+    public String getRazonSocial() {
+        return razonSocial;
+    }
 
-	public void setIdproveedor(Integer idproveedor) {
-		this.idproveedor = idproveedor;
-	}
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
 
-	public String getRuc() {
-		return ruc;
-	}
+    public String getCiudad() {
+        return ciudad;
+    }
 
-	public void setRuc(String ruc) {
-		this.ruc = ruc;
-	}
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
 
-	public String getRazonSocial() {
-		return razonSocial;
-	}
+    public String getTelefono() {
+        return telefono;
+    }
 
-	public void setRazonSocial(String razonSocial) {
-		this.razonSocial = razonSocial;
-	}
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
-	public String getCiudad() {
-		return ciudad;
-	}
+    public String getNextel() {
+        return nextel;
+    }
 
-	public void setCiudad(String ciudad) {
-		this.ciudad = ciudad;
-	}
+    public void setNextel(String nextel) {
+        this.nextel = nextel;
+    }
 
-	public String getTelefono() {
-		return telefono;
-	}
+    public String getMovil() {
+        return movil;
+    }
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
+    public void setMovil(String movil) {
+        this.movil = movil;
+    }
 
-	public String getNextel() {
-		return nextel;
-	}
+    public String getFax() {
+        return fax;
+    }
 
-	public void setNextel(String nextel) {
-		this.nextel = nextel;
-	}
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
 
-	public String getMovil() {
-		return movil;
-	}
+    public String getCtaBancaria() {
+        return ctaBancaria;
+    }
 
-	public void setMovil(String movil) {
-		this.movil = movil;
-	}
+    public void setCtaBancaria(String ctaBancaria) {
+        this.ctaBancaria = ctaBancaria;
+    }
 
-	public String getFax() {
-		return fax;
-	}
+    public String getNomContacto() {
+        return nomContacto;
+    }
 
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
+    public void setNomContacto(String nomContacto) {
+        this.nomContacto = nomContacto;
+    }
 
-	public String getCtaBancaria() {
-		return ctaBancaria;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setCtaBancaria(String ctaBancaria) {
-		this.ctaBancaria = ctaBancaria;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getNomContacto() {
-		return nomContacto;
-	}
+    public String getRubro() {
+        return rubro;
+    }
 
-	public void setNomContacto(String nomContacto) {
-		this.nomContacto = nomContacto;
-	}
+    public void setRubro(String rubro) {
+        this.rubro = rubro;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getProductos() {
+        return productos;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setProductos(String productos) {
+        this.productos = productos;
+    }
 
-	public String getRubro() {
-		return rubro;
-	}
+    public Integer getActivo() {
+        return activo;
+    }
 
-	public void setRubro(String rubro) {
-		this.rubro = rubro;
-	}
+    public void setActivo(Integer activo) {
+        this.activo = activo;
+    }
 
-	public String getProductos() {
-		return productos;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idproveedor != null ? idproveedor.hashCode() : 0);
+        return hash;
+    }
 
-	public void setProductos(String productos) {
-		this.productos = productos;
-	}
+    @Override
+    public boolean equals(Object object) {   
+        
+        if (!(object instanceof Proveedor)) {
+            return false;
+        }
+        Proveedor other = (Proveedor) object;
+        if ((this.idproveedor == null && other.idproveedor != null) || (this.idproveedor != null && !this.idproveedor.equals(other.idproveedor))) {
+            return false;
+        }
+        return true;
+    }
 
-	public Integer getActivo() {
-		return activo;
-	}
+    @Override
+    public String toString() {
+        return this.razonSocial;
+    }
 
-	public void setActivo(Integer activo) {
-		this.activo = activo;
-	}
+    @Override
+    public JAbstractModelBD llenarObjeto(ResultSet rs) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-	@Override
-	public int hashCode() {
-		int hash = 0;
-		hash += (idproveedor != null ? idproveedor.hashCode() : 0);
-		return hash;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-
-		if (!(object instanceof Proveedor)) {
-			return false;
-		}
-		Proveedor other = (Proveedor) object;
-		if ((this.idproveedor == null && other.idproveedor != null)
-				|| (this.idproveedor != null && !this.idproveedor.equals(other.idproveedor))) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return this.razonSocial;
-	}
-
-	@Override
-	public JAbstractModelBD llenarObjeto(ResultSet rs) {
-		throw new UnsupportedOperationException("Not supported yet."); 
-	}
-
-	@Override
-	public Object[] llenarValores() {
-		throw new UnsupportedOperationException("Not supported yet."); 
-	}
-
+    @Override
+    public Object[] llenarValores() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

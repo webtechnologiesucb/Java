@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,43 +26,16 @@ import java.util.logging.Logger;
  * @author Código Lite
  */
 public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
-	/**
-	 * @var string the ID of the {@link CDbConnection} application component.
-	 *      Defaults to 'db'. The database must have the tables as declared in
-	 *      "framework/web/auth/*.sql".
-	 */
-	public String connectionID = "db";
-	/**
-	 * @var string the name of the table storing authorization items. Defaults to
-	 *      'AuthItem'.
-	 */
-	public String itemTable = "gv_authitem";
-	/**
-	 * @var string the name of the table storing authorization item hierarchy.
-	 *      Defaults to 'AuthItemChild'.
-	 */
-	public String itemChildTable = "gv_authitemchild";
-	/**
-	 * @var string the name of the table storing authorization item assignments.
-	 *      Defaults to 'AuthAssignment'.
-	 */
-	public String assignmentTable = "gv_asignarauth";
-	/**
-	 * @var CDbConnection the database connection. By default, this is initialized
-	 *      automatically as the application component whose ID is indicated as
-	 *      {@link connectionID}.
-	 */
-	public BaseConexion db;
 
+	public String connectionID = "db";
+	public String itemTable = "gv_authitem";
+	public String itemChildTable = "gv_authitemchild";
+	public String assignmentTable = "gv_asignarauth";
+	public BaseConexion db;
 	private boolean usingSqlite;
 
-	/**
-	 * Initializes the application component. This method overrides the parent
-	 * implementation by establishing the database connection.
-	 */
-
-	public static HashMap<Object, Object> getPermisosPorDefecto() {
-		HashMap<Object, Object> roles = new HashMap<Object, Object>();
+	public static HashMap getPermisosPorDefecto() {
+		HashMap roles = new HashMap();
 		ArrayList<String> operacionesVentas = new ArrayList<>();
 		operacionesVentas.add("registrarVenta");
 		operacionesVentas.add("imprimirVenta");
@@ -71,6 +45,7 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		operacionesVentas.add("actualizarCliente");
 		operacionesVentas.add("eliminarCliente");
 		operacionesVentas.add("buscarCliente");
+
 		roles.put("vendedor", operacionesVentas);
 
 		ArrayList<String> operacionesAlmacenero = new ArrayList<>();
@@ -84,8 +59,8 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		roles.put("almacenero", operacionesAlmacenero);
 
 		ArrayList<String> permisosHeredados = new ArrayList<>();
-		permisosHeredados.add("vendedor");// hereda permisos de vendedor
-		permisosHeredados.add("almacenero");// hereda permisos de almacenero
+		permisosHeredados.add("vendedor");// hereda permisoos de vendedor
+		permisosHeredados.add("almacenero");// hereda permisoos de almacenero
 		permisosHeredados.add("registrarUsuario");
 		permisosHeredados.add("eliminarUsuario");
 		permisosHeredados.add("actualizarUsuario");
@@ -107,7 +82,7 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 *                 this array, which holds the value of <code>userId</code>.
 	 * @return boolean whether the operations can be performed by the user.
 	 */
-	public boolean checkAccess(String itemName, Object userId, HashMap<Object, Object> params) {
+	public boolean checkAccess(String itemName, Object userId, HashMap params) {
 		List<AutorizacionAsignado> assignments = this.getAuthAssignments(userId);
 		return this.checkAccessRecursive(itemName, userId, params, assignments);
 	}
@@ -130,14 +105,15 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 * @return boolean whether the operations can be performed by the user.
 	 * @since 1.1.3
 	 */
-	protected boolean checkAccessRecursive(String itemName, Object userId, HashMap<Object, Object> params,
+	protected boolean checkAccessRecursive(String itemName, Object userId, HashMap params,
 			List<AutorizacionAsignado> assignments) {
 		Autorizacion item = this.getAuthItem(itemName);
 		if (item == null)
 			return false;
-
+		// Yii::trace('Checking permission
+		// "'.item.getName().'"','system.web.auth.CDbAuthManager');
 		if (params == null) {
-			params = new HashMap<Object, Object>();
+			params = new HashMap();
 			params.put("userId", userId);
 		} else {
 			if (!params.containsKey("userId"))
@@ -165,7 +141,7 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 
 			CriterioSQL criterio = new CriterioSQL(this.itemChildTable);
 			criterio.addCondicion("hijo", "'" + itemName + "'", "=");
-			List<String> parents = BaseConexion.getLista(criterio);
+			List<String> parents = this.db.getLista(criterio);
 			for (String parent : parents) {
 				if (this.checkAccessRecursive(parent, userId, params, assignments))
 					return true;
@@ -182,7 +158,6 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 * @return boolean whether the item is added successfully CException if either
 	 *         parent or child doesn't exist or if a loop has been detected.
 	 */
-	@SuppressWarnings("unchecked")
 	public boolean addItemChild(String itemName, String childName) {
 		if (itemName.equals(childName)) {
 			System.out.println("error");
@@ -192,10 +167,10 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		CriterioSQL criterio = new CriterioSQL(this.itemTable);
 		criterio.addCompareTexto("nombre", itemName, null, "=");
 		criterio.addCompareTexto("nombre", childName, "or", "=");
-		HashMap<Object, Object> rows = BaseConexion.getItems(criterio);
+		HashMap rows = BaseConexion.getItems(criterio);
 		if (rows.size() == 2) {
-			ArrayList<Object> reg = (ArrayList<Object>) rows.get(0);
-			ArrayList<Object> reg1 = (ArrayList<Object>) rows.get(1);
+			ArrayList reg = (ArrayList) rows.get(0);
+			ArrayList reg1 = (ArrayList) rows.get(1);
 			int parentType;
 			int childType;
 			if (reg.get(0).equals(itemName)) {
@@ -211,16 +186,15 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 				System.out.println("No se se puede agregar como hijo");
 				return false;
 			}
-
 			Statement st = BaseConexion.getStatement();
 			try {
 				System.out.println();
 				st.execute("insert into " + this.itemChildTable + "(padre, hijo) values('" + itemName + "','"
 						+ childName + "')");
-
 			} catch (SQLException ex) {
 				Logger.getLogger(DbAutorizacionAdministrador.class.getName()).log(Level.SEVERE, null, ex);
 			}
+
 			return true;
 		} else {
 			System.out.println("No existe padre ni hijo");
@@ -273,7 +247,7 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	/**
 	 * Returns the children of the specified item.
 	 * 
-	 * @param names Object the parent item name. This can be either a string or an
+	 * @param names Objetc the parent item name. This can be either a string or an
 	 *              array. The latter represents a list of item names.
 	 * @return array all child items of the parent
 	 */
@@ -282,7 +256,7 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		if (names instanceof String)
 			condition = "padre='" + names + "'";
 		else if (names instanceof List) {
-			List<Object> ns = (List<Object>) names;
+			List ns = (List) names;
 			String unirNombres = "";
 			for (Object name : ns) {
 				if (ns.indexOf(name) == 0) {
@@ -299,10 +273,9 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		sql += " AND nombre=hijo";
 		System.out.println(sql);
 		ArrayList<HashMap> rows = BaseConexion.getItemChildrens(sql);
-
 		List<Autorizacion> children = new ArrayList<>();
 		Autorizacion auth;
-		for (HashMap<Object, Object> row : rows) {
+		for (HashMap row : rows) {
 			auth = new Autorizacion(this, row.get("nombre").toString(), (Integer) row.get("tipo"),
 					String.valueOf(row.get("descripcion")), String.valueOf(row.get("bizrule")), null);
 			children.add(auth);
@@ -318,7 +291,7 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 * @param bizRule  string the business rule to be executed when
 	 *                 {@link checkAccess} is called for this particular
 	 *                 authorization item.
-	 * @param data     Object additional data associated with this assignment
+	 * @param data     Objetc additional data associated with this assignment
 	 * @return CAuthAssignment the authorization assignment information. CException
 	 *         if the item does not exist or if the item has already been assigned
 	 *         to the user
@@ -398,9 +371,8 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 *         the item is not assigned to the user.
 	 */
 	public AutorizacionAsignado getAuthAssignment(String itemName, Object userId) {
-
 		Statement st = BaseConexion.getStatement();
-		HashMap<Object, Object> row = new HashMap<Object, Object>();
+		HashMap row = new HashMap();
 		try {
 			ResultSet rs = st.executeQuery("select * from " + this.assignmentTable + " where nombreitem ='" + itemName
 					+ "' and iduser='" + userId + "'");
@@ -413,7 +385,6 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		} catch (SQLException ex) {
 			Logger.getLogger(DbAutorizacionAdministrador.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
 		if (row.size() > 0) {
 			return new AutorizacionAsignado(this, row.get("nombreitem").toString(), row.get("iduser"),
 					String.valueOf(row.get("bizrule")), null);
@@ -430,12 +401,12 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 */
 	public ArrayList<AutorizacionAsignado> getAuthAssignments(Object userId) {
 		Statement st = BaseConexion.getStatement();
-		HashMap<Object, Object> row;
-		ArrayList<HashMap> rows = new ArrayList<HashMap>();
+		HashMap row;
+		ArrayList<HashMap> rows = new ArrayList<>();
 		try {
 			ResultSet rs = st.executeQuery("select * from " + this.assignmentTable + " where iduser='" + userId + "'");
 			while (rs.next()) {
-				row = new HashMap<Object, Object>();
+				row = new HashMap();
 				row.put("nombreitem", rs.getString(1));
 				row.put("iduser", rs.getString(2));
 				row.put("bizrule", rs.getString(3));
@@ -447,8 +418,7 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		}
 
 		ArrayList<AutorizacionAsignado> assignments = new ArrayList<>();
-
-		for (HashMap<Object, Object> row1 : rows) {
+		for (HashMap row1 : rows) {
 			AutorizacionAsignado aa = new AutorizacionAsignado(this, row1.get("nombreitem").toString(),
 					row1.get("iduser"), String.valueOf(row1.get("bizrule")), null);
 			assignments.add(aa);
@@ -463,7 +433,6 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 * @param assignment AutorizacionAsignado the assignment that has been changed.
 	 */
 	public void saveAuthAssignment(AutorizacionAsignado assignment) {
-
 		try {
 			Statement st = BaseConexion.getStatement();
 			st.executeUpdate("update " + this.assignmentTable + " set bizrule='" + assignment.getBizRule()
@@ -473,15 +442,6 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		} catch (SQLException ex) {
 			Logger.getLogger(DbAutorizacionAdministrador.class.getName()).log(Level.SEVERE, null, ex);
 		}
-//            
-//		this.db.createCommand()
-//			.update(this.assignmentTable, array(
-//				'bizrule'=>assignment.getBizRule(),
-//				'data'=>serialize(assignment.getData()),
-//			), 'itemname=:itemname AND userid=:userid', array(
-//				'itemname'=>assignment.getItemName(),
-//				'userid'=>assignment.getUserId()
-//			));
 	}
 
 	/**
@@ -498,42 +458,26 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		String command = "";
 		if (type == null && userId == null) {
 			command = "select * from " + this.itemTable;
-//			command=this.db.createCommand()
-//				.select()
-//				.from(this.itemTable);
 		} else if (userId == null) {
 			command = "select * from " + this.itemTable + " where tipo=" + type;
-//			command=this.db.createCommand()
-//				.select()
-//				.from(this.itemTable)
-//				.where('type=:type', array(':type'=>type));
 		} else if (type == null) {
 			command = "select nombre,tipo,descripcion,t1.bizrule,t1.dato from " + this.itemTable + " as t1,"
 					+ this.assignmentTable + " as t2  where nombre=nombreitem and iduser='" + userId + "'";
-//			command=this.db.createCommand()
-//				.select('name,type,description,t1.bizrule,t1.data')
-//				.from(array(
-//					this.itemTable.' t1',
-//					this.assignmentTable.' t2'
-//				))
-//				.where('name=itemname AND userid=:userid', array(':userid'=>userId));
 		} else {
-
 			command = "select nombre,tipo,descripcion,t1.bizrule,t1.dato from " + this.itemTable + " as t1,"
 					+ this.assignmentTable + " as t2  where nombre=nombreitem and tipo=" + type + " and iduser='"
 					+ userId + "'";
 		}
 
 		ArrayList<Autorizacion> items = new ArrayList<>();
-		// items=array();
 
 		Statement st = BaseConexion.getStatement();
-		HashMap<Object, Object> row;
+		HashMap row;
 		ArrayList<HashMap> rows = new ArrayList<>();
 		try {
 			ResultSet rs = st.executeQuery(command);
 			while (rs.next()) {
-				row = new HashMap<Object, Object>();
+				row = new HashMap();
 				row.put("nombre", rs.getString(1));
 				row.put("tipo", rs.getInt(2));
 				row.put("descripcion", rs.getString(3));
@@ -544,9 +488,8 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		} catch (SQLException ex) {
 			Logger.getLogger(DbAutorizacionAdministrador.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
 		Autorizacion nauth;
-		for (HashMap<Object, Object> row1 : rows) {
+		for (HashMap row1 : rows) {
 			nauth = new Autorizacion(this, row1.get("nombre").toString(), (Integer) row1.get("tipo"),
 					String.valueOf(row1.get("descripcion")), String.valueOf(row1.get("bizrule")), null);
 			items.add(nauth);
@@ -579,13 +522,13 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 *         name already exists
 	 */
 	public Autorizacion createAuthItem(String name, int type, String description, String bizRule, Object data) {
-
 		System.out.println("insert into " + this.itemTable + "(nombre,tipo,descripcion,bizrule,dato) values('" + name
 				+ "'," + type + ",'" + description + "','" + bizRule + "','" + data + "')");
 		Statement st = BaseConexion.getStatement();
 		try {
-			boolean execute = st.execute("insert into " + this.itemTable + "(nombre,tipo,descripcion,bizrule,dato) values('" + name
-							+ "'," + type + ",'" + description + "','" + bizRule + "','" + data + "')");		
+			boolean execute = st
+					.execute("insert into " + this.itemTable + "(nombre,tipo,descripcion,bizrule,dato) values('" + name
+							+ "'," + type + ",'" + description + "','" + bizRule + "','" + data + "')");
 		} catch (SQLException ex) {
 			Logger.getLogger(DbAutorizacionAdministrador.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -616,10 +559,10 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 		Statement st = BaseConexion.getStatement();
 		try {
 			revocado = st.executeUpdate("delete from " + this.itemTable + " where nombre='" + name + "'") > 0;
-
 		} catch (SQLException ex) {
 			Logger.getLogger(DbAutorizacionAdministrador.class.getName()).log(Level.SEVERE, null, ex);
 		}
+
 		return revocado;
 	}
 
@@ -630,7 +573,6 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 * @return CAuthItem the authorization item. Null if the item cannot be found.
 	 */
 	public Autorizacion getAuthItem(String name) {
-
 		Statement st = BaseConexion.getStatement();
 		HashMap row = new HashMap();
 		try {
@@ -703,11 +645,9 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 * Removes all authorization assignments.
 	 */
 	public void clearAuthAssignments() {
-//		this.db.createCommand().delete(this.assignmentTable);
 		Statement st = BaseConexion.getStatement();
 		try {
 			st.executeUpdate("delete from " + this.assignmentTable);
-//			
 		} catch (SQLException ex) {
 			Logger.getLogger(DbAutorizacionAdministrador.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -747,5 +687,10 @@ public class DbAutorizacionAdministrador extends AutorizacionAdministrador {
 	 */
 	protected boolean usingSqlite() {
 		return this.usingSqlite;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(connectionID, itemTable, itemChildTable, itemChildTable, assignmentTable, db, usingSqlite);
 	}
 }

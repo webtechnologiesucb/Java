@@ -1,13 +1,3 @@
-/ventanas/
-/managerbd/
-/autorizacion/
-/codigolite/
-/config/
-/controllers/
 /core/
-/excepciones/
+/managerbd/
 /modelbd/
-/modelgui/
-/util/
-/resources/
-/app/

@@ -30,7 +30,7 @@ public class BaseConexion {
 	public static int SOLO_STATEMENT = 2;
 	public static int SOLO_RESULTSET = 3;
 	public static int SOLO_PREPAREDSTATEMENT = 4;
-	public static int CONNECION = 5;
+	public static int CONNECTION = 5;
 
 	public static void init() {
 		try {
@@ -67,6 +67,7 @@ public class BaseConexion {
 			System.out.println("se esta pasando un objeto nulo");
 			ex.printStackTrace();
 		}
+
 	}
 
 	/**
@@ -113,11 +114,11 @@ public class BaseConexion {
 		return reg;
 	}
 
-	public static HashMap<Object, Object> getItems(CriterioSQL sql) {
+	public static HashMap getItems(CriterioSQL sql) {
 		if (cns == null) {
 			init();
 		}
-		HashMap<Object, Object> items = new HashMap<Object, Object>();
+		HashMap items = new HashMap();
 		List<Object> reg = new ArrayList<>();
 		try {
 			rs = getStatement().executeQuery(sql.getConsultaSQL());
@@ -143,12 +144,12 @@ public class BaseConexion {
 		if (cns == null) {
 			init();
 		}
-		HashMap<Object, Object> items;
+		HashMap items;
 		ArrayList<HashMap> reg = new ArrayList<>();
 		try {
 			rs = getStatement().executeQuery(sql);
 			while (rs.next()) {
-				items = new HashMap<Object, Object>();
+				items = new HashMap();
 				items.put("nombre", rs.getString(1));
 				items.put("tipo", rs.getInt(2));
 				items.put("descripcion", rs.getString(3));

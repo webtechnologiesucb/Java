@@ -23,7 +23,7 @@ public class CMoneda extends JAbstractController implements Serializable {
 	}
 
 	public ArrayList<SimpleModelo> getRegistros(String[] columna, Object[] valor) {
-		return (ArrayList<SimpleModelo>) getRegistros(new String[] {}, columna, valor);
+		return getRegistros(new String[] {}, columna, valor);
 	}
 
 	@Override
@@ -33,17 +33,17 @@ public class CMoneda extends JAbstractController implements Serializable {
 
 	@Override
 	public JAbstractModelBD getRegistro() {
-		throw new UnsupportedOperationException("No soportado");
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
 	public JAbstractModelBD getRegistro(JAbstractModelBD mdl, boolean opcion) {
-		throw new UnsupportedOperationException("No soportado");
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
 	public JAbstractModelBD buscarRegistro(Object cvl) {
-		throw new UnsupportedOperationException("No soportado");
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
@@ -52,10 +52,12 @@ public class CMoneda extends JAbstractController implements Serializable {
 		int gravado = 0;
 		String campos = "nombre, simbolo, activo,isdefault";
 		Object[] valores = { sm.getNombre(), sm.getSimbolo(), sm.getActivo(), sm.getPredeterminado() };
+
 		gravado = this.agregarRegistroPs(sm.getNombreTabla(), this.stringToArray(campos, ","), valores);
 
 		if (gravado == 1)
 			return true;
+
 		return false;
 	}
 
@@ -76,15 +78,15 @@ public class CMoneda extends JAbstractController implements Serializable {
 	public Moneda getRegistroPorPk(Integer id) {
 		Moneda sm = null;
 		try {
-			setRs(this.selectPorPk(Moneda.TABLA, Moneda.PK_COLUMNA, id));
+			rs = this.selectPorPk(Moneda.TABLA, Moneda.PK_COLUMNA, id);
 
-			while (getRs().next()) {
+			while (rs.next()) {
 				sm = new Moneda();
-				sm.setPrimaryKey(getRs().getInt(1));
-				sm.setNombre(getRs().getString(2));
-				sm.setSimbolo(getRs().getString(3));
-				sm.setActivo(getRs().getInt(4));
-				sm.setPredeterminado(getRs().getInt(5));
+				sm.setPrimaryKey(rs.getInt(1));
+				sm.setNombre(rs.getString(2));
+				sm.setSimbolo(rs.getString(3));
+				sm.setActivo(rs.getInt(4));
+				sm.setPredeterminado(rs.getInt(5));
 				if (sm.getPredeterminadoBool()) {
 					this.predeterminado = sm;
 				}
@@ -97,33 +99,33 @@ public class CMoneda extends JAbstractController implements Serializable {
 	}
 
 	@Override
-	public ArrayList<?> getRegistros(String[] campos, String[] columnaId, Object[] id) {
+	public ArrayList getRegistros(String[] campos, String[] columnaId, Object[] id) {
 		ArrayList<Moneda> rgs = new ArrayList<Moneda>();
 		try {
 
 			if (id != null) {
-				this.setNumRegistros(this.getNumeroRegistros(Moneda.TABLA, SimpleModelo.ACTIVO, SimpleModelo.ACTIVO, id));
+				this.numRegistros = this.getNumeroRegistros(Moneda.TABLA, SimpleModelo.ACTIVO, SimpleModelo.ACTIVO, id);
 			} else {
-				this.setNumRegistros(this.getNumeroRegistros(Moneda.TABLA, SimpleModelo.ACTIVO));
-				if (getRs().isClosed()) {
+				this.numRegistros = this.getNumeroRegistros(Moneda.TABLA, SimpleModelo.ACTIVO);
+				if (rs.isClosed()) {
 					System.out.println("resultset esta cerrado...");
 				}
 			}
-			setRs(this.getRegistros(Moneda.TABLA, campos, columnaId, id));
-			if (this.getNumRegistros() < getFinalPag()) {
-				setFinalPag(this.getNumRegistros());
+			rs = this.getRegistros(Moneda.TABLA, campos, columnaId, id);
+			if (this.numRegistros < finalPag) {
+				finalPag = this.numRegistros;
 			}
-			if (getFinalPag() > inicioPag) {
-				inicioPag -= (getFinalPag() - inicioPag) - 1;
+			if (finalPag > inicioPag) {
+				inicioPag -= (finalPag - inicioPag) - 1;
 			}
 			Moneda sm = null;
-			while (getRs().next()) {
+			while (rs.next()) {
 				sm = new Moneda();
-				sm.setPrimaryKey(getRs().getInt(1));
-				sm.setNombre(getRs().getString(2));
-				sm.setSimbolo(getRs().getString(3));
-				sm.setActivo(getRs().getInt(4));
-				sm.setPredeterminado(getRs().getInt(5));
+				sm.setPrimaryKey(rs.getInt(1));
+				sm.setNombre(rs.getString(2));
+				sm.setSimbolo(rs.getString(3));
+				sm.setActivo(rs.getInt(4));
+				sm.setPredeterminado(rs.getInt(5));
 				if (sm.getPredeterminadoBool()) {
 					this.predeterminado = sm;
 				}

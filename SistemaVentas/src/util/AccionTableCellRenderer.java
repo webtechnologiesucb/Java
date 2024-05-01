@@ -14,18 +14,18 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Código Lite <https://codigolite.com>
  */
-public class AccionTableCellRenderer implements TableCellRenderer {
-	private PanelAccion test;
+public class AccionTableCellRenderer implements TableCellRenderer{
+    private PanelAccion test;
 
-	public AccionTableCellRenderer(final JInternalFrame ifr) {
-		test = new PanelAccion(ifr);
-	}
+    public AccionTableCellRenderer(final JInternalFrame ifr) {
+       test = new PanelAccion(ifr);
+    }
+    
 
-	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-			int row, int column) {
-		test.setTabla(table);
-		return test;
-	}
-
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        test.setTabla(table);        
+        return test;
+    }
+    
 }

@@ -13,13 +13,13 @@ public class CriterioSQL {
 	private String select = " * ";
 	private int desplazamiento = -1;
 	private int limite = -1;
+	private boolean distinct = false;
 	private String orderBy = "";
 	private String alias = "";
 	private String tabla;
 	private String groupBy = "";
 	private String having = "";
-	private String limite1 = "";
-	private List<Object> valoresAcumulados; // lista que acumulara los valroes de las condiciones
+	private List valoresAcumulados; // lista que acumulara los valroes de las condiciones
 
 	public boolean updatePreparement = false; // poner a true para gener una setencia
 												// sql formateado esclusivamente para
@@ -296,6 +296,7 @@ public class CriterioSQL {
 
 	// distinct para no mostrar valores con repetidos
 	public void setDistinct(boolean establecer) {
+		this.distinct = true;
 	}
 
 	// uso del between
@@ -346,6 +347,7 @@ public class CriterioSQL {
 		private long idObject;
 		public String campo;
 		public Object valor;
+		private Object valorTexto;
 		public String operadorComparacion; // =, != ,<=, like
 
 		/**
@@ -520,10 +522,12 @@ public class CriterioSQL {
 	}
 
 	public String getOnlyWhere() {
+
+		String limite = "";
 		if (this.limite > -1) {
-			limite1 += " limit ";
+			limite += " limit ";
 			if (this.desplazamiento > -1) {
-				limite1 += this.desplazamiento + ",";
+				limite += this.desplazamiento + ",";
 			}
 			limite += this.limite;
 		}
@@ -533,6 +537,7 @@ public class CriterioSQL {
 	}
 
 	public String getSQLupdate() {
+
 		String sql = "update " + this.tabla + " " + procesaUpdate();
 		return sql;
 	}
@@ -610,14 +615,17 @@ public class CriterioSQL {
 								+ cod.getValor();
 					}
 				}
+
 			}
 		}
 		return condicionProcesada;
 	}
 
 	/**
-	 * Este metodo une los items de un array en una cadena, pero separado por una  coma<br/>
-	 * Y ademas verifica el tipo de dato de cada item, si el item no fuera numeric, entonces<br/>
+	 * Este metodo une los items de un array en una cadena, pero separado por una
+	 * coma<br/>
+	 * Y ademas verifica el tipo de dato de cada item, si el item no fuera numeric,
+	 * entonces<br/>
 	 * envuelve este item entre comiilas.
 	 * 
 	 * @param valores

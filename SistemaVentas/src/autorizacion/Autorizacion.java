@@ -2,14 +2,15 @@ package autorizacion;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * CAuthItem representa un elemento de autorización. Un elemento de autorización puede ser una
- * operación, una tarea o un rol. Forman una jerarquía de autorización. Los elementos en
- * niveles superiores de la jerarquía heredan los permisos representados por elementos
- * en los niveles inferiores. A un usuario se le pueden asignar uno o varios elementos de autorización
- * (llamados {@link CAuthAssignment assignments}. Sólo puede realizar una operación
- * cuando se encuentra entre sus elementos asignados.
+ * CAuthItem represents an authorization item. An authorization item can be an
+ * operation, a task or a role. They form an authorization hierarchy. Items on
+ * higher levels of the hierarchy inherit the permissions represented by items
+ * on lower levels. A user may be assigned one or several authorization items
+ * (called {@link CAuthAssignment assignments}. He can perform an operation only
+ * when it is among his assigned items.
  *
  * @property IAuthManager $authManager The authorization manager.
  * @property integer $type The authorization item type. This could be 0
@@ -77,7 +78,7 @@ public class Autorizacion {
 	 * @return boolean whether the specified item is within the hierarchy starting
 	 *         from this item.
 	 */
-	public boolean checkAccess(String itemName, HashMap<Object, Object> params) {
+	public boolean checkAccess(String itemName, HashMap params) {
 		if (this.auth.executeBizRule(this.bizRule, params, this.data)) {
 			if (this.name.equals(itemName))
 				return true;
@@ -275,5 +276,10 @@ public class Autorizacion {
 	 */
 	public AutorizacionAsignado getAssignment(Object userId) {
 		return this.auth.getAuthAssignment(this.name, userId);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(auth, type, name, description, bizRule, data);
 	}
 }

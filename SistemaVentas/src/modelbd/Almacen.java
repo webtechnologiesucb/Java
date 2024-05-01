@@ -1,10 +1,13 @@
 package modelbd;
 
+import java.util.Objects;
+
 /**
  *
  * @author Ferz Código Lite - https://codigolite.com
  */
 public class Almacen extends SimpleModelo {
+
 	private static final long serialVersionUID = 5399033143172278312L;
 	public static final String TABLA = "gv_almacen";
 	public static final String PK_COLUMNA = "ida";
@@ -54,9 +57,6 @@ public class Almacen extends SimpleModelo {
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 61 * hash + (this.primaryKey != null ? this.primaryKey.hashCode() : 0);
-		return hash;
+		return Objects.hash(TABLA, PK_COLUMNA, direccion, encargado);
 	}
-
 }

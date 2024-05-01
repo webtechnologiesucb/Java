@@ -81,8 +81,8 @@ public class Paginador {
 		return item;
 	}
 
-	public List<JAbstractModelBD> anterior() { // primero verificar que item no sea nulo o este vacio
-
+	public List<JAbstractModelBD> anterior() {
+		// primero verificar que item no sea nulo o este vacio
 		if (desplazamiento > 0) {
 			criterio.setDesplazamientos(desplazamiento -= limite);
 		}

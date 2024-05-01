@@ -15,30 +15,30 @@ import javax.swing.table.TableCellEditor;
  *
  * @author Código Lite <https://codigolite.com>
  */
-public class CeldaAccionEditor extends AbstractCellEditor implements TableCellEditor {
+public class CeldaAccionEditor extends AbstractCellEditor implements TableCellEditor{
 
-	private PanelAccion pa;
+    private PanelAccion pa;
+    public CeldaAccionEditor(JInternalFrame ifr) {
+        pa = new PanelAccion(ifr);
+        pa.setCeldaEditor(this);
+        
+    }
 
-	public CeldaAccionEditor(JInternalFrame ifr) {
-		pa = new PanelAccion(ifr);
-		pa.setCeldaEditor(this);
+    @Override
+    public Object getCellEditorValue() {
+        return "";
+    }
 
-	}
-
-	@Override
-	public Object getCellEditorValue() {
-		return "";
-	}
-
-	@Override
-	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		pa.setTabla(table);
-		pa.setIndexFila(row);
-		return pa;
-	}
-
-	public void lanzarDetencionEdicion() {
-		this.fireEditingStopped();
-	}
-
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        pa.setTabla(table);
+        pa.setIndexFila(row);        
+        return pa;
+    }
+    
+    public void lanzarDetencionEdicion()
+    {
+        this.fireEditingStopped();
+    }
+    
 }

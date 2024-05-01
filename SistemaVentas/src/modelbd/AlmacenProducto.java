@@ -11,12 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
  * @author Código Lite - https://codigolite.com
  */
 public class AlmacenProducto extends JAbstractModelBD implements Serializable, IModel {
+
 	private static final long serialVersionUID = 7906803663844023570L;
 	public static final String nt = "gv_almaceproduct";
 	public static final String COLUMNA_PK = "idpa";
@@ -143,9 +145,7 @@ public class AlmacenProducto extends JAbstractModelBD implements Serializable, I
 
 	@Override
 	public int hashCode() {
-		int hash = 5;
-		hash = 83 * hash + (this.idpa != null ? this.idpa.hashCode() : 0);
-		return hash;
+		return Objects.hash(idpa, almacen, producto, cantidadActual, cantidadInicial, tipoManipulacion, fecha, activo);
 	}
 
 	@Override
@@ -194,5 +194,4 @@ public class AlmacenProducto extends JAbstractModelBD implements Serializable, I
 	public Object[] llenarValores() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
-
 }

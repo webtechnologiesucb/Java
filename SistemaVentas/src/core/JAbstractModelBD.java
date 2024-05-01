@@ -263,15 +263,18 @@ public abstract class JAbstractModelBD {
 	}
 
 	public JAbstractModelBD getSiguiente(CriterioSQL criterio) {
+		JAbstractModelBD sm = null;
 		return getSiguiente(this.getPrimaryKey(), criterio);
 	}
 
 	public JAbstractModelBD getSiguiente(Object pk) {
+		JAbstractModelBD sm = null;
 		CriterioSQL criterio = new CriterioSQL();
 		return getSiguiente(pk, criterio);
 	}
 
 	public JAbstractModelBD getSiguiente() {
+		JAbstractModelBD sm = null;
 		CriterioSQL criterio = new CriterioSQL();
 		return getSiguiente(criterio);
 	}
@@ -295,11 +298,13 @@ public abstract class JAbstractModelBD {
 	}
 
 	public JAbstractModelBD getAnterior(Object pk) {
+		JAbstractModelBD sm = null;
 		CriterioSQL criterio = new CriterioSQL();
 		return getAnterior(pk, criterio);
 	}
 
 	public JAbstractModelBD getAnterior(CriterioSQL criterio) {
+		JAbstractModelBD sm = null;
 		return getAnterior(this.getPrimaryKey(), criterio);
 	}
 
@@ -476,6 +481,32 @@ public abstract class JAbstractModelBD {
 	 * @param valores
 	 */
 	private void setValores(PreparedStatement ps, Object[] valores) {
+		try {
+			for (int i = 0; i < valores.length; i++) {
+				if (getInt(valores[i]) != null) {
+					ps.setInt(i + 1, getInt(valores[i]));
+				} else if (getDouble(valores[i]) != null) {
+					ps.setDouble(i + 1, getDouble(valores[i]));
+				} else if (getFloat(valores[i]) != null) {
+					ps.setFloat(i + 1, getFloat(valores[i]));
+				} else if (valores[i] instanceof DatoArchivo) {
+					DatoArchivo da = (DatoArchivo) valores[i];
+					ps.setBinaryStream(i + 1, da.getFis(), da.getLongitud());
+				} else {
+					if (valores[i] != null) {
+						ps.setString(i + 1, valores[i].toString());
+					} else {
+						ps.setString(i + 1, null);
+					}
+
+				}
+			}
+		} catch (SQLException ex) {
+		}
+	}
+
+	private void setValores(PreparedStatement ps) {
+		Object[] valores = this.valoresGrabar;
 		try {
 			for (int i = 0; i < valores.length; i++) {
 				if (getInt(valores[i]) != null) {

@@ -155,9 +155,9 @@ public class PanelAutorizacion extends javax.swing.JPanel {
     private void lstRolValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRolValueChanged
         Object selectedValue = lstRol.getSelectedValue();
         List<Autorizacion> itemChildren = AppConfig.getUsuario().getAuth().getItemChildren(selectedValue);
-        ArrayList<String> alRoles = new ArrayList();
-        ArrayList<String> alTareas = new ArrayList();
-        ArrayList<String> alOperaciones= new ArrayList();
+        ArrayList<String> alRoles = new ArrayList<>();
+        ArrayList<String> alTareas = new ArrayList<>();
+        ArrayList<String> alOperaciones= new ArrayList<>();
         for(Autorizacion auth: itemChildren)
         {
             if(auth.getType()==Autorizacion.TYPE_ROLE)
@@ -193,9 +193,9 @@ public class PanelAutorizacion extends javax.swing.JPanel {
     private void lstTareaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstTareaValueChanged
        Object selectedValue = this.lstTarea.getSelectedValue();
         List<Autorizacion> itemChildren = AppConfig.getUsuario().getAuth().getItemChildren(selectedValue);
-        ArrayList<String> alRoles = new ArrayList();
-        ArrayList<String> alTareas = new ArrayList();
-        ArrayList<String> alOperaciones= new ArrayList();
+        ArrayList<String> alRoles = new ArrayList<>();
+        ArrayList<String> alTareas = new ArrayList<>();
+        ArrayList<String> alOperaciones= new ArrayList<>();
         for(Autorizacion auth: itemChildren)
         {
             if(auth.getType()==Autorizacion.TYPE_ROLE)

@@ -3,13 +3,14 @@ package modelbd;
 import core.JAbstractModelBD;
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.util.Objects;
 
 /**
  *
  * @author Código Lite - https://codigolite.com
  */
 public class Bitacora extends JAbstractModelBD implements Serializable, IModel {
-	private static final long serialVersionUID = -2025197620609231011L;
+	private static final long serialVersionUID = 1L;
 	public static final String nt = "gv_bitacora";
 	public static final String COLUMNA_PK = "idbitacora";
 	public static final String COLUMNA_USER = "idusuario";
@@ -104,14 +105,12 @@ public class Bitacora extends JAbstractModelBD implements Serializable, IModel {
 
 	@Override
 	public int hashCode() {
-		int hash = 0;
-		hash += (idbitacora != null ? idbitacora.hashCode() : 0);
-		return hash;
+		return Objects.hash(idbitacora, idusuario, os, arquitectura, version, usuario, usuario, ultimaActividad,
+				fechaActividad);
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are not set
 		if (!(object instanceof Bitacora)) {
 			return false;
 		}
@@ -137,5 +136,4 @@ public class Bitacora extends JAbstractModelBD implements Serializable, IModel {
 	public Object[] llenarValores() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
-
 }
