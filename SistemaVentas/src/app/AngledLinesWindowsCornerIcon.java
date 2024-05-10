@@ -37,7 +37,6 @@ public class AngledLinesWindowsCornerIcon implements Icon {
 		g.drawLine(6, 12, 12, 6);
 		g.drawLine(7, 12, 12, 7);
 		g.drawLine(8, 12, 12, 8);
-
 		g.drawLine(11, 12, 12, 11);
 		g.drawLine(12, 12, 12, 12);
 	}

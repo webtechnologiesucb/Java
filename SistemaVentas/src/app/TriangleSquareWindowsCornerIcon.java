@@ -9,10 +9,8 @@ import java.awt.*;
  * User: Jonathan Simon
  * Date: Oct 5, 2004
  * Time: 6:03:57 PM
- * To change this template use File | Settings | File Templates.
  */
 public class TriangleSquareWindowsCornerIcon implements Icon {
-
     //RGB values discovered using ZoomIn
     private static final Color THREE_D_EFFECT_COLOR = new Color(255, 255, 255);
     private static final Color SQUARE_COLOR_LEFT = new Color(184, 180, 163);

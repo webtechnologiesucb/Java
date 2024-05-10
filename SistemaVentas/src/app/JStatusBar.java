@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class JStatusBar extends JPanel {
+    private static final long serialVersionUID = -7642471457947958720L;
 
 	public JStatusBar() {
 		setLayout(new BorderLayout());
@@ -12,7 +13,6 @@ public class JStatusBar extends JPanel {
 		JPanel rightPanel = new JPanel(new BorderLayout());
 		rightPanel.add(new JLabel(new AngledLinesWindowsCornerIcon()), BorderLayout.SOUTH);
 		rightPanel.setOpaque(false);
-
 		add(rightPanel, BorderLayout.EAST);
 		setBackground(new Color(236, 233, 216));
 	}

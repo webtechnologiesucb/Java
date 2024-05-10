@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 public class TestApp {
     public static void main(String[] arg)
     { 
-        DbAutorizacionAdministrador auth = new DbAutorizacionAdministrador();
         Usuario usr = new Usuario();       
         AppConfig.setUsuario((Usuario)usr.getUltimo(27));
         JFrame vnt = new JFrame("Test Permisos");
