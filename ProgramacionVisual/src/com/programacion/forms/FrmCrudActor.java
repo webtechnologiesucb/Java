@@ -1,6 +1,5 @@
 package com.programacion.forms;
 
-//Importaciones necesarias
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -147,10 +146,12 @@ public class FrmCrudActor extends JFrame {
 		List<Actor> lista = new ArrayList<Actor>();
 
 		Connection con = Conexion.getInstance().getConnection();
-		String consulta = "SELECT actor_id, first_name, last_name, last_update " + "FROM actor " + "WHERE actor_id>?";
+		String consulta = "SELECT actor_id, first_name, last_name, last_update " + "FROM actor " 
+				+ "WHERE actor_id>?";
 		PreparedStatement pst = con.prepareStatement(consulta);
 		pst.setInt(1, actorId);
 		ResultSet rs = pst.executeQuery();
+		System.out.println(pst.toString());
 
 		while (rs.next()) {
 			Actor a = new Actor();
@@ -181,6 +182,7 @@ public class FrmCrudActor extends JFrame {
 		pst.setString(1, "%" + criterio + "%");
 		pst.setString(2, "%" + criterio + "%");
 		ResultSet rs = pst.executeQuery();
+		System.out.println(pst.toString());
 
 		while (rs.next()) {
 			Actor a = new Actor();
@@ -214,6 +216,7 @@ public class FrmCrudActor extends JFrame {
 		pst.setString(1, firstName);
 		pst.setString(2, lastName);
 		int rowsAffected = pst.executeUpdate();
+		System.out.println(pst.toString());
 
 		if (rowsAffected > 0) {
 			JOptionPane.showMessageDialog(this, "Actor insertado exitosamente.");
@@ -236,12 +239,14 @@ public class FrmCrudActor extends JFrame {
 		}
 
 		Connection con = Conexion.getInstance().getConnection();
-		String consulta = "UPDATE actor SET first_name = ?, last_name = ?, last_update = NOW() WHERE actor_id = ?";
+		String consulta = "UPDATE actor SET first_name = ?, last_name = ?, last_update = NOW() "
+				+ " WHERE actor_id = ?";
 		PreparedStatement pst = con.prepareStatement(consulta);
 		pst.setString(1, firstName);
 		pst.setString(2, lastName);
 		pst.setInt(3, actorId);
 		int rowsAffected = pst.executeUpdate();
+		System.out.println(pst.toString());
 
 		if (rowsAffected > 0) {
 			JOptionPane.showMessageDialog(this, "Actor modificado exitosamente.");
@@ -257,13 +262,13 @@ public class FrmCrudActor extends JFrame {
 		}
 
 		int actorId = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
-
+		
 		Connection con = Conexion.getInstance().getConnection();
 		String consulta = "DELETE FROM actor WHERE actor_id = ?";
 		PreparedStatement pst = con.prepareStatement(consulta);
 		pst.setInt(1, actorId);
 		int rowsAffected = pst.executeUpdate();
-
+		System.out.println(pst.toString());
 		if (rowsAffected > 0) {
 			JOptionPane.showMessageDialog(this, "Actor eliminado exitosamente.");
 			cargarDatos(0);
