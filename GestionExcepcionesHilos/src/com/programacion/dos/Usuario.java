@@ -1,6 +1,6 @@
 package com.programacion.dos;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ class UsuarioModel {
 	private String nombres;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
-	private LocalDateTime fechaReg; // para manejar fecha y hora
+	private Date fechaReg; // para manejar fecha y hora
 	private String cuenta;
 	private String contraseña;
 	private boolean vigente;
@@ -31,11 +31,11 @@ public class Usuario{
 	public static void main(String...args) {
 		List<UsuarioModel> listado = new ArrayList<UsuarioModel>();
 		listado.add(new UsuarioModel(1, "Miguel", "Pacheco", "Arteaga", 
-				LocalDateTime.now(), "admin", "4dm1n123", true));
+				Date.now(), "admin", "4dm1n123", true));
 		listado.add(new UsuarioModel(2,"Leticia", "Martinez", "Garcia",
-				LocalDateTime.now(), "lgarcia", "L3ti2024", true));
+				Date.now(), "lgarcia", "L3ti2024", true));
 		listado.add(new UsuarioModel(3,"Daniela", "Toledo", "Abastoflor",
-				LocalDateTime.now(), "dtoledo", "D4ni2024", true));
+				Date.now(), "dtoledo", "D4ni2024", true));
 		
 		System.out.println("*******************************************");
 		System.out.println("Uso del toString");

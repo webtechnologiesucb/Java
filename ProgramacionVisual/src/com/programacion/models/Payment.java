@@ -1,13 +1,13 @@
 package com.programacion.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class Payment {
 	public long paymentId;
 	public double amount;
-	public LocalDateTime paymentDate;
-	public LocalDateTime lastUpdate;
+	public Date paymentDate;
+	public Date lastUpdate;
 	public Customer customer;
 	public Rental rental;
 	public Staff staff;
@@ -28,19 +28,19 @@ public class Payment {
 		amount = newAmount;
 	}
 
-	public LocalDateTime getPaymentDate() {
+	public Date getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(LocalDateTime newPaymentDate) {
+	public void setPaymentDate(Date newPaymentDate) {
 		paymentDate = newPaymentDate;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime newLastUpdate) {
+	public void setLastUpdate(Date newLastUpdate) {
 		lastUpdate = newLastUpdate;
 	}
 

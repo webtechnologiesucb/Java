@@ -1,18 +1,18 @@
 package com.programacion.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class FilmCategory {
-	public LocalDateTime lastUpdate;
+	public Date lastUpdate;
 	public Category category;
 	public Film film;
 
-	public LocalDateTime getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime newLastUpdate) {
+	public void setLastUpdate(Date newLastUpdate) {
 		lastUpdate = newLastUpdate;
 	}
 

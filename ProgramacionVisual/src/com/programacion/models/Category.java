@@ -1,13 +1,13 @@
 package com.programacion.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Collection;
 import java.util.Objects;
 
 public class Category {
 	public long categoryId;
 	public String name;
-	public LocalDateTime lastUpdate;
+	public Date lastUpdate;
 	public Collection<FilmCategory> filmCategory;
 
 	public long getCategoryId() {
@@ -26,11 +26,11 @@ public class Category {
 		name = newName;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime newLastUpdate) {
+	public void setLastUpdate(Date newLastUpdate) {
 		lastUpdate = newLastUpdate;
 	}
 

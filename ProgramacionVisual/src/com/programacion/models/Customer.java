@@ -1,6 +1,6 @@
 package com.programacion.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
@@ -11,8 +11,8 @@ public class Customer {
 	public String lastName;
 	public String email;
 	public long active = 1;
-	public LocalDateTime createDate;
-	public LocalDateTime lastUpdate;
+	public Date createDate;
+	public Date lastUpdate;
 	public Collection<Payment> payment;
 	public Collection<Rental> rental;
 	public Address address;
@@ -58,19 +58,19 @@ public class Customer {
 		active = newActive;
 	}
 
-	public LocalDateTime getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(LocalDateTime newCreateDate) {
+	public void setCreateDate(Date newCreateDate) {
 		createDate = newCreateDate;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime newLastUpdate) {
+	public void setLastUpdate(Date newLastUpdate) {
 		lastUpdate = newLastUpdate;
 	}
 

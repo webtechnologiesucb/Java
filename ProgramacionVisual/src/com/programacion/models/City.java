@@ -1,6 +1,6 @@
 package com.programacion.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
@@ -8,7 +8,7 @@ import java.util.Objects;
 public class City {
 	public long cityId;
 	public String city;
-	public LocalDateTime lastUpdate;
+	public Date lastUpdate;
 	public Collection<Address> address;
 	public Country country;
 
@@ -28,11 +28,11 @@ public class City {
 		city = newCity;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime newLastUpdate) {
+	public void setLastUpdate(Date newLastUpdate) {
 		lastUpdate = newLastUpdate;
 	}
 

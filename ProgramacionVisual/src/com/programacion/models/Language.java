@@ -1,6 +1,6 @@
 package com.programacion.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Language {
 	public long languageId;
 	public String name;
-	public LocalDateTime lastUpdate;
+	public Date lastUpdate;
 	public Collection<Film> film;
 
 	public long getLanguageId() {
@@ -27,11 +27,11 @@ public class Language {
 		name = newName;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime newLastUpdate) {
+	public void setLastUpdate(Date newLastUpdate) {
 		lastUpdate = newLastUpdate;
 	}
 

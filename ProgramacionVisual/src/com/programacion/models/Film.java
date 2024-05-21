@@ -1,6 +1,6 @@
 package com.programacion.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -56,7 +56,7 @@ public class Film {
 	public double replacementCost = 19.99;
 	public Rating rating;
 	public SpecialFeatures specialFeatures;
-	public LocalDateTime lastUpdate;
+	public Date lastUpdate;
 
 	public Collection<Inventory> inventory;
 	public Collection<FilmActor> filmActor;
@@ -143,11 +143,11 @@ public class Film {
 		specialFeatures = newSpecialFeatures;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime newLastUpdate) {
+	public void setLastUpdate(Date newLastUpdate) {
 		lastUpdate = newLastUpdate;
 	}
 

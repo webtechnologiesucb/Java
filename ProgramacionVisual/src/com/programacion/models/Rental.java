@@ -1,6 +1,6 @@
 package com.programacion.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,11 +8,11 @@ import java.util.Objects;
 
 public class Rental {
 	public long rentalId;
-	public LocalDateTime rentalDate;
+	public Date rentalDate;
 	public int inventoryId;
 	public short customerId;
-	public LocalDateTime returnDate;
-	public LocalDateTime lastUpdate;
+	public Date returnDate;
+	public Date lastUpdate;
 	public Collection<Payment> payment;
 	public Customer customer;
 	public Inventory inventory;
@@ -26,11 +26,11 @@ public class Rental {
 		rentalId = newRentalId;
 	}
 
-	public LocalDateTime getRentalDate() {
+	public Date getRentalDate() {
 		return rentalDate;
 	}
 
-	public void setRentalDate(LocalDateTime newRentalDate) {
+	public void setRentalDate(Date newRentalDate) {
 		rentalDate = newRentalDate;
 	}
 
@@ -50,19 +50,19 @@ public class Rental {
 		customerId = newCustomerId;
 	}
 
-	public LocalDateTime getReturnDate() {
+	public Date getReturnDate() {
 		return returnDate;
 	}
 
-	public void setReturnDate(LocalDateTime newReturnDate) {
+	public void setReturnDate(Date newReturnDate) {
 		returnDate = newReturnDate;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime newLastUpdate) {
+	public void setLastUpdate(Date newLastUpdate) {
 		lastUpdate = newLastUpdate;
 	}
 

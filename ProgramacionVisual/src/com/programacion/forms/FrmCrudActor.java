@@ -1,31 +1,27 @@
 package com.programacion.forms;
 
+//Importaciones necesarias
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import com.programacion.databases.Conexion;
 import com.programacion.models.Actor;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.Font;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ListSelectionModel;
+import javax.swing.JOptionPane;
 
 public class FrmCrudActor extends JFrame {
 
@@ -33,6 +29,7 @@ public class FrmCrudActor extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtBusqueda;
 	private JTable grdDatos;
+	private DefaultTableModel model;
 
 	/**
 	 * Launch the application.
@@ -96,14 +93,63 @@ public class FrmCrudActor extends JFrame {
 		btnEliminar.setBounds(460, 99, 128, 23);
 		contentPane.add(btnEliminar);
 
-		// carga de la base de datos
+		// Inicializar tabla
+		String[] columnNames = { "Actor ID", "First Name", "Last Name", "Last Update" };
+		model = new DefaultTableModel(columnNames, 0);
+		grdDatos = new JTable(model);
+		grdDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		grdDatos.setFillsViewportHeight(true);
+		JScrollPane scrollPane = new JScrollPane(grdDatos);
+		scrollPane.setBounds(45, 158, 543, 290);
+		contentPane.add(scrollPane);
+
+		// Cargar datos iniciales
+		cargarDatos(0);
+
+		// Acción de buscar
+		btnBuscar.addActionListener(e -> {
+			try {
+				buscarActores(txtBusqueda.getText());
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		});
+
+		// Acción de nuevo
+		btnNuevo.addActionListener(e -> {
+			try {
+				insertarActor();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		});
+
+		// Acción de modificar
+		btnModificar.addActionListener(e -> {
+			try {
+				modificarActor();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		});
+
+		// Acción de eliminar
+		btnEliminar.addActionListener(e -> {
+			try {
+				eliminarActor();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		});
+	}
+
+	private void cargarDatos(int actorId) throws SQLException {
 		List<Actor> lista = new ArrayList<Actor>();
 
-		Connection con = Conexion.getInstance().getConnection(); // rescatar conexion
-		String consulta = "SELECT actor_id, first_name, last_name, last_update " + " FROM actor WHERE actor_id>?";
-		PreparedStatement pst = con.prepareStatement(consulta); // Statement seguro
-		pst.setString(1, "0"); // parametro tipo texto
-		System.out.println(pst.toString());
+		Connection con = Conexion.getInstance().getConnection();
+		String consulta = "SELECT actor_id, first_name, last_name, last_update " + "FROM actor " + "WHERE actor_id>?";
+		PreparedStatement pst = con.prepareStatement(consulta);
+		pst.setInt(1, actorId);
 		ResultSet rs = pst.executeQuery();
 
 		while (rs.next()) {
@@ -115,27 +161,112 @@ public class FrmCrudActor extends JFrame {
 			lista.add(a);
 		}
 
-		String[] columnNames = { "Actor ID", "First Name", "Last Name", "Last Update" };
-		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+		// Limpiar el modelo
+		model.setRowCount(0);
 
+		// Agregar datos al modelo
 		for (Actor actor : lista) {
 			Object[] row = { actor.getActorId(), actor.getFirstName(), actor.getLastName(), actor.getLastUpdate() };
 			model.addRow(row);
 		}
+	}
 
-		grdDatos = new JTable();
-		grdDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		grdDatos.setFillsViewportHeight(true);
-		grdDatos.setBounds(45, 158, 543, 290);
-		contentPane.add(grdDatos);
+	private void buscarActores(String criterio) throws SQLException {
+		List<Actor> lista = new ArrayList<Actor>();
 
-		// Envolver JTable en JScrollPane para mostrar encabezados
-		JScrollPane scrollPane = new JScrollPane(grdDatos);
-		scrollPane.setBounds(45, 158, 543, 290);
-		contentPane.add(scrollPane);
+		Connection con = Conexion.getInstance().getConnection();
+		String consulta = "SELECT actor_id, first_name, last_name, last_update " + " FROM actor "
+				+ " WHERE first_name LIKE ? OR last_name LIKE ? ";
+		PreparedStatement pst = con.prepareStatement(consulta);
+		pst.setString(1, "%" + criterio + "%");
+		pst.setString(2, "%" + criterio + "%");
+		ResultSet rs = pst.executeQuery();
 
-		grdDatos.setModel(model);
-		grdDatos.updateUI();
+		while (rs.next()) {
+			Actor a = new Actor();
+			a.setActorId(rs.getInt("actor_id"));
+			a.setFirstName(rs.getString("first_name"));
+			a.setLastName(rs.getString("last_name"));
+			a.setLastUpdate(rs.getDate("last_update"));
+			lista.add(a);
+		}
 
+		// Limpiar el modelo
+		model.setRowCount(0);
+
+		// Agregar datos al modelo
+		for (Actor actor : lista) {
+			Object[] row = { actor.getActorId(), actor.getFirstName(), actor.getLastName(), actor.getLastUpdate() };
+			model.addRow(row);
+		}
+	}
+
+	private void insertarActor() throws SQLException {
+		String firstName = JOptionPane.showInputDialog("Ingrese el primer nombre:");
+		String lastName = JOptionPane.showInputDialog("Ingrese el apellido:");
+		if (firstName == null || lastName == null) {
+			return;
+		}
+
+		Connection con = Conexion.getInstance().getConnection();
+		String consulta = "INSERT INTO actor (first_name, last_name, last_update) VALUES (?, ?, NOW())";
+		PreparedStatement pst = con.prepareStatement(consulta);
+		pst.setString(1, firstName);
+		pst.setString(2, lastName);
+		int rowsAffected = pst.executeUpdate();
+
+		if (rowsAffected > 0) {
+			JOptionPane.showMessageDialog(this, "Actor insertado exitosamente.");
+			cargarDatos(0);
+		}
+	}
+
+	private void modificarActor() throws SQLException {
+		int selectedRow = grdDatos.getSelectedRow();
+		if (selectedRow == -1) {
+			JOptionPane.showMessageDialog(this, "Seleccione un registro para modificar.");
+			return;
+		}
+		int actorId = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
+
+		String firstName = JOptionPane.showInputDialog("Ingrese el nuevo primer nombre:");
+		String lastName = JOptionPane.showInputDialog("Ingrese el nuevo apellido:");
+		if (firstName == null || lastName == null) {
+			return;
+		}
+
+		Connection con = Conexion.getInstance().getConnection();
+		String consulta = "UPDATE actor SET first_name = ?, last_name = ?, last_update = NOW() WHERE actor_id = ?";
+		PreparedStatement pst = con.prepareStatement(consulta);
+		pst.setString(1, firstName);
+		pst.setString(2, lastName);
+		pst.setInt(3, actorId);
+		int rowsAffected = pst.executeUpdate();
+
+		if (rowsAffected > 0) {
+			JOptionPane.showMessageDialog(this, "Actor modificado exitosamente.");
+			cargarDatos(0);
+		}
+	}
+
+	private void eliminarActor() throws SQLException {
+		int selectedRow = grdDatos.getSelectedRow();
+		if (selectedRow == -1) {
+			JOptionPane.showMessageDialog(this, "Seleccione un registro para eliminar.");
+			return;
+		}
+
+		int actorId = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
+
+		Connection con = Conexion.getInstance().getConnection();
+		String consulta = "DELETE FROM actor WHERE actor_id = ?";
+		PreparedStatement pst = con.prepareStatement(consulta);
+		pst.setInt(1, actorId);
+		int rowsAffected = pst.executeUpdate();
+
+		if (rowsAffected > 0) {
+			JOptionPane.showMessageDialog(this, "Actor eliminado exitosamente.");
+			cargarDatos(0);
+		}
 	}
 }

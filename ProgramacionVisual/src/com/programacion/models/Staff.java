@@ -1,6 +1,6 @@
 package com.programacion.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
@@ -14,7 +14,7 @@ public class Staff {
 	public long active = 1;
 	public String username;
 	public String password;
-	public LocalDateTime lastUpdate;
+	public Date lastUpdate;
 	public java.util.Collection<Payment> payment;
 	public java.util.Collection<Rental> rental;
 	public Address address;
@@ -84,11 +84,11 @@ public class Staff {
 		password = newPassword;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime newLastUpdate) {
+	public void setLastUpdate(Date newLastUpdate) {
 		lastUpdate = newLastUpdate;
 	}
 
