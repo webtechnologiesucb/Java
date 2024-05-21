@@ -13,8 +13,8 @@ public class LineaArea {
    private java.util.Date dInicioActividades;
    private String cNombre;
    
-   /** @pdRoleInfo migr=no name=AvionComercial assc=Association_3 coll=java.util.Collection impl=java.util.HashSet mult=0..* type=Composition */
-   public java.util.Collection<AvionComercial> avionComercial;
+   /** @pdRoleInfo migr=no name=AvionComercial assc=Association_3 coll=java.util.List impl=java.util.HashSet mult=0..* type=Composition */
+   public java.util.List<AvionComercial> avionComercial;
 
    public java.util.Date getDInicioActividades() {
       return dInicioActividades;
@@ -32,7 +32,7 @@ public class LineaArea {
       cNombre = newCNombre;
    }
    
-   public java.util.Collection<AvionComercial> getAvionComercial() {
+   public java.util.List<AvionComercial> getAvionComercial() {
       if (avionComercial == null)
          avionComercial = new java.util.HashSet<AvionComercial>();
       return avionComercial;
@@ -44,7 +44,7 @@ public class LineaArea {
       return avionComercial.iterator();
    }
    
-   public void setAvionComercial(java.util.Collection<AvionComercial> newAvionComercial) {
+   public void setAvionComercial(java.util.List<AvionComercial> newAvionComercial) {
       removeAllAvionComercial();
       for (Object element : newAvionComercial)
 		addAvionComercial((AvionComercial)element);

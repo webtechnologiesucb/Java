@@ -1,0 +1,406 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html" id="fview"> 
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <ui:debug />
+        <f:metadata>
+            <ui:insert name="metadata" />
+        </f:metadata>
+        <h:head>
+
+            <link href="../css/default.css" rel="stylesheet" type="text/css" />
+
+            <title><ui:insert name="title">Reclutamiento Personal</ui:insert>
+            </title>
+
+
+        </h:head>
+
+        <h:body id="body2" style="font-size: 11px;">
+            <h:outputText value="USUARIO ACTUAL: #{controllerAccesoSistema.usuarioModuloBean.codUsuarioGlobal} #{!(controllerAccesoSistema.usuarioModuloBean.codUsuarioGlobal eq '')}"></h:outputText>
+            <p:outputPanel rendered="#{controllerAccesoSistema.usuarioModuloBean.codUsuarioGlobal eq ''}">
+                <h:outputText value="Su sesión ha caducado, debe iniciar sesión nuevamente"></h:outputText>
+                <br/>
+
+                <h:form>
+                    <p:commandButton value="Volver a iniciar sesión" 
+                                     icon="ui-icon-refresh" 
+                                     title="Volver a iniciar sesión" 
+                                     style="vertical-align: bottom;height: 50px;font-size: 10px;"
+                                     actionListener="#{controllerAccesoSistema.redirect_homePage()}" 
+                                     >
+
+                    </p:commandButton>
+                </h:form>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{!(controllerAccesoSistema.usuarioModuloBean.codUsuarioGlobal eq '')}">
+
+
+                <p:layout  id="template" fullPage="true" > 
+                    <p:layoutUnit position="north" 
+                                  size="100" 
+                                  resizable="true" 
+                                  closable="false" 
+                                  collapsible="true"
+                                  id="panel_menu"
+
+                                  >
+
+
+                        <h:form>
+                            <h:panelGrid columns="2" 
+                                         style="border-style: hidden !important ;
+                                         width: 100%;
+                                         border-collapse: collapse;"
+                                         >
+                                <p:panel style="border-style: hidden !important;">
+                                    <p:graphicImage url="../img/logocofar.png" height="40" style="vertical-align: middle; ">
+                                    </p:graphicImage>
+                                    <p:graphicImage url="../img/_CPS.png" height="55" style="vertical-align: middle; ">
+                                    </p:graphicImage>
+                                    <br />
+                                    <h:outputText value="Cuestionario de Personalidad Situacional" style=" color: #336699;font-size: 16px;"></h:outputText>
+                                </p:panel>
+                                <p:panel style="border-style: hidden !important; text-align: right; background-color: transparent; " >
+                                    <p:commandButton value="#{controllerAccesoSistema.usuarioModuloBean.nombre_completo} #{controllerAccesoSistema.usuarioModuloBean.apPaternoUsuarioGlobal}, Bienvenido"  
+                                                     icon="ui-icon-person" 
+                                                     title="Editar Usuario" 
+                                                     style="vertical-align: bottom;height: 50px;font-size: 10px;"/>
+                                    <p:commandButton value="Ver Instrucciones" type="button" onclick="PF('instruc').show();"
+                                                     style="vertical-align: bottom;height: 50px;font-size: 10px;" 
+                                                     actionListener="#{controller_Reclutamiento.ver_instrucciones()}"
+                                                     immediate="true"/>
+                                    <p:commandButton value="Logout" 
+                                                     icon="ui-icon-extlink" 
+                                                     title="Salir del Sistema" 
+                                                     style="vertical-align: bottom;height: 50px;font-size: 10px;"
+                                                     actionListener="#{controllerAccesoSistema.redirect_homePage()}" 
+                                                     >
+                                        <p:confirm header="Confirmación" 
+                                                   message="Esta seguro de Salir del Sistema?" 
+                                                   icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                    <p:confirmDialog global="true" 
+                                                     showEffect="fade" 
+                                                     hideEffect="explode" 
+                                                     width="400">
+                                        <p:commandButton value="Si" 
+                                                         type="button" 
+                                                         styleClass="ui-confirmdialog-yes" 
+                                                         icon="ui-icon-check" 
+                                                         />
+                                        <p:commandButton value="No" 
+                                                         type="button" 
+                                                         styleClass="ui-confirmdialog-no" 
+                                                         icon="ui-icon-close" />
+                                    </p:confirmDialog>
+                                </p:panel>
+                            </h:panelGrid>
+                            <p:separator></p:separator>
+                        </h:form>
+                    </p:layoutUnit>
+
+
+
+                    <p:layoutUnit position="center" id="ccont" styleClass="layoutUnitCenter">
+
+
+                        <p:dialog header="Registro de Postulante"    
+                                  widgetVar="dlgNuevoPostulante" 
+                                  modal="true" 
+                                  appendTo="@(body)"
+                                  width="800" 
+                                  height="550" 
+                                  id="materialDetail"
+                                  visible="true"
+                                  style="font-size: 12px;"
+                                  closable="false"
+                                  resizable="false">
+                            <f:facet name="header">
+                                <h:outputText value="Registro de Postulante" style="font-size: 16px;"></h:outputText>
+                            </f:facet>
+                            <h:form id="form">
+                                <h:outputText value="Los campos marcados con * son obligatorios." style="color: #336699;font-size: 14px;font-weight: bold;"></h:outputText>
+                                <p:tabView id="tabView"
+                                           >
+                                    <p:tab title="Datos Básicos">
+                                        <p:panelGrid columns="3">
+                                            <p:panel >
+                                                <h:outputText value="Identificación: " style="font-weight: bold" />
+
+                                                <h:outputText value="#{controller_Administrador.postulante.numid}"></h:outputText>
+
+                                            </p:panel>
+                                        </p:panelGrid>
+
+                                        <p:panel>
+                                            <h:panelGrid columns="3" cellpadding="5">
+                                                <h:outputText value="Tipo Documento de Identificación: *"
+                                                              style="font-weight: bold" />
+                                                <h:outputText value="Número de Identificación: *"
+                                                              style="font-weight: bold" />
+                                                <h:outputText value="."></h:outputText>
+                                                <p:selectOneMenu id="tipo_id" label="Tipo de Identificación"
+                                                                 value="#{controller_Administrador.postulante.cod_tipoid}" required="true"
+                                                                 style="width:200px;">
+                                                    <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                                                    <f:selectItem itemLabel="Carnet de Identidad" itemValue="1" />
+                                                    <f:selectItem itemLabel="RUN" itemValue="2" />
+                                                    <f:selectItem itemLabel="Pasaporte" itemValue="3" />
+                                                </p:selectOneMenu>
+                                                <p:inputText id="numid"
+                                                             value="#{controller_Administrador.postulante.numid}"
+                                                             label="Número de Identificación" required="true"
+                                                             style="width:200px;" />
+                                                <h:outputText></h:outputText>
+
+                                            </h:panelGrid>
+                                        </p:panel>
+                                        <p:panel>
+                                            <h:panelGrid columns="3" cellpadding="5">
+                                                <h:outputText value="Apellido Paterno: *"
+                                                              style="font-weight: bold" />
+                                                <h:outputText value="Apellido Materno: *"
+                                                              style="font-weight: bold" />
+                                                <h:outputText value="Nombres: *" style="font-weight: bold" />
+                                                <p:inputText value="#{controller_Administrador.postulante.ap_paterno}"
+                                                             required="true" id="paterno" label="Apellido Paterno"
+                                                             style="width:200px;" />
+                                                <p:inputText value="#{controller_Administrador.postulante.ap_materno}"
+                                                             label="Apellido Materno" required="true" id="materno"
+                                                             style="width:200px;" />
+                                                <p:inputText value="#{controller_Administrador.postulante.nombres}"
+                                                             label="Nombres" required="true" id="nombres"
+                                                             style="width:200px;" />
+
+                                            </h:panelGrid>
+                                        </p:panel>
+                                        <h:panelGrid columns="2">
+                                            <p:panel style="width:300px">
+                                                <h:panelGrid columns="2" cellpadding="5" id="panel">
+                                                    <h:outputText value="Sexo: *" style="font-weight: bold" />
+
+                                                    <p:selectOneRadio id="sexo" label="Sexo" required="true"
+                                                                      value="#{controller_Administrador.postulante.sexo}">
+                                                        <f:selectItem itemValue="M" itemLabel="Masculino"></f:selectItem>
+                                                        <f:selectItem itemValue="F" itemLabel="Femenino"></f:selectItem>
+                                                        <p:ajax update="panel"
+                                                                listener="#{controller_Administrador.changeEstadoCivil}" />
+                                                    </p:selectOneRadio>
+
+                                                    <h:outputText value="Estado Civil: *" style="font-weight: bold" />
+                                                    <p:selectOneMenu
+                                                        value="#{controller_Administrador.postulante.cod_estadocivil}"
+                                                        required="true" label="Estado Civil" id="estcivil"
+                                                        style="width:150px;">
+                                                        <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                                                        <f:selectItem itemLabel="Soltero/a" itemValue="1" />
+                                                        <f:selectItem itemLabel="Casado/a" itemValue="2" />
+                                                        <f:selectItem itemLabel="Divorciado/a" itemValue="3" />
+                                                        <f:selectItem itemLabel="Viudo/a" itemValue="4" />
+                                                        <p:ajax update="panel"
+                                                                listener="#{controller_Administrador.changeEstadoCivil}" />
+
+                                                    </p:selectOneMenu>
+                                                    
+                                                        <h:outputText value="Apellido del Esposo: "
+                                                                      style="font-weight: bold"
+                                                                      rendered="#{controller_Administrador.showApellidoEsposo}" id="outEsposo" />
+                                                        <p:inputText value="#{controller_Administrador.postulante.ap_esposo}"
+                                                                     style="width:200px;" id="inEsposo"
+                                                                     rendered="#{controller_Administrador.showApellidoEsposo}" />
+                                                  
+                                                </h:panelGrid>
+                                            </p:panel>
+                                            <p:panel>
+                                                <h:panelGrid columns="2">
+                                                    <h:outputText value="Pais de Nacimiento: *"
+                                                                  style="font-weight: bold" />
+                                                    <p:selectOneMenu id="paisnac"
+                                                                     value="#{controller_Administrador.postulante.cod_paisnacimiento}"
+                                                                     label="Pais de Nacimiento" required="true" filter="true"
+                                                                     filterMatchMode="startsWith" style="width:150px;">
+                                                        <f:selectItem itemLabel="Seleccione uno" itemValue="0" noSelectionOption="true"></f:selectItem>
+                                                        <f:selectItems value="#{controller_Administrador.listPaises}"
+                                                                       var="pais"
+                                                                       itemValue="#{pais.cod_pais}"
+                                                                       itemLabel="#{pais.descripcion}"
+                                                                       ></f:selectItems>
+                                                    </p:selectOneMenu>
+
+                                                    <h:outputText value="Fecha de Nacimiento (yyyy/MM/dd): *"
+                                                                  style="font-weight: bold" />
+                                                    <p:calendar pattern="yyyy/MM/dd" id="fecnac" 
+                                                                value="#{controller_Administrador.postulante.fecha_nac}"
+                                                                required="true" 
+                                                                label="Fecha de Nacimiento"
+                                                                style="width:300px;" 
+                                                                navigator="true"
+                                                                yearRange="c-100:c+100"
+                                                                locale="es_ES"
+                                                                mask="true"
+                                                                mindate="1930/01/01"
+                                                                >
+                                                        <f:convertDateTime pattern="yyyy/MM/dd"></f:convertDateTime>
+                                                    </p:calendar>
+
+                                                </h:panelGrid>
+                                            </p:panel>
+                                        </h:panelGrid>
+                                        <p:panel>
+                                            <h:panelGrid columns="2" id="direccion_cliente">
+
+                                                <h:outputText value="Dirección de Domicilio: "
+                                                              style="font-weight: bold" />
+                                                <p:inputText value="#{controller_Administrador.postulante.direccionDomicilio}"
+                                                             style="width:300px;" />
+
+                                            </h:panelGrid>
+
+                                        </p:panel>
+
+                                    </p:tab>
+
+
+                                    <p:tab title="Datos de Contacto">
+                                        <p:panelGrid columns="2">
+                                            <p:panel>
+                                                <h:outputText value="#{controller_Administrador.cargarDatosPostulanteSession}" style="font-weight: bold" />
+
+                                                <h:outputText value="Identificación: " style="font-weight: bold" />
+
+                                                <h:outputText value="#{controller_Administrador.postulante.numid}"></h:outputText>
+                                            </p:panel>
+
+                                        </p:panelGrid>
+                                        <p:panel>
+                                            <h:panelGrid columns="2" cellpadding="10">
+                                                <h:outputText value="Telefono Domicilio: "
+                                                              style="font-weight: bold" />
+                                                <p:inputText value="#{controller_Administrador.postulante.numTelefono}" style="width: 300px;" />
+
+
+                                                <h:outputText value="Fax: " style="font-weight: bold" />
+                                                <p:inputText value="#{controller_Administrador.postulante.fax}" style="width: 300px;"/>
+
+                                                <h:outputText value="Celular: *" style="font-weight: bold" />
+                                                <p:inputText value="#{controller_Administrador.postulante.numCelular}" 
+                                                             style="width: 300px;" required="true"
+                                                             label="Número de celular"/>
+                                                <h:outputText value="Correo Electrónico: *"
+                                                              style="font-weight: bold" />
+                                                <p:inputText value="#{controller_Administrador.postulante.email}" 
+                                                             style="width: 300px;" required="true"
+                                                             label="Correo Electrónico"/>
+
+                                            </h:panelGrid>
+                                        </p:panel>
+
+                                    </p:tab>
+
+
+                                </p:tabView>
+
+
+
+                                <p:commandButton id="guardar_postulante"
+                                                 value="Guardar Cambios" 
+                                                 styleClass="ui-priority-primary"
+                                                 style=" width:180px; height:40px; color:white; font-size:14px;"
+
+
+                                                 icon="ui-icon-disk"
+                                                 action="#{controller_Administrador.guardarPostulante()}"
+
+                                                 >
+                                    <p:confirm header="Confirmación" message="Esta seguro de continuar?" icon="ui-icon-alert" />
+                                </p:commandButton>
+                                <p:confirmDialog global="true" 
+                                                 showEffect="fade" 
+                                                 hideEffect="explode" 
+                                                 width="400">
+                                    <p:commandButton value="Si" 
+                                                     type="button" 
+                                                     styleClass="ui-confirmdialog-yes" 
+                                                     icon="ui-icon-check" 
+                                                     />
+                                    <p:commandButton value="No" 
+                                                     type="button" 
+                                                     styleClass="ui-confirmdialog-no" 
+                                                     icon="ui-icon-close" />
+                                </p:confirmDialog>
+                                <p:blockUI block=":form" trigger="guardar_postulante" >
+                                    <h:outputText value="Cargando"></h:outputText>
+                                    <br/>
+                                    <p:graphicImage url="../img/loading.gif"></p:graphicImage>
+                                </p:blockUI>
+                                <p:commandButton value="Cancelar" 
+                                                 actionListener="#{controller_Administrador.actionListener_cancelarNuevoPostulante()}" 
+                                                 update=":form"
+                                                 style=" width:160px; height:40px; color:white; font-size:14px;"
+                                                 icon="ui-icon-close"
+                                                 immediate="true"
+                                                 styleClass="ui-priority-secondary"
+                                                 >
+                                    <p:confirm header="Confirmación" message="Esta seguro de continuar?" icon="ui-icon-alert" />
+                                </p:commandButton>
+
+                                <p:confirmDialog id="confirmDialog"
+                                                 message="Esta Ud. seguro de cancelar todo? No se guardarán los cambios"
+                                                 header="Cancelar Operación" severity="alert"
+                                                 widgetVar="confirmation">
+                                    <p:commandButton value="Si" 
+                                                     type="button" 
+                                                     styleClass="ui-confirmdialog-yes" 
+                                                     icon="ui-icon-check" 
+                                                     />
+                                    <p:commandButton value="No" 
+                                                     type="button" 
+                                                     styleClass="ui-confirmdialog-no" 
+                                                     icon="ui-icon-close" />
+                                </p:confirmDialog>
+
+
+
+
+
+                            </h:form>
+
+                        </p:dialog>
+                    </p:layoutUnit>
+
+                    <p:layoutUnit position="south" size="30"  resizable="true" closable="true" collapsible="true">
+                        <div>
+                            <h:outputText value="Corporación Farmacéutica ([Calidad], [Responsabilidad], [Eficiencia], [Reciprocidad]), "></h:outputText>
+                            <h:outputText value="COFAR Copyright © 2016." style="color: blue;"></h:outputText>
+
+                        </div>
+                    </p:layoutUnit>
+
+                </p:layout>
+
+            </p:outputPanel>
+            <p:growl autoUpdate="true" showDetail="false" showSummary="true" id="messages" ></p:growl>
+            <ui:insert name="status" >
+                <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px"
+                              >
+                    <f:facet name="start">
+                        <p:graphicImage url="../img/loading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+            </ui:insert>
+
+
+        </h:body>
+    </f:view>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link type="text/css" rel="stylesheet"
+              href="css/default.css" />
+    </h:head>
+    <h:form id="miForm">
+        <center>
+            <p:dialog  style="border: 10px;font-size: 13px;" 
+                       visible="true" modal="true" closable="false" 
+                       resizable="false" 
+                       header="Ingreso al Sistema" 
+                       width="370" 
+                       height="530"
+                       styleClass="modal-transparente">
+                <f:facet name="header">
+                    <h:outputText value="#{controllerCleanSession.bienvenidaLogin}" style="font-size:12px;"></h:outputText>
+                </f:facet>
+                <div align="center">
+                    <p:graphicImage url="img/logocofar.png" height="50" style="vertical-align: middle; background-color: transparent;">
+                    </p:graphicImage>
+                    <br></br>
+                    <p:graphicImage url="img/rec_shadow.png" height="55" style="vertical-align: middle; ">
+                    </p:graphicImage>
+                    <br></br>
+                    <p:graphicImage url="img/_dePersonal.png" height="55" style="vertical-align: middle; ">
+                    </p:graphicImage>
+                    
+                    
+                    <br></br>
+                    <br></br>
+                    
+
+                    <h:outputText value="Seleccione el Perfil:"></h:outputText>
+                    <p:selectOneMenu value="#{controllerAccesoSistema.perfil_usuario}" 
+                                     required="true"
+                                     requiredMessage="Seleccione un perfil."
+                                     style="width: 250px;color: #0B4C5F;"
+                                     >
+                        <p:ajax listener="#{controllerAccesoSistema.onPerfilChange()}"
+                                update="evaluaciones" ></p:ajax>
+                        <f:selectItem itemLabel="-NINGUNO-" ></f:selectItem>
+
+                        <f:selectItem itemLabel="POSTULANTE" itemValue="1"></f:selectItem>
+                        <f:selectItem itemLabel="ADMINISTRADOR" itemValue="2"></f:selectItem>
+                        
+                    </p:selectOneMenu>
+                    <p:outputPanel
+                        id="evaluaciones" rendered="false">
+                        <p:selectOneMenu  style="width: 250px;color: #0B4C5F;" 
+                                          rendered="#{controllerAccesoSistema.renderedEvaluaciones}"
+                                          value="#{controllerAccesoSistema.cod_evaluacion}">
+                            <f:selectItem itemLabel="Evaluación CPS" itemValue="1"></f:selectItem>
+                             <f:selectItem itemLabel="Evaluación IPV" itemValue="2"></f:selectItem>
+                        </p:selectOneMenu>
+                    </p:outputPanel>
+                    <p:inputText id="usuario"  required="true"
+                                 requiredMessage="Ingrese sus Datos de usuario" 
+                                 style="width: 250px;color: #0B4C5F;" 
+                                 placeholder="Ingrese su usuario"
+                                 value="#{controllerAccesoSistema.usuarioModuloBean.nombreUsuario}"/>
+                    <br></br>
+                    <br></br>
+                    <p:password id="password" 
+                                required="true" requiredMessage="Ingrese su password" 
+                                style="width: 250px;color: #0B4C5F;" 
+                                placeholder="Ingrese su password"
+                                value="#{controllerAccesoSistema.usuarioModuloBean.contraseniaUsuario}"/>
+                    <br></br>
+                    <br></br>
+                    
+                    <p:commandButton value="Ingresar"  rendered="true" update=":miForm" 
+                                     style="width: 250px;" styleClass="ui-priority-primary"
+                                     action="#{controllerAccesoSistema.action_VerficarUsuario()}"/>
+                    <br></br>
+                    <br></br>
+
+<br></br>
+                    <p:separator style="width: 340px;"></p:separator>
+                    <br></br>
+                    <div align="center">
+                        <p:commandButton value="Olvidaste tu Password ?"  style="width: 250px;"></p:commandButton>   
+                        <p:commandButton value="Olvidaste tu Usuario  ?" styleClass="ui-priority-secondary"  style="width: 250px;"></p:commandButton>   
+                    </div>
+
+                </div>
+            </p:dialog>
+        </center>
+        <p:growl autoUpdate="true" showDetail="true"/>
+    </h:form>
+
+</html>

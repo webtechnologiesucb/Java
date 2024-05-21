@@ -11,8 +11,8 @@ public class Avion extends Transporte {
    private String cCodigoAvion;
    private String cMatricula;
    
-   /** @pdRoleInfo migr=no name=Hangar assc=Association_2 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Hangar> hangar;
+   /** @pdRoleInfo migr=no name=Hangar assc=Association_2 coll=java.util.List impl=java.util.HashSet mult=0..* */
+   public java.util.List<Hangar> hangar;
    
    public String getcCodigoAvion() {
       return cCodigoAvion;
@@ -30,7 +30,7 @@ public class Avion extends Transporte {
       cMatricula = newCMatricula;
    }
    
-   public java.util.Collection<Hangar> getHangar() {
+   public java.util.List<Hangar> getHangar() {
       if (hangar == null)
          hangar = new java.util.HashSet<Hangar>();
       return hangar;
@@ -42,7 +42,7 @@ public class Avion extends Transporte {
       return hangar.iterator();
    }
    
-   public void setHangar(java.util.Collection<Hangar> newHangar) {
+   public void setHangar(java.util.List<Hangar> newHangar) {
       removeAllHangar();
       for (java.util.Iterator<Hangar> iter = newHangar.iterator(); iter.hasNext();)
          addHangar(iter.next());

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <p:panel id="dialog4">
+            <p:dialog header="Nuevo Postulante"    
+                      widgetVar="dlgNuevoPostulante" 
+                      modal="true" 
+                      appendTo="@(body)"
+                      width="650" 
+                      height="450" 
+                      id="materialDetail"
+                      visible="#{controller_Administrador.visible_NuevoPostulante}"
+                      style="font-size: 10px;"
+                      closable="false"
+                      resizable="false">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Nuevo Postulante" style="font-size: 16px;"></h:outputText>
+                </f:facet>
+                <h:form id="formNuevoPostulante">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Nombre Completo: *"></h:outputText>
+                        <p:inputText value="#{controller_Administrador.postulante.nombres}"
+                                     style="width: 400px;" 
+                                     required="true"
+                                     requiredMessage="Registre el nombre."></p:inputText>
+                        <h:outputText value="Apellido Paterno: *"></h:outputText>
+                        <p:inputText value="#{controller_Administrador.postulante.ap_paterno}"
+                                     style="width: 400px;" 
+                                     required="true"
+                                     requiredMessage="Registre el apellido paterno."></p:inputText>
+                        <h:outputText value="Apellido Materno: *"></h:outputText>
+                        <p:inputText value="#{controller_Administrador.postulante.ap_materno}"
+                                     style="width: 400px;" 
+                                     required="true"
+                                     requiredMessage="Registre el apellido materno."></p:inputText>
+                        <h:outputText value="Sexo: *"></h:outputText>
+                        <p:selectOneMenu value="#{controller_Administrador.postulante.sexo}"
+                                         required="true"
+                                         requiredMessage="Seleccione el sexo del postulante."
+                                         style="width: 400px;">
+                            <f:selectItem itemLabel="-NINGUNO-"></f:selectItem>
+                            <f:selectItem itemLabel="MASCULINO" itemValue="M"></f:selectItem>
+                            <f:selectItem itemLabel="FEMENINO" itemValue="F"></f:selectItem>
+                        </p:selectOneMenu>
+                        <h:outputText value="Número Carnet Identidad: *"></h:outputText>
+                        <p:inputText value="#{controller_Administrador.postulante.numid}"
+                                     style="width: 350px;" 
+                                     required="true"
+                                     requiredMessage="Registre el número de carnet."></p:inputText>
+                        <h:outputText value="Fecha de Nacimiento: *" ></h:outputText>
+                        <p:calendar pattern="yyyy/MM/dd" value="#{controller_Administrador.postulante.fecha_nac}" 
+                                    required="true"
+                                    requiredMessage="Seleccione una fecha de nacimiento para el postulante."></p:calendar>
+                        <h:outputText value="Observaciones:"></h:outputText>
+                        <p:inputTextarea value="#{controller_Administrador.postulante.observaciones}" style="width: 400px;"></p:inputTextarea>
+
+                    </p:panelGrid>
+
+                    <p:fieldset legend="Acceso al Sistema" style="margin-bottom:20px">
+                        <p:commandButton value="Generar datos de acceso"
+                                         actionListener="#{controller_Administrador.actionListener_generarDatosAcceso()}"
+                                         update="usuario,pass"
+                                         ></p:commandButton>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Usuario *:"></h:outputText>
+                            <p:inputText value="#{controller_Administrador.postulante.nombre_usuario}" 
+                                         style="width: 400px;"
+                                         id="usuario" required="true" requiredMessage="Registre un nombre de usuario."></p:inputText>
+                            <h:outputText value="Password *:"></h:outputText>
+                            <p:inputText value="#{controller_Administrador.postulante.password}" 
+                                         style="width: 400px;"
+                                         id="pass" required="true" requiredMessage="Registre un password."></p:inputText>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <p:commandButton id="guardar_postulante"
+                                     value="Guardar Postulante" 
+                                     styleClass="ui-priority-primary"
+                                     oncomplete= "if (!args.validationFailed) PF('dlgNuevoPostulante').hide();" 
+                                     icon="ui-icon-disk"
+                                     action="#{controller_Administrador.guardarPostulante()}"
+                                     update=":formContent:dataPostulantes"
+                                     >
+                        <p:confirm header="Confirmación" message="Esta seguro de continuar?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:confirmDialog global="true" 
+                                     showEffect="fade" 
+                                     hideEffect="explode" 
+                                     width="400">
+                        <p:commandButton value="Si" 
+                                         type="button" 
+                                         styleClass="ui-confirmdialog-yes" 
+                                         icon="ui-icon-check" 
+                                         />
+                        <p:commandButton value="No" 
+                                         type="button" 
+                                         styleClass="ui-confirmdialog-no" 
+                                         icon="ui-icon-close" />
+                    </p:confirmDialog>
+                    <p:blockUI block=":formNuevoPostulante" trigger="guardar_postulante" >
+                        <h:outputText value="Cargando"></h:outputText>
+                        <br></br>
+                        <p:graphicImage url="../img/loading.gif"></p:graphicImage>
+                    </p:blockUI>
+                    <p:commandButton value="Cancelar" 
+                                     actionListener="#{controller_Administrador.actionListener_cancelarNuevoPostulante()}" 
+                                     update=":formContent"
+                                     oncomplete="PF('dlgNuevoPostulante').hide();" immediate="true">
+                    </p:commandButton>
+                </h:form>
+            </p:dialog>
+
+        </p:panel>
+    </f:view>
+</html>
+
+

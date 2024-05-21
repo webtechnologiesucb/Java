@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Sistema de Reclutamiento</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:form>
+                <h:outputText value="La sesión de usuario expiró. Favor ingrese sus datos de acceso nuevamente."></h:outputText>
+                <br></br>
+                <h:outputText value="Si al volver a acceder al recurso el problema persiste, comuniquese con el Departamento de Sistemas a la brevedad posible."></h:outputText>
+                <br></br>
+                <p:commandButton value="Ingresar al sistema" actionListener="#{controllerAccesoSistema.redirect_homePage()}" ></p:commandButton>
+            </h:form>
+        </h:body>
+    </f:view>
+</html>
+

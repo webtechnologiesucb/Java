@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <p:panel id="dialog4">
+            <p:dialog header="Nuevo Postulante"    
+                      widgetVar="dlgNuevoPostulante" 
+                      modal="true" 
+                      appendTo="@(body)"
+                      width="700" 
+                      height="400" 
+                      id="materialDetail"
+                      visible="#{controller_Administrador.visible_NuevoPostulante}"
+                      style="font-size: 14px;"
+                      closable="false"
+                      resizable="false">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Nuevo Postulante" style="font-size: 16px;"></h:outputText>
+                </f:facet>
+                <h:form id="formNuevoPostulante">
+
+                    <p:fieldset legend="Acceso al Sistema" style="margin-bottom:20px; ">
+                        <p:commandButton value="Generar datos de acceso"
+                                         actionListener="#{controller_Administrador.actionListener_generarDatosAcceso()}"
+                                         update="usuario,pass"
+                                         rendered="false"></p:commandButton>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Apellido Paterno Postulante (Usuario) *:"></h:outputText>
+                            <p:inputText value="#{controller_Administrador.postulante.nombre_usuario}" 
+                                         style="width: 300px;"
+                                         id="usuario" 
+                                         required="true"
+                                         requiredMessage="Debe registrar el apellido paterno." ></p:inputText>
+                            <h:outputText value="Número de Identificación Personal (Password) *:"></h:outputText>
+                            <p:inputText value="#{controller_Administrador.postulante.password}" 
+                                         style="width: 300px;"
+                                         id="pass"
+                                         required="true"
+                                         requiredMessage="Debe registrar el número de identificación."></p:inputText>
+
+                            <h:outputText value="Area a la que postula: "></h:outputText>
+                            <p:selectOneMenu value="#{controller_Administrador.postulante.area.codAreaEmpresa}"
+                                             id="area"
+                                             style="width: 300px;"
+                                             filter="true"
+                                             filterMatchMode="startsWith"
+                                             label="Area a la que postula."
+                                             required="true"
+                                             
+                                             requiredMessage="Debe seleccionar un área.">
+                                <p:ajax listener="#{controller_Administrador.onAreaChange()}" 
+                                        update="cargos"></p:ajax>
+                                <f:selectItem itemLabel="Ninguno" itemValue="0" noSelectionOption="true"></f:selectItem>
+                                <f:selectItems value="#{controller_Administrador.listAreas}"
+                                               var="area"
+                                               itemValue="#{area.codAreaEmpresa}"
+                                               itemLabel="#{area.nombreAreaEmpresa}"
+                                               ></f:selectItems>
+                            </p:selectOneMenu>
+                            <h:outputText value="Cargo al que postula: " ></h:outputText>
+                            <p:selectOneMenu value="#{controller_Administrador.postulante.cargo.codigo_cargo}" 
+                                             id="cargos"
+                                             style="width: 300px;"
+                                             filter="true"
+                                             filterMatchMode="startsWith"
+                                             label="Cargo al que postula."
+                                             required="true"
+                                             requiredMessage="Debe seleccionar un cargo.">
+
+                                <f:selectItem itemLabel="Ninguno" itemValue="0" noSelectionOption="true"></f:selectItem>
+                                <f:selectItems value="#{controller_Administrador.listCargos}"
+                                               var="cargo"
+                                               itemValue="#{cargo.codigo_cargo}"
+                                               itemLabel="#{cargo.descripcion_cargo}"
+                                               ></f:selectItems>
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Seleccione las evaluaciones habilitadas *:"></h:outputText>
+
+                            <p:selectManyCheckbox id="basic" value="#{controller_Administrador.selectedEvaluaciones}" required="true" requiredMessage="Debe seleccionar al menos una evaluación">
+                                <f:selectItem itemLabel="CPS" itemValue="1" />
+                                <f:selectItem itemLabel="IPV" itemValue="2" />
+
+                            </p:selectManyCheckbox>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <p:commandButton id="guardar_postulante"
+                                     value="Guardar Postulante" 
+                                     styleClass="ui-priority-primary"
+                                     oncomplete= "if (!args.validationFailed) {PF('dlgNuevoPostulante').hide();}" 
+                                     icon="ui-icon-disk"
+                                     action="#{controller_Administrador.guardarPostulanteAdmin()}"
+                                     update=":formContent:dataPostulantes, @widgetVar(dlgNuevoPostulante)"
+                                     >
+                        <p:confirm header="Confirmación" message="Esta seguro de continuar?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:confirmDialog global="true" 
+                                      width="400">
+                        <p:commandButton value="Si" 
+                                         type="button" 
+                                         styleClass="ui-confirmdialog-yes" 
+                                         icon="ui-icon-check" 
+                                         />
+                        <p:commandButton value="No" 
+                                         type="button" 
+                                         styleClass="ui-confirmdialog-no" 
+                                         icon="ui-icon-close" />
+                    </p:confirmDialog>
+                    <p:blockUI block=":formNuevoPostulante" trigger="guardar_postulante" >
+                        <h:outputText value="Cargando"></h:outputText>
+                        <br></br>
+                        <p:graphicImage url="../img/loading.gif"></p:graphicImage>
+                    </p:blockUI>
+                    <p:commandButton value="Cancelar" 
+                                     actionListener="#{controller_Administrador.actionListener_cancelarNuevoPostulanteAdmin()}" 
+                                     update=":formContent"
+                                     oncomplete="PF('dlgNuevoPostulante').hide();" immediate="true">
+                    </p:commandButton>
+                </h:form>
+            </p:dialog>
+
+        </p:panel>
+    </f:view>
+</html>
+
+

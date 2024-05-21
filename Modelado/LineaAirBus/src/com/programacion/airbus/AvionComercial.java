@@ -13,8 +13,8 @@ public class AvionComercial extends Avion {
    private String cDenominacion;
    private int nCapacidad;
    
-   /** @pdRoleInfo migr=no name=Vuelo assc=Association_4 coll=java.util.Collection impl=java.util.HashSet mult=0..* type=Composition */
-   public java.util.Collection<Vuelo> vuelo;
+   /** @pdRoleInfo migr=no name=Vuelo assc=Association_4 coll=java.util.List impl=java.util.HashSet mult=0..* type=Composition */
+   public java.util.List<Vuelo> vuelo;
    
    public String getcDenominacion() {
       return cDenominacion;
@@ -32,7 +32,7 @@ public class AvionComercial extends Avion {
       nCapacidad = newNCapacidad;
    }
    
-   public java.util.Collection<Vuelo> getVuelo() {
+   public java.util.List<Vuelo> getVuelo() {
       if (vuelo == null)
          vuelo = new java.util.HashSet<Vuelo>();
       return vuelo;
@@ -44,7 +44,7 @@ public class AvionComercial extends Avion {
       return vuelo.iterator();
    }
    
-   public void setVuelo(java.util.Collection<Vuelo> newVuelo) {
+   public void setVuelo(java.util.List<Vuelo> newVuelo) {
       removeAllVuelo();
       for (java.util.Iterator<Vuelo> iter = newVuelo.iterator(); iter.hasNext();)
          addVuelo(iter.next());

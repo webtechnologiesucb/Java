@@ -4,10 +4,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.programacion.databases.Conexion;
+import com.programacion.models.Actor;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -15,9 +17,15 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.Font;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ListSelectionModel;
 
 public class FrmCrudActor extends JFrame {
 
@@ -48,7 +56,7 @@ public class FrmCrudActor extends JFrame {
 	 * @throws SQLException
 	 */
 	public FrmCrudActor() throws SQLException {
-		setTitle("Registro de Actores");
+		setTitle("CRUD de Actores");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 495);
 		contentPane = new JPanel();
@@ -88,45 +96,46 @@ public class FrmCrudActor extends JFrame {
 		btnEliminar.setBounds(460, 99, 128, 23);
 		contentPane.add(btnEliminar);
 
-		grdDatos = new JTable();
-		grdDatos.setBounds(45, 141, 543, 290);
-		contentPane.add(grdDatos);
-
 		// carga de la base de datos
+		List<Actor> lista = new ArrayList<Actor>();
 
 		Connection con = Conexion.getInstance().getConnection(); // rescatar conexion
-		String consulta = "SELECT * FROM actor WHERE actor_id>?";
+		String consulta = "SELECT actor_id, first_name, last_name, last_update " + " FROM actor WHERE actor_id>?";
 		PreparedStatement pst = con.prepareStatement(consulta); // Statement seguro
 		pst.setString(1, "0"); // parametro tipo texto
+		System.out.println(pst.toString());
 		ResultSet rs = pst.executeQuery();
-		DefaultTableModel dtmModelo;
-
-		dtmModelo = new DefaultTableModel() {
-			private static final long serialVersionUID = 8462952105265234581L;
-
-			@Override
-			public boolean isCellEditable(int fila, int columna) {
-				return false; // Con esto conseguimos que la tabla no se pueda editar
-			}
-		};
-
-		dtmModelo.addColumn("ID");
-		dtmModelo.addColumn("Nombre");
-		dtmModelo.addColumn("Apellido");
-		dtmModelo.addColumn("Fecha");
 
 		while (rs.next()) {
-			int actorId = rs.getInt("actor_id");
-			String firstName = rs.getString("first_name");
-			String lastName = rs.getString("last_name");
-			String lastUpdate = rs.getString("last_update");
-
-			dtmModelo.addRow(new Object[] { actorId, firstName, lastName, lastUpdate });
+			Actor a = new Actor();
+			a.setActorId(rs.getInt("actor_id"));
+			a.setFirstName(rs.getString("first_name"));
+			a.setLastName(rs.getString("last_name"));
+			a.setLastUpdate(rs.getDate("last_update"));
+			lista.add(a);
 		}
 
-		grdDatos.setModel(dtmModelo);
+		String[] columnNames = { "Actor ID", "First Name", "Last Name", "Last Update" };
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+		for (Actor actor : lista) {
+			Object[] row = { actor.getActorId(), actor.getFirstName(), actor.getLastName(), actor.getLastUpdate() };
+			model.addRow(row);
+		}
+
+		grdDatos = new JTable();
+		grdDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		grdDatos.setFillsViewportHeight(true);
+		grdDatos.setBounds(45, 158, 543, 290);
+		contentPane.add(grdDatos);
+
+		// Envolver JTable en JScrollPane para mostrar encabezados
+		JScrollPane scrollPane = new JScrollPane(grdDatos);
+		scrollPane.setBounds(45, 158, 543, 290);
+		contentPane.add(scrollPane);
+
+		grdDatos.setModel(model);
 		grdDatos.updateUI();
-		System.out.println(dtmModelo.getRowCount());
 
 	}
 }

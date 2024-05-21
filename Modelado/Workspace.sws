@@ -4,8 +4,10 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model Expanded="Yes" ID="{C2B50CE3-7429-4E0C-955C-7B7D72CD2286}" Name="UML Class Diagram_1" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="LineaAirBus.oom"/>
-		<Model Expanded="Yes" ID="{740F1519-CDD3-47AB-806E-0F172A39F20A}" Name="MySQLDataBase" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="MySQLDataBase.pdm"/>
+		<Model Expanded="Yes" ID="{C2B50CE3-7429-4E0C-955C-7B7D72CD2286}" Loaded="No" Name="UML Class Diagram_1" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="LineaAirBus.oom"/>
+		<Model Expanded="Yes" ID="{740F1519-CDD3-47AB-806E-0F172A39F20A}" Loaded="No" Name="MySQLDataBase" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="MySQLDataBase.pdm"/>
+		<Model Expanded="Yes" ID="{72FB27B4-4009-4A5F-A50A-822C13E5FA5D}" Name="Physical Data _1" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="Sakila-BD.pdm"/>
+		<Model Expanded="Yes" ID="{802CB8BA-3A11-474A-B9F0-9FE063CD540B}" Name="JavaObjects_1" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="JavaObjects_1.oom"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>

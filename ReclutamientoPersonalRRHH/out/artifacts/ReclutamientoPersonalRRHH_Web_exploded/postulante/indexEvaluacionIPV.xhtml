@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html" id="fview"> 
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <ui:debug />
+        <f:metadata>
+            <ui:insert name="metadata" />
+        </f:metadata>
+        <h:head>
+
+            <link href="../css/default.css" rel="stylesheet" type="text/css" />
+
+            <title><ui:insert name="title">Reclutamiento Personal</ui:insert>
+            </title>
+            <style type="text/css">
+
+                .logo {
+                    width: 5%
+                }
+
+
+                .detail {
+                    width: 90%;
+                    padding-left: 25px;
+                }
+
+
+                .detail td {
+                    font-size: 14px;
+                }
+
+
+                .ui-datascroller .ui-datascroller-item {
+                    border-bottom: 1px solid #A8A8A8;
+                    padding: 25px 10px;
+
+                }
+
+            </style>
+
+        </h:head>
+
+        <h:body id="body2" style="font-size: 11px;">
+            <h:outputText value="USUARIO ACTUAL: #{controllerAccesoSistema.usuarioModuloBean.codUsuarioGlobal} #{!(controllerAccesoSistema.usuarioModuloBean.codUsuarioGlobal eq '')}"></h:outputText>
+            <p:outputPanel rendered="#{controllerAccesoSistema.usuarioModuloBean.codUsuarioGlobal eq ''}">
+                <h:outputText value="Su sesión ha caducado, debe iniciar sesión nuevamente"></h:outputText>
+                <br/>
+                <h:form>
+                    <p:commandButton value="Volver a iniciar sesión" 
+                                     icon="ui-icon-refresh" 
+                                     title="Volver a iniciar sesión" 
+                                     style="vertical-align: bottom;height: 50px;font-size: 10px;"
+                                     actionListener="#{controllerAccesoSistema.redirect_homePage()}" 
+                                     >
+
+                    </p:commandButton>
+                </h:form>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{!(controllerAccesoSistema.usuarioModuloBean.codUsuarioGlobal eq '')}">
+
+
+                <p:layout  id="template" fullPage="true" > 
+                    <p:layoutUnit position="north" 
+                                  size="100" 
+                                  resizable="true" 
+                                  closable="false" 
+                                  collapsible="true"
+                                  id="panel_menu"
+
+                                  >
+
+
+                        <h:form>
+                            <h:panelGrid columns="2" 
+                                         style="border-style: hidden !important ;
+                                         width: 100%;
+                                         border-collapse: collapse;"
+                                         >
+                                <p:panel style="border-style: hidden !important;">
+                                    <p:graphicImage url="../img/logocofar.png" height="40" style="vertical-align: middle; ">
+                                    </p:graphicImage>
+                                    <p:graphicImage url="../img/_IPV.png" height="40" style="vertical-align: middle; ">
+                                    </p:graphicImage>
+                                    <br />
+                                    <h:outputText value="Inventario de Personalidad para Vendedores" style=" color: #336699;font-size: 16px;"></h:outputText>
+                                </p:panel>
+                                <p:panel style="border-style: hidden !important; text-align: right; background-color: transparent; " >
+                                    <p:commandButton value="#{controllerAccesoSistema.usuarioModuloBean.nombre_completo} #{controllerAccesoSistema.usuarioModuloBean.apPaternoUsuarioGlobal}, Bienvenido"  
+                                                     icon="ui-icon-person" 
+                                                     title="Editar Usuario" 
+                                                     style="vertical-align: bottom;height: 50px;font-size: 14px;"/>
+                                    <p:commandButton value="Ver Instrucciones" type="button" onclick="PF('instruc').show();"
+                                                     style="vertical-align: bottom;height: 50px;font-size: 14px;" 
+                                                     actionListener="#{controller_EvaluacionIPV.ver_instrucciones()}"
+                                                     icon="ui-icon-note"
+                                                     immediate="true"/>
+                                    <p:commandButton value="Logout" 
+                                                     icon="ui-icon-extlink" 
+                                                     title="Salir del Sistema" 
+                                                     style="vertical-align: bottom;height: 50px;font-size: 14px;"
+                                                     actionListener="#{controllerAccesoSistema.redirect_homePage()}" 
+                                                     >
+                                        <p:confirm header="Confirmación" 
+                                                   message="Ud. no ha completado la prueba. Esta seguro de Salir del Sistema?" 
+                                                   icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                    <p:confirmDialog global="true" 
+                                                     showEffect="fade" 
+                                                     hideEffect="explode" 
+                                                     width="400">
+                                        <p:commandButton value="Si" 
+                                                         type="button" 
+                                                         styleClass="ui-confirmdialog-yes" 
+                                                         icon="ui-icon-check" 
+                                                         />
+                                        <p:commandButton value="No" 
+                                                         type="button" 
+                                                         styleClass="ui-confirmdialog-no" 
+                                                         icon="ui-icon-close" />
+                                    </p:confirmDialog>
+                                </p:panel>
+                            </h:panelGrid>
+                            <p:separator></p:separator>
+                        </h:form>
+
+                    </p:layoutUnit>
+
+
+
+                    <p:layoutUnit position="center" id="ccont" styleClass="layoutUnitCenter">
+                        <p:dialog  style="border: 10px;" 
+                                   visible="#{controller_EvaluacionIPV.visible_mensajeConclusion}" 
+                                   modal="true" 
+                                   resizable="false" 
+                                   header="IPV CONCLUIDO" width="300" height="150"
+                                   widgetVar="conclusion"
+                                   showEffect="explode" 
+                                   hideEffect="clip"
+                                   closable="false"
+                                   id="conclusion"
+                                   appendTo="@(body)"
+                                   >
+                            <h:form>
+                                <div align="center">
+
+                                    <h:outputText value="Gracias!"  style=" font-size: 14px; color: #336699;">
+                                    </h:outputText>
+                                    <br />
+                                    <br />
+                                    <h:outputText value="Ud. ha completado de manera satisfactoria la prueba IPV."  style=" font-size: 14px; color: #336699;">
+                                    </h:outputText>
+                                    <br />
+                                    <br />
+
+                                    <br />
+
+                                    <p:commandButton actionListener="#{controller_EvaluacionIPV.action_ConfirmarConclusionEvaluacion()}"
+
+                                                     onclick="PF('conclusiones').hide();"
+                                                     value="Cerrar" immediate="true"></p:commandButton>
+                                </div>
+                            </h:form>
+                        </p:dialog>
+
+                        <h:form id="form">
+                            <p:dialog  style="border: 10px;" 
+                                       visible="#{controller_EvaluacionIPV.visible_instrucciones}" modal="false" closable="false" 
+                                       resizable="false" header="IPV" width="800" height="510"
+                                       widgetVar="instruc"
+                                       showEffect="explode" hideEffect="clip"
+                                       id="instrucciones">
+
+                                <div align="center">
+                                    <h:outputText value="INSTRUCCIONES" style="font-weight: bold; font-size: 22px; color: darkblue;">
+                                    </h:outputText>
+                                    <br />
+                                    <br />
+
+                                    <h:outputText value="En las páginas siguientes encontrará cierto número de situaciones y de preguntas seguidas de varias respuestas posibles. Se le pide que escoja UNA ALTERNATIVA para cada pregunta, la que de manera espontánea le parezca preferible. 
+                                                  
+                                                  "  style=" font-size: 14px; color: #336699;">
+                                    </h:outputText>
+                                     <br />
+                                    <h:outputText value="En algunas cuestiones estará Usted personalmente implicado. Por ejemplo:
+                                                  
+                                                  "  style=" font-size: 14px; color: #336699;">
+                                    </h:outputText>
+                                     
+                                    <br />
+                                    <br />
+                                    <h:outputText value="•	Si usted pudiera elegir el tipo de vivienda de manera completamente libre, ¿qué preferiría? "  style=" font-size: 14px; color: #336699; font-weight: bold;">
+                                    </h:outputText>
+                                    <br />
+                                    
+                                    <h:panelGrid columns="1" style="width: 500px;">
+                                    <h:outputText value="o	Una casa en el campo con un gran jardín. " style=" font-size: 14px; color: #336699; ">
+                                    </h:outputText>
+                                    
+                                    <h:outputText value="o	Un lujoso departamento en una gran ciudad.  " style=" font-size: 14px; color: #336699; ">
+                                    </h:outputText>
+                                    
+                                    <h:outputText value="o	Una casa tranquila en una calle tranquila, de una pequeña ciudad. " style=" font-size: 14px; color: #336699; ">
+                                    </h:outputText>
+                                    
+                                    </h:panelGrid>
+                                    <br />
+                                     <h:outputText value="Otras se refieren a personas ajenas. Por ejemplo: " style="font-size: 14px; color: #336699;">
+                                    </h:outputText>
+                                    <br />
+                                    <h:outputText value="XXXXXXX"  style=" font-size: 14px; color: transparent;font-weight: bold;">
+                                    </h:outputText>
+                                    <h:outputText value="•	J… está comprando en un gran almacén, cuando advierte que alguien esconde discretamente un disco bajo su suéter. ¿Qué hará J…?"  style=" font-size: 14px; color: #336699;font-weight: bold;">
+                                    </h:outputText>
+                                    <br />
+                                    <h:panelGrid columns="1" style="width: 500px;">
+                                    <h:outputText value="o	Avisar del hecho al primer Vendedor que encuentre.  " style=" font-size: 14px; color: #336699; ">
+                                    </h:outputText>
+                                   
+                                    <h:outputText value="o	No hacer nada porque piensa que no es cosa suya.   " style=" font-size: 14px; color: #336699; ">
+                                    </h:outputText>
+                                    
+                                    <h:outputText value="o	Indicar al infractor con el gesto o de palabra que ha visto lo que ha hecho. " style=" font-size: 14px; color: #336699; ">
+                                    </h:outputText>
+                                    </h:panelGrid>
+                                    <br />
+                                     <h:outputText value="En este caso, Usted contestará lo que, según su propia opinión, es más probable que haga J…  " style="font-size: 14px; color: #336699;">
+                                    </h:outputText>
+                                    <br />
+                                    <br />
+                                      <h:outputText value="Recuerde que no hay respuestas buenas ni  malas, cada uno piensa y actúa como cree conveniente en función de su carácter, de sus intereses, etc. Se le recomienda que responda lo más espontánea y sinceramente posible. Conteste rápidamente, sin reflexionar demasiado. " style="font-size: 14px; color: #336699;">
+                                    </h:outputText>
+                                    <br />
+                                    <br />
+                                    <p:commandButton actionListener="#{controller_EvaluacionIPV.cerrar_instrucciones()}"
+
+                                                     onclick="PF('instruc').hide();"
+                                                     value="Cerrar" immediate="true"></p:commandButton>
+                                </div>
+                            </p:dialog>
+                            <center>
+                                <p:panel style="width: 90%;" >
+                                    <p:dataScroller value="#{controller_EvaluacionIPV.lista_preguntas}" 
+                                                    var="preg" 
+                                                    chunkSize="100"   
+                                                    scrollHeight="100"
+                                                    style="width: 80%;"
+                                                    id="scroller"
+                                                    >
+
+
+                                        <h:panelGrid columns="2" style="width:80%; " columnClasses="logo,detail" >
+
+                                            <h:outputText value="#{preg.nro_pregunta} .-" style="font-size: 17px; font-weight: bold; color: darkgray"></h:outputText> 
+
+
+                                            <p:outputPanel>
+                                                <h:panelGrid columns="1"  cellpadding="5">
+
+                                                    <h:outputText value="#{preg.descripcion_pregunta}" style="font-size: 16px; font-weight: bold"/>
+
+
+                                                    <p:selectOneRadio id="console" 
+                                                                      value="#{preg.respuesta}" 
+                                                                      layout="custom"
+                                                                      required="true" requiredMessage="Debe responder a la pregunta #{preg.nro_pregunta}."
+                                                                      >
+                                                        <f:selectItem itemLabel="#{preg.descripcion_respuestaA}" itemValue="1" />
+                                                        <f:selectItem itemLabel="#{preg.descripcion_respuestaB}" itemValue="2" />
+                                                        <f:selectItem itemLabel="#{preg.descripcion_respuestaC}" itemValue="3" />
+
+                                                    </p:selectOneRadio>
+                                                    <h:panelGrid columns="2" cellpadding="8">
+                                                        <p:radioButton id="opt1" for="console" itemIndex="0"  />
+                                                        <h:outputLabel for="opt1" value="#{preg.descripcion_respuestaA}" />
+
+                                                        <p:radioButton id="opt2" for="console" itemIndex="1" />
+                                                        <h:outputLabel for="opt2" value="#{preg.descripcion_respuestaB}" />
+
+                                                        <p:radioButton id="opt3" for="console" itemIndex="2" rendered="#{preg.descripcion_respuestaC!=null}"/>
+                                                        <h:outputLabel for="opt3" value="#{preg.descripcion_respuestaC}" />
+                                                    </h:panelGrid>
+                                                </h:panelGrid>
+                                            </p:outputPanel>
+
+                                        </h:panelGrid>
+                                        <p:separator rendered="false"></p:separator>
+                                    </p:dataScroller>
+                                </p:panel>
+
+                                <p:commandButton  value="Continuar" 
+                                                  icon="ui-icon-circle-triangle-s"
+                                                  actionListener="#{controller_EvaluacionIPV.actionGuardarRespuestas()}"
+                                                  update="@all"/>
+
+                            </center>
+                            <p:commandButton value="Guardar Respuestas" 
+                                             rendered="false">
+                                <p:confirm header="Confirmación" 
+                                           message="Esta seguro de Concluir el cuestionario?" 
+                                           icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true" 
+                                             showEffect="fade" 
+                                             hideEffect="explode" 
+                                             width="400">
+                                <p:commandButton value="Si" 
+                                                 type="button" 
+                                                 styleClass="ui-confirmdialog-yes" 
+                                                 icon="ui-icon-check" 
+                                                 />
+                                <p:commandButton value="No" 
+                                                 type="button" 
+                                                 styleClass="ui-confirmdialog-no" 
+                                                 icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </h:form>
+
+                    </p:layoutUnit>
+
+                    <p:layoutUnit position="south" size="30"  resizable="true" closable="true" collapsible="true">
+                        <div>
+                            <h:outputText value="Corporación Farmacéutica ([Calidad], [Responsabilidad], [Eficiencia], [Reciprocidad]), "></h:outputText>
+                            <h:outputText value="COFAR Copyright © 2016." style="color: blue;"></h:outputText>
+
+                        </div>
+                    </p:layoutUnit>
+
+                </p:layout>
+
+            </p:outputPanel>
+            <p:growl autoUpdate="true" showDetail="false" showSummary="true" id="messages" ></p:growl>
+            <ui:insert name="status" >
+                <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px"
+                              >
+                    <f:facet name="start">
+                        <p:graphicImage url="../img/loading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+            </ui:insert>
+
+
+        </h:body>
+    </f:view>
+</html>

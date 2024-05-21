@@ -14,8 +14,8 @@ public class Pasajero extends Persona {
    private String cNombre;
    private boolean bMenorEdad;
    
-   /** @pdRoleInfo migr=no name=Pasaje assc=Association_11 coll=java.util.Collection impl=java.util.HashSet mult=0..* */
-   public java.util.Collection<Pasaje> pasaje;
+   /** @pdRoleInfo migr=no name=Pasaje assc=Association_11 coll=java.util.List impl=java.util.HashSet mult=0..* */
+   public java.util.List<Pasaje> pasaje;
    
    public int getnCodPasajero() {
       return nCodPasajero;
@@ -41,7 +41,7 @@ public class Pasajero extends Persona {
       bMenorEdad = newBMenorEdad;
    }
 
-   public java.util.Collection<Pasaje> getPasaje() {
+   public java.util.List<Pasaje> getPasaje() {
       if (pasaje == null)
          pasaje = new java.util.HashSet<Pasaje>();
       return pasaje;
@@ -53,7 +53,7 @@ public class Pasajero extends Persona {
       return pasaje.iterator();
    }
 
-   public void setPasaje(java.util.Collection<Pasaje> newPasaje) {
+   public void setPasaje(java.util.List<Pasaje> newPasaje) {
       removeAllPasaje();
       for (Object element : newPasaje)
 		addPasaje((Pasaje)element);

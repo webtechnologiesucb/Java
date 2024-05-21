@@ -14,10 +14,10 @@ public class Vuelo {
    private int nDuracion;
    private java.util.Date dSalida;
    
-   /** @pdRoleInfo migr=no name=Pasaje assc=Association_5 coll=java.util.Collection impl=java.util.HashSet mult=0..* type=Composition */
-   public java.util.Collection<Pasaje> pasaje;
-   /** @pdRoleInfo migr=no name=Tripulacion assc=Association_7 coll=java.util.Collection impl=java.util.HashSet mult=0..* type=Composition */
-   public java.util.Collection<Tripulacion> tripulacion;
+   /** @pdRoleInfo migr=no name=Pasaje assc=Association_5 coll=java.util.List impl=java.util.HashSet mult=0..* type=Composition */
+   public java.util.List<Pasaje> pasaje;
+   /** @pdRoleInfo migr=no name=Tripulacion assc=Association_7 coll=java.util.List impl=java.util.HashSet mult=0..* type=Composition */
+   public java.util.List<Tripulacion> tripulacion;
 
    public String getcDestino() {
       return cDestino;
@@ -43,7 +43,7 @@ public class Vuelo {
       dSalida = newDSalida;
    }
 
-   public java.util.Collection<Pasaje> getPasaje() {
+   public java.util.List<Pasaje> getPasaje() {
       if (pasaje == null)
          pasaje = new java.util.HashSet<Pasaje>();
       return pasaje;
@@ -55,7 +55,7 @@ public class Vuelo {
       return pasaje.iterator();
    }
 
-   public void setPasaje(java.util.Collection<Pasaje> newPasaje) {
+   public void setPasaje(java.util.List<Pasaje> newPasaje) {
       removeAllPasaje();
       for (java.util.Iterator<Pasaje> iter = newPasaje.iterator(); iter.hasNext();)
          addPasaje(iter.next());
@@ -83,7 +83,7 @@ public class Vuelo {
          pasaje.clear();
    }
 
-   public java.util.Collection<Tripulacion> getTripulacion() {
+   public java.util.List<Tripulacion> getTripulacion() {
       if (tripulacion == null)
          tripulacion = new java.util.HashSet<Tripulacion>();
       return tripulacion;
@@ -95,7 +95,7 @@ public class Vuelo {
       return tripulacion.iterator();
    }
 
-   public void setTripulacion(java.util.Collection<Tripulacion> newTripulacion) {
+   public void setTripulacion(java.util.List<Tripulacion> newTripulacion) {
       removeAllTripulacion();
       for (Object element : newTripulacion)
 		addTripulacion((Tripulacion)element);

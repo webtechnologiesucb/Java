@@ -11,7 +11,7 @@ public class Aeropuerto {
    private String cCodigoInternacional;
    private String cDescripcion;
    
-   public java.util.Collection<Hangar> hangar;
+   public java.util.List<Hangar> hangar;
    
    public String getcCodigoInternacional() {
       return cCodigoInternacional;
@@ -29,7 +29,7 @@ public class Aeropuerto {
       cDescripcion = newCDescripcion;
    }
    
-   public java.util.Collection<Hangar> getHangar() {
+   public java.util.List<Hangar> getHangar() {
       if (hangar == null)
          hangar = new java.util.HashSet<Hangar>();
       return hangar;
@@ -41,7 +41,7 @@ public class Aeropuerto {
       return hangar.iterator();
    }
    
-   public void setHangar(java.util.Collection<Hangar> newHangar) {
+   public void setHangar(java.util.List<Hangar> newHangar) {
       removeAllHangar();
       for (java.util.Iterator<Hangar> iter = newHangar.iterator(); iter.hasNext();)
          addHangar(iter.next());
