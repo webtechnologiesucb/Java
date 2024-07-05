@@ -30,7 +30,6 @@
     <fullyQualifiedTypeName name="java.util.HashMap"/>
     <fullyQualifiedTypeName name="java.awt.EventQueue"/>
     <fullyQualifiedTypeName name="java.sql.Connection"/>
-    <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
     <fullyQualifiedTypeName name="com.programacion.databases.Conexion"/>
     <fullyQualifiedTypeName name="com.programacion.models.FilmActor"/>
     <fullyQualifiedTypeName name="com.programacion.models.FilmCategory"/>
@@ -40,13 +39,25 @@
     <fullyQualifiedTypeName name="java.util.Iterator"/>
     <fullyQualifiedTypeName name="com.programacion.models.Address"/>
     <fullyQualifiedTypeName name="com.mysql.cj.xdevapi.AddResult"/>
-    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
     <fullyQualifiedTypeName name="com.mysql.cj.x.protobuf.MysqlxCrud.Collection"/>
     <fullyQualifiedTypeName name="java.util.Collection"/>
     <fullyQualifiedTypeName name="java.util.HashSet"/>
     <fullyQualifiedTypeName name="com.programacion.models.Country"/>
     <fullyQualifiedTypeName name="java.util.Objects"/>
     <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="com.programacion.models.Actor"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.programacion.models.Actor"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="java.time.ZoneId"/>
+    <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
+    <fullyQualifiedTypeName name="com.programacion.forms.FrmCrudActor"/>
+    <fullyQualifiedTypeName name="com.programacion.forms.MDIPrincipal"/>
+    <fullyQualifiedTypeName name="com.programacion.forms.MDIContainer"/>
+    <fullyQualifiedTypeName name="javax.swing.JDesktopPane"/>
+    <fullyQualifiedTypeName name="javax.swing.JMenuBar"/>
+    <fullyQualifiedTypeName name="javax.swing.JMenu"/>
+    <fullyQualifiedTypeName name="javax.swing.JMenuItem"/>
 </qualifiedTypeNameHistroy>
