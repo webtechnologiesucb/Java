@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
+    <entry loc="C:\Program Files\Java\jdk-23\bin" stamp="1740964442250"/>
+    <entry loc="C:\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.5.v20241023-1957\jre" stamp="1732800914000"/>
+    <entry loc="C:\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.5.v20241023-1957" stamp="1734384432815"/>
+    <entry loc="C:\Program Files\Java\jdk-23" stamp="1740964450950"/>
     <entry loc="C:\Program Files\Java\jdk-20" stamp="1684121860942"/>
 </dirs>

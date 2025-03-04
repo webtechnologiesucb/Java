@@ -43,13 +43,13 @@ public class Pasajero extends Persona {
 
    public java.util.List<Pasaje> getPasaje() {
       if (pasaje == null)
-         pasaje = new java.util.HashSet<Pasaje>();
+         pasaje = (List<Pasaje>) new java.util.HashSet<Pasaje>();
       return pasaje;
    }
 
    public java.util.Iterator<Pasaje> getIteratorPasaje() {
       if (pasaje == null)
-         pasaje = new java.util.HashSet<Pasaje>();
+         pasaje = (List<Pasaje>) new java.util.HashSet<Pasaje>();
       return pasaje.iterator();
    }
 
@@ -63,7 +63,7 @@ public class Pasajero extends Persona {
       if (newPasaje == null)
          return;
       if (this.pasaje == null)
-         this.pasaje = new java.util.HashSet<Pasaje>();
+         this.pasaje = (List<Pasaje>) new java.util.HashSet<Pasaje>();
       if (!this.pasaje.contains(newPasaje))
          this.pasaje.add(newPasaje);
    }

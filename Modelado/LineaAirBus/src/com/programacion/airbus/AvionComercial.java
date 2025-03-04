@@ -34,13 +34,13 @@ public class AvionComercial extends Avion {
    
    public java.util.List<Vuelo> getVuelo() {
       if (vuelo == null)
-         vuelo = new java.util.HashSet<Vuelo>();
+         vuelo = (List<Vuelo>) new java.util.HashSet<Vuelo>();
       return vuelo;
    }
    
    public java.util.Iterator<Vuelo> getIteratorVuelo() {
       if (vuelo == null)
-         vuelo = new java.util.HashSet<Vuelo>();
+         vuelo = (List<Vuelo>) new java.util.HashSet<Vuelo>();
       return vuelo.iterator();
    }
    
@@ -54,7 +54,7 @@ public class AvionComercial extends Avion {
       if (newVuelo == null)
          return;
       if (this.vuelo == null)
-         this.vuelo = new java.util.HashSet<Vuelo>();
+         this.vuelo = (List<Vuelo>) new java.util.HashSet<Vuelo>();
       if (!this.vuelo.contains(newVuelo))
          this.vuelo.add(newVuelo);
    }

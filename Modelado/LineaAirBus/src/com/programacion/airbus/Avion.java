@@ -32,13 +32,13 @@ public class Avion extends Transporte {
    
    public java.util.List<Hangar> getHangar() {
       if (hangar == null)
-         hangar = new java.util.HashSet<Hangar>();
+         hangar = (List<Hangar>) new java.util.HashSet<Hangar>();
       return hangar;
    }
    
    public java.util.Iterator<Hangar> getIteratorHangar() {
       if (hangar == null)
-         hangar = new java.util.HashSet<Hangar>();
+         hangar = (List<Hangar>) new java.util.HashSet<Hangar>();
       return hangar.iterator();
    }
    
@@ -52,7 +52,7 @@ public class Avion extends Transporte {
       if (newHangar == null)
          return;
       if (this.hangar == null)
-         this.hangar = new java.util.HashSet<Hangar>();
+         this.hangar = (List<Hangar>) new java.util.HashSet<Hangar>();
       if (!this.hangar.contains(newHangar))
          this.hangar.add(newHangar);
    }

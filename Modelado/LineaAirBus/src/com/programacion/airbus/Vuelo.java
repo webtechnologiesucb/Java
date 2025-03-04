@@ -45,13 +45,13 @@ public class Vuelo {
 
    public java.util.List<Pasaje> getPasaje() {
       if (pasaje == null)
-         pasaje = new java.util.HashSet<Pasaje>();
+         pasaje = (List<Pasaje>) new java.util.HashSet<Pasaje>();
       return pasaje;
    }
 
    public java.util.Iterator<Pasaje> getIteratorPasaje() {
       if (pasaje == null)
-         pasaje = new java.util.HashSet<Pasaje>();
+         pasaje = (List<Pasaje>) new java.util.HashSet<Pasaje>();
       return pasaje.iterator();
    }
 
@@ -65,7 +65,7 @@ public class Vuelo {
       if (newPasaje == null)
          return;
       if (this.pasaje == null)
-         this.pasaje = new java.util.HashSet<Pasaje>();
+         this.pasaje = (List<Pasaje>) new java.util.HashSet<Pasaje>();
       if (!this.pasaje.contains(newPasaje))
          this.pasaje.add(newPasaje);
    }
@@ -85,13 +85,13 @@ public class Vuelo {
 
    public java.util.List<Tripulacion> getTripulacion() {
       if (tripulacion == null)
-         tripulacion = new java.util.HashSet<Tripulacion>();
+         tripulacion = (List<Tripulacion>) new java.util.HashSet<Tripulacion>();
       return tripulacion;
    }
 
    public java.util.Iterator<Tripulacion> getIteratorTripulacion() {
       if (tripulacion == null)
-         tripulacion = new java.util.HashSet<Tripulacion>();
+         tripulacion = (List<Tripulacion>) new java.util.HashSet<Tripulacion>();
       return tripulacion.iterator();
    }
 
@@ -105,7 +105,7 @@ public class Vuelo {
       if (newTripulacion == null)
          return;
       if (this.tripulacion == null)
-         this.tripulacion = new java.util.HashSet<Tripulacion>();
+         this.tripulacion = (List<Tripulacion>) new java.util.HashSet<Tripulacion>();
       if (!this.tripulacion.contains(newTripulacion))
          this.tripulacion.add(newTripulacion);
    }

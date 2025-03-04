@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Lists;
+//import java.util.Lists;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ abstract class Juego01 {
 		for (int i = 1; i <= 9; i++) {
 			secuencia.add(i);
 		}
-		Lists.shuffle(secuencia);
+		//Lists.shuffle(secuencia);
 		secuencia = secuencia.subList(0, 4);
 	}
 
