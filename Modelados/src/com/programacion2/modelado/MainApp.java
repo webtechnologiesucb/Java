@@ -9,9 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import com.programacion2.modelo.Actor;
-
 import java.sql.SQLException;
-import java.util.Date;
 
 public class MainApp extends Application {
     private TableView<Actor> table;
