@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.lang.System"/>
-    <fullyQualifiedTypeName name="desarrollo02.Numero"/>
-    <fullyQualifiedTypeName name="desarrollo02.Desarrollo011"/>
-    <fullyQualifiedTypeName name="desarrollo02.Cuenta"/>
-    <fullyQualifiedTypeName name="desarrollo02.Circulo"/>
-    <fullyQualifiedTypeName name="desarrollo02.Impuesto"/>
-    <fullyQualifiedTypeName name="desarrollo02.Rectangulo"/>
     <fullyQualifiedTypeName name="com.programacion.dos.Figura3DBase"/>
     <fullyQualifiedTypeName name="com.programacion.dos.OperacionMatematica"/>
     <fullyQualifiedTypeName name="com.programacion.dos.Perro"/>
@@ -23,7 +16,6 @@
     <fullyQualifiedTypeName name="java.util.Base64"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
     <fullyQualifiedTypeName name="java.awt.EventQueue"/>
-    <fullyQualifiedTypeName name="java.sql.Connection"/>
     <fullyQualifiedTypeName name="com.programacion.databases.Conexion"/>
     <fullyQualifiedTypeName name="com.programacion.models.FilmActor"/>
     <fullyQualifiedTypeName name="com.programacion.models.FilmCategory"/>
@@ -45,7 +37,6 @@
     <fullyQualifiedTypeName name="java.time.ZoneId"/>
     <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
     <fullyQualifiedTypeName name="java.sql.Date"/>
-    <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
     <fullyQualifiedTypeName name="com.programacion.forms.FrmCrudActor"/>
     <fullyQualifiedTypeName name="com.programacion.forms.MDIPrincipal"/>
@@ -60,4 +51,13 @@
     <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="com.programacion.dos.UsuarioModel"/>
     <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
+    <fullyQualifiedTypeName name="com.programacion2.modelo.Actor"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="java.beans.Statement"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.TableColumn"/>
 </qualifiedTypeNameHistroy>
