@@ -1,42 +1,64 @@
 package com.programacion2.principal;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class BackgroundScene extends Application {
-
-	@Override
+    @Override
     public void start(Stage primaryStage) {
-        Canvas canvas = new Canvas(800, 600);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        dibujarArbolFractal(gc, 400, 550, -90, 10);
+        Pane pane = new Pane();
 
-        StackPane root = new StackPane(canvas);
-        Scene scene = new Scene(root, 800, 600);
+        // Crear el carrito (rectángulo)
+        Rectangle carrito = new Rectangle(50, 30, Color.BLUE);
+        carrito.setX(50);
+        carrito.setY(100);
 
-        primaryStage.setTitle("Arbol Fractal");
+        // Crear la persona (círculo)
+        Circle persona = new Circle(15, Color.RED);
+        persona.setCenterX(100);
+        persona.setCenterY(200);
+
+        pane.getChildren().addAll(carrito, persona);
+
+        // Animación para el carrito
+        Timeline animacionCarrito = new Timeline(
+                new KeyFrame(Duration.millis(50), e -> {
+                    carrito.setX(carrito.getX() + 2); // Movimiento hacia la derecha
+                    if (carrito.getX() > pane.getWidth()) {
+                        carrito.setX(0); // Regresar al inicio cuando sale del borde
+                    }
+                })
+        );
+        animacionCarrito.setCycleCount(Timeline.INDEFINITE);
+        animacionCarrito.play();
+
+        // Animación para la persona
+        Timeline animacionPersona = new Timeline(
+                new KeyFrame(Duration.millis(100), e -> {
+                    persona.setCenterY(persona.getCenterY() - 1); // Movimiento hacia arriba
+                    if (persona.getCenterY() < 0) {
+                        persona.setCenterY(pane.getHeight()); // Regresar al inicio cuando sale del borde
+                    }
+                })
+        );
+        animacionPersona.setCycleCount(Timeline.INDEFINITE);
+        animacionPersona.play();
+
+        Scene scene = new Scene(pane, 800, 400);
+        primaryStage.setTitle("Supermercado Animado");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    private void dibujarArbolFractal(GraphicsContext gc, double x1, double y1, double angulo, int profundidad) {
-        if (profundidad == 0) return;
-
-        double longitudRama = profundidad * 10;
-        double x2 = x1 + longitudRama * Math.cos(Math.toRadians(angulo));
-        double y2 = y1 + longitudRama * Math.sin(Math.toRadians(angulo));
-
-        gc.strokeLine(x1, y1, x2, y2);
-        dibujarArbolFractal(gc, x2, y2, angulo - 30, profundidad - 1);
-        dibujarArbolFractal(gc, x2, y2, angulo + 30, profundidad - 1);
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 }
-

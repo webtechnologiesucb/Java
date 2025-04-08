@@ -1,3 +1,5 @@
+import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class SampleGuiConsola {
     public static void main(String[] args) {
@@ -18,7 +20,7 @@ public class SampleGuiConsola {
 
     private static void runConsoleVersion() {
         // Lógica para la versión de consola
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Ingresa el primer número: ");
         int num1 = scanner.nextInt();
         System.out.print("Ingresa el segundo número: ");
@@ -29,10 +31,10 @@ public class SampleGuiConsola {
 
     private static void runGuiVersion() {
         // Lógica para la versión gráfica
-        javax.swing.JOptionPane.showMessageDialog(null, "Bienvenido a la versión gráfica");
-        String num1 = javax.swing.JOptionPane.showInputDialog("Ingresa el primer número:");
-        String num2 = javax.swing.JOptionPane.showInputDialog("Ingresa el segundo número:");
+        JOptionPane.showMessageDialog(null, "Bienvenido a la versión gráfica");
+        String num1 = JOptionPane.showInputDialog("Ingresa el primer número:");
+        String num2 = JOptionPane.showInputDialog("Ingresa el segundo número:");
         int sum = Integer.parseInt(num1) + Integer.parseInt(num2);
-        javax.swing.JOptionPane.showMessageDialog(null, "La suma es: " + sum);
+        JOptionPane.showMessageDialog(null, "La suma es: " + sum);
     }
 }
