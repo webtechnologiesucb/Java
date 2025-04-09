@@ -47,9 +47,9 @@ public class GuiDivisionEjemplo extends JFrame {
 		setContentPane(contenido);
 		contenido.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Division de dos numeros");
-		lblNewLabel.setBounds(213, 53, 120, 13);
-		contenido.add(lblNewLabel);
+		JLabel lblTitulo = new JLabel("Division de dos numeros");
+		lblTitulo.setBounds(213, 53, 120, 13);
+		contenido.add(lblTitulo);
 
 		JLabel lblNumero1 = new JLabel("Numero 1:");
 		lblNumero1.setBounds(62, 96, 72, 13);
