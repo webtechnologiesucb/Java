@@ -80,7 +80,7 @@ public class GuiDivisionEjemplo extends JFrame {
 						// damos formato para mostrar el resultado
 						String resultado = String.format("La division de: %d / %d = %d ", n1, n2, div);
 						// imprime el mensaje en un cuadro de dialogo
-						JOptionPane.showMessageDialog(contenido, resultado, "Divisi[on",
+						JOptionPane.showMessageDialog(contenido, resultado, "Division",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						JOptionPane.showMessageDialog(contenido, "Revise si lleno los campos del formulario!",
