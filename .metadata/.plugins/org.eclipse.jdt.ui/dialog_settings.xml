@@ -112,6 +112,7 @@
 		<item key="updateSimilarElements" value="false"/>
 		<item key="updateSimilarElementsMatchStrategy" value="1"/>
 		<item key="updateTextualMatches" value="false"/>
+		<item key="renameSubpackages" value="false"/>
 	</section>
 	<section name="ProblemSeveritiesConfigurationBlock">
 		<item key="expanded2" value="false"/>
