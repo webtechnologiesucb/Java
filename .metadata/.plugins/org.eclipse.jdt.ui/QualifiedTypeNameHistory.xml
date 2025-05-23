@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="evaluacion.ucb.CuentaBancaria"/>
-    <fullyQualifiedTypeName name="evaluacion.ucb.Tigre"/>
-    <fullyQualifiedTypeName name="java.lang.Override"/>
-    <fullyQualifiedTypeName name="evaluacion.ucb.Vehiculo"/>
-    <fullyQualifiedTypeName name="Operaciones"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
-    <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
-    <fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
-    <fullyQualifiedTypeName name="javax.swing.JComponent"/>
-    <fullyQualifiedTypeName name="javax.swing.DefaultCellEditor"/>
-    <fullyQualifiedTypeName name="java.awt.Component"/>
-    <fullyQualifiedTypeName name="javax.swing.table.TableColumn"/>
-    <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
     <fullyQualifiedTypeName name="lombok.ToString"/>
     <fullyQualifiedTypeName name="lombok.Getter"/>
     <fullyQualifiedTypeName name="lombok.Setter"/>
@@ -60,4 +44,20 @@
     <fullyQualifiedTypeName name="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="jakarta.persistence.Column"/>
+    <fullyQualifiedTypeName name="javax.swing.JMenuItem"/>
+    <fullyQualifiedTypeName name="com.programacion.forms.FrmReporteActores"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
+    <fullyQualifiedTypeName name="javax.swing.JInternalFrame"/>
+    <fullyQualifiedTypeName name="java.awt.FlowLayout"/>
+    <fullyQualifiedTypeName name="net.sf.jasperreports.engine.JasperReport"/>
+    <fullyQualifiedTypeName name="net.sf.jasperreports.engine.JasperPrint"/>
+    <fullyQualifiedTypeName name="net.sf.jasperreports.engine.JasperFillManager"/>
+    <fullyQualifiedTypeName name="net.sf.jasperreports.engine.util.JRLoader"/>
+    <fullyQualifiedTypeName name="net.sf.jasperreports.view.JasperViewer"/>
+    <fullyQualifiedTypeName name="com.programacion.forms.MDIContainer"/>
+    <fullyQualifiedTypeName name="java.awt.SplashScreen"/>
+    <fullyQualifiedTypeName name="com.programacion.forms.LoginFrame"/>
+    <fullyQualifiedTypeName name="com.programacion.databases.Conexion"/>
+    <fullyQualifiedTypeName name="org.mindrot.jbcrypt.BCrypt"/>
 </qualifiedTypeNameHistroy>
