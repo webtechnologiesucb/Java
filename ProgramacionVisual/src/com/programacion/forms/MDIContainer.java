@@ -1,5 +1,6 @@
 package com.programacion.forms;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JDesktopPane;
@@ -7,7 +8,18 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+import com.programacion.databases.Conexion;
+
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
@@ -36,12 +48,13 @@ public class MDIContainer extends JFrame {
 	 * Create the frame.
 	 */
 	public MDIContainer() {
-		setTitle("MDI Container Example");
+		setTitle("Sakila App");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 600);
+		setBounds(100, 100, 800, 600);
+		getContentPane().setLayout(new BorderLayout());
 
 		desktopPane = new JDesktopPane();
-		setContentPane(desktopPane);
+		getContentPane().add(desktopPane, BorderLayout.CENTER);
 
 		// Add your menu items or buttons here
 		// Agregar el menú "Registro"
@@ -53,14 +66,14 @@ public class MDIContainer extends JFrame {
 				FrmCrudActor frmActor;
 				try {
 					frmActor = new FrmCrudActor();
-					frmActor.setVisible(true); // Mostrar el MDI Child
+					desktopPane.add(frmActor);
+					frmActor.setVisible(true);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
 			}
 		});
+
 		JMenuItem filmItem = new JMenuItem("Film");
 		JMenuItem categoryItem = new JMenuItem("Category");
 

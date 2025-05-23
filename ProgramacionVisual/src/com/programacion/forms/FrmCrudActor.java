@@ -1,13 +1,23 @@
 package com.programacion.forms;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import com.programacion.databases.Conexion;
 import com.programacion.models.Actor;
+
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -21,8 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.JOptionPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class FrmCrudActor extends JFrame {
+public class FrmCrudActor extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -52,9 +64,14 @@ public class FrmCrudActor extends JFrame {
 	 * @throws SQLException
 	 */
 	public FrmCrudActor() throws SQLException {
+		setClosable(true);
+		setIconifiable(true);
+		setMaximizable(true);
+		setResizable(true);
 		setTitle("CRUD de Actores");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 495);
+		setBounds(10, 10, 400, 300);
+		getContentPane().setLayout(new FlowLayout());
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -67,12 +84,12 @@ public class FrmCrudActor extends JFrame {
 		contentPane.add(lblTitulo);
 
 		JLabel lblBusqueda = new JLabel("Ingrese búsqueda");
-		lblBusqueda.setBounds(10, 48, 94, 14);
+		lblBusqueda.setBounds(45, 47, 94, 14);
 		contentPane.add(lblBusqueda);
 
 		txtBusqueda = new JTextField();
 		lblBusqueda.setLabelFor(txtBusqueda);
-		txtBusqueda.setBounds(114, 45, 375, 20);
+		txtBusqueda.setBounds(149, 45, 340, 20);
 		contentPane.add(txtBusqueda);
 		txtBusqueda.setColumns(10);
 
@@ -85,11 +102,11 @@ public class FrmCrudActor extends JFrame {
 		contentPane.add(btnNuevo);
 
 		JButton btnModificar = new JButton("Modificar Registro");
-		btnModificar.setBounds(254, 99, 134, 23);
+		btnModificar.setBounds(183, 99, 134, 23);
 		contentPane.add(btnModificar);
 
 		JButton btnEliminar = new JButton("Eliminar Registro");
-		btnEliminar.setBounds(460, 99, 128, 23);
+		btnEliminar.setBounds(342, 99, 128, 23);
 		contentPane.add(btnEliminar);
 
 		// Inicializar tabla
@@ -101,6 +118,30 @@ public class FrmCrudActor extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(grdDatos);
 		scrollPane.setBounds(45, 158, 543, 290);
 		contentPane.add(scrollPane);
+
+		JButton btnGenerarReporte = new JButton("Ver Reporte");
+		btnGenerarReporte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					// Conexión a la base de datos Sakila
+					Connection con = Conexion.getInstance().getConnection();
+
+					// Cargar el archivo .jasper
+					JasperReport reporte = (JasperReport) JRLoader
+							.loadObject(getClass().getResource("/reportes/ActorsList.jasper"));
+
+					// Llenar y mostrar el reporte
+					JasperPrint print = JasperFillManager.fillReport(reporte, null, con);
+					JasperViewer.viewReport(print, false);
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error al mostrar el reporte:\n" + ex.getMessage());
+				}
+			}
+		});
+		btnGenerarReporte.setBounds(481, 100, 107, 21);
+		contentPane.add(btnGenerarReporte);
 
 		// Cargar datos iniciales
 		cargarDatos(0);
@@ -146,8 +187,7 @@ public class FrmCrudActor extends JFrame {
 		List<Actor> lista = new ArrayList<Actor>();
 
 		Connection con = Conexion.getInstance().getConnection();
-		String consulta = "SELECT actor_id, first_name, last_name, last_update " + "FROM actor " 
-				+ "WHERE actor_id>?";
+		String consulta = "SELECT actor_id, first_name, last_name, last_update " + "FROM actor " + "WHERE actor_id>?";
 		PreparedStatement pst = con.prepareStatement(consulta);
 		pst.setInt(1, actorId);
 		ResultSet rs = pst.executeQuery();
@@ -262,7 +302,7 @@ public class FrmCrudActor extends JFrame {
 		}
 
 		int actorId = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
-		
+
 		Connection con = Conexion.getInstance().getConnection();
 		String consulta = "DELETE FROM actor WHERE actor_id = ?";
 		PreparedStatement pst = con.prepareStatement(consulta);
