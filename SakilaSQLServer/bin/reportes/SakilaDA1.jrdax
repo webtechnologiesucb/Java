@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl">
+	<name>Sakila DA1</name>
+	<classpath>C:\developer\Java\SakilaSQLServer\lib\mssql-jdbc-12.8.1.jre11.jar</classpath>
+	<driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+	<username>sa</username>
+	<password>12345678</password>
+	<url>jdbc:sqlserver://localhost:1433;databaseName=sakila;encrypt=true;trustServerCertificate=true</url>
+	<database></database>
+	<savePassword>true</savePassword>
+	<serverAddress></serverAddress>
+</jdbcDataAdapter>
